@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "217296477080",
+    "project_id": "cocuisinage-software",
+    "storage_bucket": "cocuisinage-software.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217296477080:android:216689ba29ac85718169ed",
+        "android_client_info": {
+          "package_name": "com.cocuisinage.professionnel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217296477080-ju26v4v10v687h9ebo48ho1eu1tulo4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOREtr-IppSChcV_kPd7Av7vjB6gEOt_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217296477080-ju26v4v10v687h9ebo48ho1eu1tulo4a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "217296477080-l8k4j5m462j7ltn59hsj14ve1qoisau2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cocuisinage.professionnel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
