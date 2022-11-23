@@ -33,7 +33,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.cocuisinage.professionnel"
+        applicationId "com.cocuisinage.professional"
         multiDexEnabled true
         minSdkVersion 19
         targetSdkVersion 31
