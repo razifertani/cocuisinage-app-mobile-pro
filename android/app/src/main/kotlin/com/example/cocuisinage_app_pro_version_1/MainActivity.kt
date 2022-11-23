@@ -1,4 +1,4 @@
-package com.cocuisinage.professional
+package com.cocuisinage.professionnel
 
 import io.flutter.embedding.android.FlutterActivity
 

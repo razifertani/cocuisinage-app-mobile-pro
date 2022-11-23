@@ -33,7 +33,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.cocuisinage.professional"
+        applicationId "com.cocuisinage.professionnel"
         multiDexEnabled true
         minSdkVersion 19
         targetSdkVersion 31
@@ -56,10 +56,10 @@ android {
 
     signingConfigs {
         release {
-            keyAlias 'cocuisangerh'
-            keyPassword 'Razifertani123!!'
+            keyAlias 'cocuisangesoftware'
+            keyPassword 'cocuisangesoftware'
             storeFile file("key.jks")
-            storePassword 'Razifertani123!!'
+            storePassword 'cocuisangesoftware'
         }
     }
 
