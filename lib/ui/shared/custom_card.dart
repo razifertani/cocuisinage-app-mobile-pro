@@ -11,7 +11,13 @@ class CustomCard extends StatelessWidget {
   int? quantite;
 
   Function fun;
-  CustomCard({Key? key, required this.imgPath, required this.txt, this.quantite, required this.fun}) : super(key: key);
+  CustomCard(
+      {Key? key,
+      required this.imgPath,
+      required this.txt,
+      this.quantite,
+      required this.fun})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,6 @@ class CustomCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               elevation: 4,
-              color: Colors.white,
               child: Column(children: [
                 const SizedBox(
                   height: 20,
@@ -57,7 +62,11 @@ class CustomCard extends StatelessWidget {
                 const SizedBox(
                   height: 5,
                 ),
-                quantite != null ? Text("${quantite}", style: MyTextStyles.cardTextStyle.copyWith(color: MyColors.red, fontWeight: FontWeight.w600)) : SizedBox(),
+                quantite != null
+                    ? Text("${quantite}",
+                        style: MyTextStyles.cardTextStyle.copyWith(
+                            color: MyColors.red, fontWeight: FontWeight.w600))
+                    : SizedBox(),
               ]),
             ),
           )),

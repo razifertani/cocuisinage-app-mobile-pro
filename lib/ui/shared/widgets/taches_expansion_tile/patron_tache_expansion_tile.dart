@@ -30,10 +30,8 @@ class _PatronTacheExpansionTileState extends State<PatronTacheExpansionTile> {
         ),
         elevation: 3,
         child: ExpansionTile(
-          collapsedTextColor: Colors.black,
           collapsedIconColor: Colors.black,
           iconColor: Colors.black,
-          textColor: Colors.black,
           trailing: SizedBox(),
           title: Padding(
             padding: const EdgeInsets.all(4),

@@ -9,6 +9,7 @@ import '../../../Theme/my_text_styles.dart';
 
 import '../../shared/widgets/porte_monnaie_widgets/chart.dart';
 import '../../shared/widgets/porte_monnaie_widgets/porte_monnaie_card.dart';
+import '../tutoriel/tutoriel_pop_up.dart';
 import 'exporter_mes_donnees.dart';
 
 class MonPorteMonnaieScreen extends StatelessWidget {
@@ -50,16 +51,16 @@ class MonPorteMonnaieScreen extends StatelessWidget {
             ),
             IconButton(
                 onPressed: () {
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (_) => TutorielPopUp(
-                  //           title: "Mon porte monnaies",
-                  //           description:
-                  //               "Vous aurez la possibilité d’alimenter votre compte virtuel et de consulter votre solde.",
-                  //           numberOfPages: 2,
-                  //           secDescription:
-                  //               "Vous pourrez voir l’historique du détail de vos dépenses co-cuisinage à une fréquence donnée et télécharger les factures de l’ensemble de vos activité.",
-                  //         ));
+                  showDialog(
+                      context: context,
+                      builder: (_) => TutorielPopUp(
+                            title: "Mon porte monnaies",
+                            description:
+                                "Vous aurez la possibilité d’alimenter votre compte virtuel et de consulter votre solde.",
+                            numberOfPages: 2,
+                            secDescription:
+                                "Vous pourrez voir l’historique du détail de vos dépenses co-cuisinage à une fréquence donnée et télécharger les factures de l’ensemble de vos activité.",
+                          ));
                 },
                 icon: Icon(Icons.question_mark))
           ],
