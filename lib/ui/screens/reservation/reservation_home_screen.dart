@@ -1,15 +1,13 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/reservation/plan_de_table/plan_de_table.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/reservation/reservation_screens/reservation_screen.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../Theme/my_colors.dart';
 import '../../../Theme/my_text_styles.dart';
-import '../../shared/bottom_app_bar.dart';
 import '../../shared/custom_card.dart';
-import '../../shared/floating_action_button_home.dart';
 import '../../shared/widgets/planning_widgets/horizontal_calendar.dart';
 import '../../shared/widgets/reservation/raduil_gauge_reservation.dart';
 import '../../shared/widgets/reservation/reservation_chart.dart';
@@ -41,9 +39,7 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
           "Réservations",
           style: MyTextStyles.appBarTextStyle,
         ),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.question_mark))
-        ],
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.question_mark))],
         centerTitle: true,
         backgroundColor: MyColors.red,
       ),
@@ -63,51 +59,38 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
               ),
               SizedBox(
                 height: 28.h,
-                child: GridView.count(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    crossAxisCount: 1,
-                    childAspectRatio: 1,
-                    mainAxisSpacing: 1.5.h,
-                    crossAxisSpacing: 1.5.h,
-                    children: [
-                      CustomCard(
-                          imgPath: "assets/primary_icons/reservation.png",
-                          txt: "Reservations",
-                          quantite: 250,
-                          fun: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ReservationScreen()),
-                            );
-                          }),
-                      CustomCard(
-                          imgPath: "assets/primary_icons/plan_de_table.png",
-                          txt: "Plan de table",
-                          quantite: 250,
-                          fun: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PlanDeTableScreen()),
-                            );
-                          }),
-                      CustomCard(
-                          imgPath: "assets/primary_icons/service.png",
-                          txt: "Mon service",
-                          quantite: 250,
-                          fun: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PreparationDeCommandeScreen()),
-                            );
-                          }),
-                    ]),
+                child: GridView.count(shrinkWrap: true, scrollDirection: Axis.horizontal, crossAxisCount: 1, childAspectRatio: 1, mainAxisSpacing: 1.5.h, crossAxisSpacing: 1.5.h, children: [
+                  CustomCard(
+                      imgPath: "assets/primary_icons/reservation.png",
+                      txt: "Reservations",
+                      quantite: Globals.profile.getEstablishment().reservations.length,
+                      fun: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ReservationScreen()),
+                        );
+                      }),
+                  CustomCard(
+                      imgPath: "assets/primary_icons/plan_de_table.png",
+                      txt: "Plan de table",
+                      quantite: 250,
+                      fun: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PlanDeTableScreen()),
+                        );
+                      }),
+                  CustomCard(
+                      imgPath: "assets/primary_icons/service.png",
+                      txt: "Mon service",
+                      quantite: 250,
+                      fun: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PreparationDeCommandeScreen()),
+                        );
+                      }),
+                ]),
               ),
               const SizedBox(
                 height: 20,

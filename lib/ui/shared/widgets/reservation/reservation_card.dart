@@ -1,16 +1,19 @@
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/reservation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../Theme/my_text_styles.dart';
 import '../../../screens/reservation/plan_de_table/plan_de_table.dart';
 
-class ReservationCard extends StatelessWidget {
-  final String name;
-  final String pers;
-  final String time;
-  const ReservationCard(
-      {Key? key, required this.name, required this.pers, required this.time})
-      : super(key: key);
+class ReservationCard extends StatefulWidget {
+  final Reservation reservation;
 
+  const ReservationCard({Key? key, required this.reservation}) : super(key: key);
+
+  @override
+  State<ReservationCard> createState() => _ReservationCardState();
+}
+
+class _ReservationCardState extends State<ReservationCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,11 +29,11 @@ class ReservationCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  name,
+                  '${widget.reservation.clientName}',
                   style: MyTextStyles.cardTextStyle,
                 ),
                 Text(
-                  pers,
+                  '${widget.reservation.nbPeople} Pers',
                   style: MyTextStyles.cardTextStyle,
                 ),
               ],
@@ -39,32 +42,28 @@ class ReservationCard extends StatelessWidget {
               height: 10,
             ),
             Divider(
-              color: Theme.of(context).scaffoldBackgroundColor == Colors.black
-                  ? Colors.white
-                  : Colors.black,
+              color: Theme.of(context).scaffoldBackgroundColor == Colors.black ? Colors.white : Colors.black,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.close, color: Colors.red)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.close, color: Colors.red)),
                 Text(
-                  time,
+                  '${widget.reservation.hour}',
                   style: MyTextStyles.cardTextStyle,
                 ),
                 IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const PlanDeTableScreen()),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    )),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PlanDeTableScreen()),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  ),
+                ),
               ],
             )
           ],

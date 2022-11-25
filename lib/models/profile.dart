@@ -3,6 +3,7 @@ import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/company.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/establishment.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/notification.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/planning.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/reservation.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/role_permission.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/task.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
@@ -97,8 +98,7 @@ class Profile {
     if (json['establishments_permissions'] != null) {
       establishmentsPermissions = <EstablishmentsPermissions>[];
       json['establishments_permissions'].forEach((v) {
-        establishmentsPermissions
-            .add(new EstablishmentsPermissions.fromJson(v));
+        establishmentsPermissions.add(new EstablishmentsPermissions.fromJson(v));
       });
     }
     if (json['plannings'] != null) {
@@ -206,15 +206,12 @@ class Profile {
 
   List<int> getColleguePermissions({required int id}) {
     List<int> colleguePermissionsIDs = [];
-    Iterable<EstablishmentsPermissions> establishmentsPermissions =
-        this.getColleague(id: id).establishmentsPermissions.where((element) {
+    Iterable<EstablishmentsPermissions> establishmentsPermissions = this.getColleague(id: id).establishmentsPermissions.where((element) {
       return element.id == Globals.params.currentEstablishmentID;
     });
     establishmentsPermissions.forEach((establishmentsPermissionsElement) {
       Globals.config.permissions.forEach((permissionElement) {
-        if (establishmentsPermissionsElement
-                .pivotEstablishmentsPermissions.permissionId ==
-            permissionElement.id) {
+        if (establishmentsPermissionsElement.pivotEstablishmentsPermissions.permissionId == permissionElement.id) {
           colleguePermissionsIDs.add(permissionElement.id);
         }
       });
@@ -240,8 +237,7 @@ class Profile {
     return tasks;
   }
 
-  List<Planning> getColleguePlanningsForDate(
-      {required int collegueID, required DateTime date}) {
+  List<Planning> getColleguePlanningsForDate({required int collegueID, required DateTime date}) {
     return this.getColleague(id: collegueID).plannings.where((element) {
       return element.day.isSameDayAs(date) && element.isFixed();
     }).toList();
@@ -257,18 +253,7 @@ class Profile {
       if (!element.isFixed()) {
         isAvailableTargetPlanningForNow = true;
       } else if (element.startedAt == null || element.finishedAt == null) {
-        if (DateTime.now().isAfter(DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-                DateTime.now().day,
-                element.shouldStartAt.hour,
-                element.shouldStartAt.minute)) &&
-            DateTime.now().isBefore(DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-                DateTime.now().day,
-                element.shouldFinishAt!.hour,
-                element.shouldFinishAt!.minute))) {
+        if (DateTime.now().isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, element.shouldStartAt.hour, element.shouldStartAt.minute)) && DateTime.now().isBefore(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, element.shouldFinishAt!.hour, element.shouldFinishAt!.minute))) {
           isAvailableTargetPlanningForNow = true;
         }
       }
@@ -288,18 +273,7 @@ class Profile {
       } else if (element.startedAt == null || element.finishedAt == null) {
         if (element.shouldFinishAt == null) {
           return true;
-        } else if (DateTime.now().isAfter(DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-                DateTime.now().day,
-                element.shouldStartAt.hour,
-                element.shouldStartAt.minute)) &&
-            DateTime.now().isBefore(DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-                DateTime.now().day,
-                element.shouldFinishAt!.hour,
-                element.shouldFinishAt!.minute))) {
+        } else if (DateTime.now().isAfter(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, element.shouldStartAt.hour, element.shouldStartAt.minute)) && DateTime.now().isBefore(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, element.shouldFinishAt!.hour, element.shouldFinishAt!.minute))) {
           return true;
         }
       }
@@ -312,9 +286,7 @@ class Profile {
 
     this.getColleagues().forEach((currentCollegue) {
       currentCollegue.plannings.forEach((currentColleguePlanning) {
-        if (DateTime(
-                DateTime.now().year, DateTime.now().month, DateTime.now().day)
-            .isSameDayAs(currentColleguePlanning.day)) {
+        if (DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day).isSameDayAs(currentColleguePlanning.day)) {
           currentColleguePlannings.add(currentColleguePlanning);
         }
       });
@@ -323,26 +295,14 @@ class Profile {
     return currentColleguePlannings;
   }
 
-  List<Planning> getColleguePlanningsByPart(
-      {required DateTime dateTime, required int part}) {
+  List<Planning> getColleguePlanningsByPart({required DateTime dateTime, required int part}) {
     List<Planning> currentColleguePlannings = [];
 
     this.getColleagues().forEach((currentCollegue) {
       currentCollegue.plannings.forEach((currentColleguePlanning) {
-        if (currentColleguePlanning.isFixed() &&
-            dateTime.isSameDayAs(currentColleguePlanning.day)) {
-          if ((Planning.DAY_PARTS.values.elementAt(part).first <=
-                      double.parse(
-                          "${currentColleguePlanning.shouldStartAt.hour}.${currentColleguePlanning.shouldStartAt.minute}") &&
-                  double.parse(
-                          "${currentColleguePlanning.shouldStartAt.hour}.${currentColleguePlanning.shouldStartAt.minute}") <=
-                      Planning.DAY_PARTS.values.elementAt(part).last) ||
-              (Planning.DAY_PARTS.values.elementAt(part).first <=
-                      double.parse(
-                          "${currentColleguePlanning.shouldFinishAt!.hour}.${currentColleguePlanning.shouldFinishAt!.minute}") &&
-                  double.parse(
-                          "${currentColleguePlanning.shouldFinishAt!.hour}.${currentColleguePlanning.shouldFinishAt!.minute}") <=
-                      Planning.DAY_PARTS.values.elementAt(part).last)) {
+        if (currentColleguePlanning.isFixed() && dateTime.isSameDayAs(currentColleguePlanning.day)) {
+          if ((Planning.DAY_PARTS.values.elementAt(part).first <= double.parse("${currentColleguePlanning.shouldStartAt.hour}.${currentColleguePlanning.shouldStartAt.minute}") && double.parse("${currentColleguePlanning.shouldStartAt.hour}.${currentColleguePlanning.shouldStartAt.minute}") <= Planning.DAY_PARTS.values.elementAt(part).last) ||
+              (Planning.DAY_PARTS.values.elementAt(part).first <= double.parse("${currentColleguePlanning.shouldFinishAt!.hour}.${currentColleguePlanning.shouldFinishAt!.minute}") && double.parse("${currentColleguePlanning.shouldFinishAt!.hour}.${currentColleguePlanning.shouldFinishAt!.minute}") <= Planning.DAY_PARTS.values.elementAt(part).last)) {
             currentColleguePlannings.add(currentColleguePlanning);
           }
         }
@@ -352,30 +312,13 @@ class Profile {
     return currentColleguePlannings;
   }
 
-  List<Planning> getColleguePlanningsForPart(
-      {required int collegueID,
-      required DateTime dateTime,
-      required int part}) {
+  List<Planning> getColleguePlanningsForPart({required int collegueID, required DateTime dateTime, required int part}) {
     List<Planning> plannings = [];
 
-    this
-        .getColleague(id: collegueID)
-        .plannings
-        .forEach((currentColleguePlanning) {
-      if (currentColleguePlanning.isFixed() &&
-          dateTime.isSameDayAs(currentColleguePlanning.day)) {
-        if ((Planning.DAY_PARTS.values.elementAt(part).first <=
-                    double.parse(
-                        "${currentColleguePlanning.shouldStartAt.hour}.${currentColleguePlanning.shouldStartAt.minute}") &&
-                double.parse(
-                        "${currentColleguePlanning.shouldStartAt.hour}.${currentColleguePlanning.shouldStartAt.minute}") <=
-                    Planning.DAY_PARTS.values.elementAt(part).last) ||
-            (Planning.DAY_PARTS.values.elementAt(part).first <=
-                    double.parse(
-                        "${currentColleguePlanning.shouldFinishAt!.hour}.${currentColleguePlanning.shouldFinishAt!.minute}") &&
-                double.parse(
-                        "${currentColleguePlanning.shouldFinishAt!.hour}.${currentColleguePlanning.shouldFinishAt!.minute}") <=
-                    Planning.DAY_PARTS.values.elementAt(part).last)) {
+    this.getColleague(id: collegueID).plannings.forEach((currentColleguePlanning) {
+      if (currentColleguePlanning.isFixed() && dateTime.isSameDayAs(currentColleguePlanning.day)) {
+        if ((Planning.DAY_PARTS.values.elementAt(part).first <= double.parse("${currentColleguePlanning.shouldStartAt.hour}.${currentColleguePlanning.shouldStartAt.minute}") && double.parse("${currentColleguePlanning.shouldStartAt.hour}.${currentColleguePlanning.shouldStartAt.minute}") <= Planning.DAY_PARTS.values.elementAt(part).last) ||
+            (Planning.DAY_PARTS.values.elementAt(part).first <= double.parse("${currentColleguePlanning.shouldFinishAt!.hour}.${currentColleguePlanning.shouldFinishAt!.minute}") && double.parse("${currentColleguePlanning.shouldFinishAt!.hour}.${currentColleguePlanning.shouldFinishAt!.minute}") <= Planning.DAY_PARTS.values.elementAt(part).last)) {
           plannings.add(currentColleguePlanning);
         }
       }
@@ -384,16 +327,10 @@ class Profile {
     return plannings;
   }
 
-  List<Task> getCollegueTasksForPart(
-      {required int collegueID,
-      required DateTime dateTime,
-      required int part}) {
+  List<Task> getCollegueTasksForPart({required int collegueID, required DateTime dateTime, required int part}) {
     List<Task> tasks = [];
 
-    this
-        .getColleguePlanningsForPart(
-            collegueID: collegueID, dateTime: dateTime, part: part)
-        .forEach((element) {
+    this.getColleguePlanningsForPart(collegueID: collegueID, dateTime: dateTime, part: part).forEach((element) {
       element.tasks.forEach((element) {
         tasks.add(element);
       });
@@ -403,11 +340,12 @@ class Profile {
   }
 
   List<NotificationsParams> getNotificationsParamsForEstablishment() {
-    return this
-        .notificationsParams
-        .where((element) =>
-            element.pivot.establishmentId ==
-            Globals.params.currentEstablishmentID)
-        .toList();
+    return this.notificationsParams.where((element) => element.pivot.establishmentId == Globals.params.currentEstablishmentID).toList();
+  }
+
+  List<Reservation> getReservationsForDate({required DateTime day}) {
+    return this.getEstablishment().reservations.where((element) {
+      return element.day.isSameDayAs(day);
+    }).toList();
   }
 }

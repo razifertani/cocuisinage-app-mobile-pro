@@ -1,5 +1,6 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/collegue.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/planning.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/reservation.dart';
 
 class Establishment {
   late int id;
@@ -18,6 +19,7 @@ class Establishment {
   String? updatedAt;
   late List<Collegue> collegues;
   List<Planning>? plannings;
+  late List<Reservation> reservations;
 
   Establishment({
     required this.id,
@@ -36,6 +38,7 @@ class Establishment {
     this.updatedAt,
     required this.collegues,
     this.plannings,
+    required this.reservations,
   });
 
   Establishment.fromJson(Map<String, dynamic> json) {
@@ -63,6 +66,12 @@ class Establishment {
       plannings = <Planning>[];
       json['plannings'].forEach((v) {
         plannings!.add(new Planning.fromJson(v));
+      });
+    }
+    if (json['reservations'] != null) {
+      reservations = <Reservation>[];
+      json['reservations'].forEach((v) {
+        reservations.add(new Reservation.fromJson(v));
       });
     }
   }

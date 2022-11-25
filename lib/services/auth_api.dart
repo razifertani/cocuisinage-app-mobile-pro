@@ -36,8 +36,7 @@ Future<Config> configWS() async {
   }
 }
 
-Future<Either<Exception, bool>> loginWS(
-    {required String email, required String password}) async {
+Future<Either<Exception, bool>> loginWS({required String email, required String password}) async {
   try {
     final response = await http.post(
         Uri.parse(
@@ -61,8 +60,7 @@ Future<Either<Exception, bool>> loginWS(
 
         return Right(true);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));
@@ -73,16 +71,7 @@ Future<Either<Exception, bool>> loginWS(
   }
 }
 
-Future<Either<Exception, String>> registerWS(
-    {required String ownerEmail,
-    required String ownerFirstName,
-    required String ownerLastName,
-    required String ownerPassword,
-    required String companyName,
-    required String companyEmail,
-    required String companyPhoneNumber,
-    required String companyRib,
-    required String companySiret}) async {
+Future<Either<Exception, String>> registerWS({required String ownerEmail, required String ownerFirstName, required String ownerLastName, required String ownerPassword, required String companyName, required String companyEmail, required String companyPhoneNumber, required String companyRib, required String companySiret}) async {
   try {
     var response = await http.post(
       Uri.parse('${Globals.baseUrl}/register'),
@@ -106,8 +95,7 @@ Future<Either<Exception, String>> registerWS(
       if (!json.decode(response.body)['error']) {
         return Right(json.decode(response.body)['message']);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));
@@ -149,22 +137,12 @@ Future<Profile> getUserWS() async {
   }
 }
 
-Future<Either<Exception, String>> updateProfileWS(
-    {required int professionalID,
-    File? image,
-    String? firstName,
-    String? lastName,
-    String? email,
-    String? phoneNumber,
-    String? password,
-    String? newPassword,
-    String? fcmToken}) async {
+Future<Either<Exception, String>> updateProfileWS({required int professionalID, File? image, String? firstName, String? lastName, String? email, String? phoneNumber, String? password, String? newPassword, String? fcmToken}) async {
   try {
     http.Response response;
 
     if (image != null) {
-      var request = http.MultipartRequest(
-          'POST', Uri.parse('${Globals.baseUrl}/user/$professionalID'))
+      var request = http.MultipartRequest('POST', Uri.parse('${Globals.baseUrl}/user/$professionalID'))
         ..headers.addAll({
           HttpHeaders.acceptHeader: 'application/json',
           HttpHeaders.authorizationHeader: 'Bearer ${Globals.token}',
@@ -211,8 +189,7 @@ Future<Either<Exception, String>> updateProfileWS(
         Globals.profile = await getUserWS();
         return Right(json.decode(response.body)['message']);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));
@@ -223,8 +200,7 @@ Future<Either<Exception, String>> updateProfileWS(
   }
 }
 
-Future<Either<Exception, String>> sendResetPasswordLinkWS(
-    {required String email}) async {
+Future<Either<Exception, String>> sendResetPasswordLinkWS({required String email}) async {
   try {
     final response = await http.post(
       Uri.parse(
@@ -242,8 +218,7 @@ Future<Either<Exception, String>> sendResetPasswordLinkWS(
       if (!json.decode(response.body)['error']) {
         return Right(json.decode(response.body)['message']);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));
@@ -254,8 +229,7 @@ Future<Either<Exception, String>> sendResetPasswordLinkWS(
   }
 }
 
-Future<Either<Exception, String>> verifyCodeWS(
-    {required String email, required String token}) async {
+Future<Either<Exception, String>> verifyCodeWS({required String email, required String token}) async {
   try {
     final response = await http.post(
       Uri.parse(
@@ -274,8 +248,7 @@ Future<Either<Exception, String>> verifyCodeWS(
       if (!json.decode(response.body)['error']) {
         return Right(json.decode(response.body)['message']);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));
@@ -286,10 +259,7 @@ Future<Either<Exception, String>> verifyCodeWS(
   }
 }
 
-Future<Either<Exception, String>> resetPasswordWS(
-    {required String email,
-    required String token,
-    required String password}) async {
+Future<Either<Exception, String>> resetPasswordWS({required String email, required String token, required String password}) async {
   try {
     final response = await http.post(
       Uri.parse(
@@ -310,8 +280,7 @@ Future<Either<Exception, String>> resetPasswordWS(
       if (!json.decode(response.body)['error']) {
         return Right(json.decode(response.body)['message']);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));
@@ -341,8 +310,7 @@ Future<Either<Exception, bool>> logoutWS() async {
 
         return Right(true);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));
