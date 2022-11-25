@@ -7,13 +7,7 @@ class BoutiqueCardAuth extends StatelessWidget {
   String address;
   int rate;
   String imgPath;
-  BoutiqueCardAuth(
-      {Key? key,
-      required this.name,
-      required this.address,
-      required this.imgPath,
-      required this.rate})
-      : super(key: key);
+  BoutiqueCardAuth({Key? key, required this.name, required this.address, required this.imgPath, required this.rate}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +15,7 @@ class BoutiqueCardAuth extends StatelessWidget {
       width: 90.w,
       height: 35.h,
       child: Card(
-        color: Theme.of(context).scaffoldBackgroundColor == Colors.black
-            ? null
-            : Color(0xFFF1F0F0),
+        color: Theme.of(context).scaffoldBackgroundColor == Colors.black ? null : Color(0xFFF1F0F0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
