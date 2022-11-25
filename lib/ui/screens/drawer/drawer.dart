@@ -11,6 +11,7 @@ import '../../../services/auth_api.dart';
 import '../../../utils/utils.dart';
 import '../auth/mes_boutiques/mes_boutiques.dart';
 import '../auth/sign_in/sign_in.dart';
+import '../signaler_un_bug/signaler_un_bug.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -104,7 +105,6 @@ class _MyDrawerState extends State<MyDrawer> {
                           width: 35,
                           child: Image.asset(
                             "assets/drawer_icons/changer.png",
-                            // height: 30,
                           ),
                         ),
                         const SizedBox(
@@ -134,13 +134,61 @@ class _MyDrawerState extends State<MyDrawer> {
                 SizedBox(
                   height: 15,
                 ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 35,
+                          child: Image.asset(
+                            "assets/drawer_icons/bugs.png",
+                            height: 30,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignalerUnBugScreen()),
+                            );
+                          },
+                          child: FittedBox(
+                            child: AutoSizeText(
+                              "Signaler un bug",
+                              style: MyTextStyles.subhead
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
-                      Image.asset("assets/drawer_icons/dark_theme.png"),
                       SizedBox(
-                        width: 15,
+                        width: 35,
+                        child: Image.asset(
+                          "assets/drawer_icons/dark_theme.png",
+                          height: 30,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
                       ),
                       Text(
                         "Dark theme",
