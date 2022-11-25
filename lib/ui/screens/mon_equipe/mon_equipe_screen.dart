@@ -10,6 +10,8 @@ import '../../../../Theme/my_text_styles.dart';
 
 import '../../shared/bottom_app_bar.dart';
 import '../../shared/floating_action_button_home.dart';
+import '../drawer/drawer.dart';
+import '../tutoriel/tutoriel_pop_up.dart';
 import 'equipe/equipe.dart';
 
 import 'roles/permissions_screen.dart';
@@ -88,6 +90,7 @@ class _MonEquipeScreenState extends State<MonEquipeScreen> {
           // floatingActionButtonLocation:
           //     FloatingActionButtonLocation.centerDocked,
           // bottomNavigationBar: const MyBottomNavigationBar(),
+          drawer: const MyDrawer(),
           appBar: AppBar(
             bottom: PreferredSize(
               preferredSize: _tabBar.preferredSize,
@@ -106,24 +109,23 @@ class _MonEquipeScreenState extends State<MonEquipeScreen> {
             actions: [
               IconButton(
                 onPressed: () {
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (_) => TutorielPopUp(
-                  //           title: "Mon équipe",
-                  //           description: "Vous pouvez  ajouter de nouveaux employés à votre équipe avec ses informations essentielles (identité du client,métier, horaires de travail,...)",
-                  //           numberOfPages: 3,
-                  //           secDescription: "Vous pouvez visualiser le planning de l’ensemble de votre salariés. Vous pouvez affecter de nouvelles tâches aux salariés de votre équipe",
-                  //           thirdDescription: "Vous pouvez ajouter des accès personnalisés à l’application.",
-                  //         ));
+                  showDialog(
+                      context: context,
+                      builder: (_) => TutorielPopUp(
+                            title: "Mon équipe",
+                            description:
+                                "Vous pouvez  ajouter de nouveaux employés à votre équipe avec ses informations essentielles (identité du client,métier, horaires de travail,...)",
+                            numberOfPages: 3,
+                            secDescription:
+                                "Vous pouvez visualiser le planning de l’ensemble de votre salariés. Vous pouvez affecter de nouvelles tâches aux salariés de votre équipe",
+                            thirdDescription:
+                                "Vous pouvez ajouter des accès personnalisés à l’application.",
+                          ));
                 },
                 icon: const Icon(Icons.question_mark),
               )
             ],
             backgroundColor: MyColors.red,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context),
-            ),
           ),
           body: TabBarView(
             children: [

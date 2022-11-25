@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../Theme/my_colors.dart';
 import '../../shared/widgets/planning_widgets/horizontal_calendar.dart';
+import '../drawer/drawer.dart';
 
 class PlanningScreen extends StatefulWidget {
   const PlanningScreen({Key? key}) : super(key: key);
@@ -38,11 +39,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
         ),
         centerTitle: true,
         backgroundColor: MyColors.red,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
       ),
+      drawer: const MyDrawer(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -78,8 +76,10 @@ class _PlanningScreenState extends State<PlanningScreen> {
                   },
                   itemBuilder: (context, index) {
                     return EquipeTimeCard(
-                      plannings: Globals.profile.getColleguePlanningsByPart(dateTime: selectedDate, part: index),
-                      text: "${DateFormat.EEEE('fr').format(selectedDate).capitalize()} ${Planning.DAY_PARTS.keys.elementAt(index)}",
+                      plannings: Globals.profile.getColleguePlanningsByPart(
+                          dateTime: selectedDate, part: index),
+                      text:
+                          "${DateFormat.EEEE('fr').format(selectedDate).capitalize()} ${Planning.DAY_PARTS.keys.elementAt(index)}",
                       function: () {
                         Navigator.push(
                           context,
@@ -87,7 +87,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                             builder: (context) => PlanningParJour(
                               selectedDate: selectedDate,
                               partOfTheDay: index,
-                              text: "${DateFormat.EEEE('fr').format(selectedDate).capitalize()} ${Planning.DAY_PARTS.keys.elementAt(index)}",
+                              text:
+                                  "${DateFormat.EEEE('fr').format(selectedDate).capitalize()} ${Planning.DAY_PARTS.keys.elementAt(index)}",
                             ),
                           ),
                         );

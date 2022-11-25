@@ -8,16 +8,19 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PatronTacheExpansionTile extends StatefulWidget {
   final int index;
-  const PatronTacheExpansionTile({Key? key, required this.index}) : super(key: key);
+  const PatronTacheExpansionTile({Key? key, required this.index})
+      : super(key: key);
 
   @override
-  State<PatronTacheExpansionTile> createState() => _PatronTacheExpansionTileState();
+  State<PatronTacheExpansionTile> createState() =>
+      _PatronTacheExpansionTileState();
 }
 
 class _PatronTacheExpansionTileState extends State<PatronTacheExpansionTile> {
   @override
   Widget build(BuildContext context) {
-    Planning planning = Globals.profile.getColleguesPlanningsToday()[widget.index];
+    Planning planning =
+        Globals.profile.getColleguesPlanningsToday()[widget.index];
 
     return SizedBox(
       width: 95.w,
@@ -27,10 +30,6 @@ class _PatronTacheExpansionTileState extends State<PatronTacheExpansionTile> {
         ),
         elevation: 3,
         child: ExpansionTile(
-          collapsedTextColor: Colors.black,
-          collapsedIconColor: Colors.black,
-          iconColor: Colors.black,
-          textColor: Colors.black,
           trailing: SizedBox(),
           title: Padding(
             padding: const EdgeInsets.all(4),
@@ -40,7 +39,9 @@ class _PatronTacheExpansionTileState extends State<PatronTacheExpansionTile> {
                   CircleAvatar(
                     radius: 26,
                     backgroundImage: NetworkImage(
-                      Globals.profile.getColleague(id: planning.professionalId).imageUrl,
+                      Globals.profile
+                          .getColleague(id: planning.professionalId)
+                          .imageUrl,
                     ),
                     child: Material(
                       shape: const CircleBorder(),
@@ -66,7 +67,10 @@ class _PatronTacheExpansionTileState extends State<PatronTacheExpansionTile> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              AutoSizeText('${Globals.profile.getColleague(id: planning.professionalId).firstName} ${Globals.profile.getColleague(id: planning.professionalId).lastName} ', maxLines: 1, style: MyTextStyles.subhead),
+                              AutoSizeText(
+                                  '${Globals.profile.getColleague(id: planning.professionalId).firstName} ${Globals.profile.getColleague(id: planning.professionalId).lastName} ',
+                                  maxLines: 1,
+                                  style: MyTextStyles.subhead),
                               Text(
                                 '${Globals.profile.getColleagueRole(id: planning.professionalId).name}',
                                 style: MyTextStyles.body,
@@ -93,7 +97,8 @@ class _PatronTacheExpansionTileState extends State<PatronTacheExpansionTile> {
                                   : Colors.black,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
                       child: AutoSizeText(
                         planning.status == Planning.NOT_YET
                             ? Planning.NOT_YET_TEXT
@@ -146,15 +151,19 @@ class _PatronTacheExpansionTileState extends State<PatronTacheExpansionTile> {
                                 children: [
                                   TextSpan(
                                     text: "Pointé en retard de ",
-                                    style: MyTextStyles.body.copyWith(color: MyColors.red),
+                                    style: MyTextStyles.body
+                                        .copyWith(color: MyColors.red),
                                   ),
                                   TextSpan(
                                     text: "${planning.getDelayInMinutes()}",
-                                    style: MyTextStyles.body.copyWith(color: MyColors.red, fontWeight: FontWeight.w600),
+                                    style: MyTextStyles.body.copyWith(
+                                        color: MyColors.red,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                   TextSpan(
                                     text: " minutes",
-                                    style: MyTextStyles.body.copyWith(color: MyColors.red),
+                                    style: MyTextStyles.body
+                                        .copyWith(color: MyColors.red),
                                   ),
                                 ],
                               ),
