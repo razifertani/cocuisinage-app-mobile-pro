@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../Theme/my_colors.dart';
 import '../../../Theme/my_text_styles.dart';
 import '../../../controllers/theme_controller.dart';
+import '../tutoriel/tutoriel_pop_up.dart';
 
 class StatistiqueMainScreen extends StatefulWidget {
   StatistiqueMainScreen({Key? key}) : super(key: key);
@@ -85,16 +86,16 @@ class _StatistiqueMainScreenState extends State<StatistiqueMainScreen> {
               actions: [
                 IconButton(
                     onPressed: () {
-                      // showDialog(
-                      //     context: context,
-                      //     builder: (_) => TutorielPopUp(
-                      //           title: "Mes statistique",
-                      //           description:
-                      //               "Vous consulterez un tableau de bord permettant de suivre les indicateurs d’activité de votre établissement sous forme visuel (graphique, tableau, …). ",
-                      //           numberOfPages: 2,
-                      //           secDescription:
-                      //               "Une comparaison sera possible selon la période souhaitée J/J-1, Mois N/Mois N-1….\nUn détail sera visible dans « Porte-Monnaie ».",
-                      //         ));
+                      showDialog(
+                          context: context,
+                          builder: (_) => TutorielPopUp(
+                                title: "Mes statistique",
+                                description:
+                                    "Vous consulterez un tableau de bord permettant de suivre les indicateurs d’activité de votre établissement sous forme visuel (graphique, tableau, …). ",
+                                numberOfPages: 2,
+                                secDescription:
+                                    "Une comparaison sera possible selon la période souhaitée J/J-1, Mois N/Mois N-1….\nUn détail sera visible dans « Porte-Monnaie ».",
+                              ));
                     },
                     icon: Icon(Icons.question_mark))
               ],

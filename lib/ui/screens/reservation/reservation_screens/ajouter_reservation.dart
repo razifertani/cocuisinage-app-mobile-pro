@@ -12,7 +12,7 @@ class AjouterReservation extends StatelessWidget {
   TextEditingController heure = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController date = TextEditingController();
-  TextEditingController nmrTable = TextEditingController();
+
   TextEditingController cmntr = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -85,14 +85,6 @@ class AjouterReservation extends StatelessWidget {
               style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
             ),
             CustomCardTextForm(controller: heure, hintText: "15:30"),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Numéro de table",
-              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
-            ),
-            CustomCardTextForm(controller: nmrTable, hintText: "034"),
             const SizedBox(
               height: 10,
             ),

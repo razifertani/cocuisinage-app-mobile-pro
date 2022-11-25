@@ -1,3 +1,4 @@
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/widgets/reservation/ajouter_nmr_de_table_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -114,13 +115,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                     onTap: () {
                       showDialog(
                           context: context,
-                          builder: (_) => PopUpWidget(
-                                controller: nmr,
-                                function: (a, b, c) {
-                                  Navigator.pop(context);
-                                },
-                                title: "Ajouter un numéro  de table",
-                              ));
+                          builder: (_) => new AjouterNmrDeTablePopUp());
                     },
                     child: Card(
                       color: const Color(0xFFE1E1E1),

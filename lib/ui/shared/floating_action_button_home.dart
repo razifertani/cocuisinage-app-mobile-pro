@@ -79,9 +79,13 @@ class _MyFloatingActButtonHomeState extends State<MyFloatingActButtonHome> {
         // );
 
         FloatingActionButton(
-      backgroundColor: Colors.white,
+      backgroundColor:
+          Theme.of(context).scaffoldBackgroundColor == Color(0xFFfafafa)
+              ? Colors.white
+              : Theme.of(context).primaryColor,
       onPressed: () {
         // HAMED
+        print(Theme.of(context).scaffoldBackgroundColor);
         widget.function();
       },
       child: Image.asset(

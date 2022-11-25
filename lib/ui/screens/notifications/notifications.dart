@@ -4,6 +4,7 @@ import '../../../Theme/my_colors.dart';
 import '../../../Theme/my_text_styles.dart';
 import '../../shared/widgets/notification_widgets/notification_card.dart';
 import '../drawer/drawer.dart';
+import '../tutoriel/tutoriel_pop_up.dart';
 import 'notification_settings/notification_settings.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -29,12 +30,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
           IconButton(
             onPressed: () {
               print(Globals.profile.notificationsAsReceiver.length);
-              // showDialog(
-              //     context: context,
-              //     builder: (_) => TutorielPopUp(
-              //         title: "Mes notifications",
-              //         description:
-              //             "vous recevrez en temps réel des notifications de votre activité afin de valider la tâches/l’information reçu pour automatisation du système."));
+              showDialog(
+                  context: context,
+                  builder: (_) => TutorielPopUp(
+                      title: "Mes notifications",
+                      description:
+                          "vous recevrez en temps réel des notifications de votre activité afin de valider la tâches/l’information reçu pour automatisation du système."));
             },
             icon: Icon(Icons.question_mark),
           ),

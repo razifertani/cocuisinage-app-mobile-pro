@@ -6,6 +6,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../Theme/my_colors.dart';
 import '../../../Theme/my_text_styles.dart';
 import '../../shared/widgets/prep_commande_widgets copy/item_card.dart';
+import '../tutoriel/tutoriel_pop_up.dart';
 
 class PreparationDeCommandeScreen extends StatefulWidget {
   const PreparationDeCommandeScreen({Key? key}) : super(key: key);
@@ -35,13 +36,26 @@ class _PreparationDeCommandeScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: AutoSizeText(
-            "Préparation de commande",
-            overflow: TextOverflow.clip,
-            style: MyTextStyles.appBarTextStyle,
+          title: FittedBox(
+            child: AutoSizeText(
+              "Préparation de commande",
+              style: MyTextStyles.appBarTextStyle,
+            ),
           ),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.question_mark))
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (_) => TutorielPopUp(
+                          title: "Prépation de commande",
+                          description:
+                              "Chaque employé responsable d’un poste de travail (dessert, entrée,…) reçoit le ticket et la préparation à effectuer. ",
+                          numberOfPages: 2,
+                          secDescription:
+                              "Pour que le ticket soit validé, il faut que l’ensemble des employés responsable d’un poste de travail valide la faisabilité de la préparation (devient vert)."));
+                },
+                icon: const Icon(Icons.question_mark))
           ],
           centerTitle: true,
           backgroundColor: MyColors.red,

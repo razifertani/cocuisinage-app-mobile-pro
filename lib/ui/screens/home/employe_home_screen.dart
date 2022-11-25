@@ -140,10 +140,10 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                                 ),
                                 child: ExpansionTile(
                                   trailing: SizedBox(),
-                                  collapsedTextColor: Colors.black,
+                                  // collapsedTextColor: Colors.black,
                                   collapsedIconColor: Colors.black,
                                   iconColor: Colors.black,
-                                  textColor: Colors.black,
+                                  // textColor: Colors.black,
                                   title: Padding(
                                     padding: const EdgeInsets.all(4),
                                     child: FittedBox(
