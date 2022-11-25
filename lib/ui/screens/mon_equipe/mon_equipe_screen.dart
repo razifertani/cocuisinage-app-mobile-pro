@@ -10,6 +10,7 @@ import '../../../../Theme/my_text_styles.dart';
 
 import '../../shared/bottom_app_bar.dart';
 import '../../shared/floating_action_button_home.dart';
+import '../drawer/drawer.dart';
 import '../tutoriel/tutoriel_pop_up.dart';
 import 'equipe/equipe.dart';
 
@@ -89,6 +90,7 @@ class _MonEquipeScreenState extends State<MonEquipeScreen> {
           // floatingActionButtonLocation:
           //     FloatingActionButtonLocation.centerDocked,
           // bottomNavigationBar: const MyBottomNavigationBar(),
+          drawer: const MyDrawer(),
           appBar: AppBar(
             bottom: PreferredSize(
               preferredSize: _tabBar.preferredSize,
@@ -124,10 +126,6 @@ class _MonEquipeScreenState extends State<MonEquipeScreen> {
               )
             ],
             backgroundColor: MyColors.red,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context),
-            ),
           ),
           body: TabBarView(
             children: [

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../Theme/my_colors.dart';
 import '../../../Theme/my_text_styles.dart';
 import '../../shared/widgets/notification_widgets/notification_card.dart';
+import '../drawer/drawer.dart';
 import '../tutoriel/tutoriel_pop_up.dart';
 import 'notification_settings/notification_settings.dart';
 
@@ -24,9 +25,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
         centerTitle: true,
         backgroundColor: MyColors.red,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context)),
         actions: [
           IconButton(
             onPressed: () {
@@ -54,6 +52,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
         ],
       ),
+      drawer: const MyDrawer(),
       body: Globals.profile.notificationsAsReceiver.length != 0
           ? SingleChildScrollView(
               child: Padding(
