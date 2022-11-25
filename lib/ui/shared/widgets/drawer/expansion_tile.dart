@@ -18,8 +18,8 @@ class ExpansionTileDrawer extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
-        iconColor: Colors.black,
-        textColor: Colors.black,
+        // iconColor: Colors.black,
+        // textColor: Colors.black,
         expandedAlignment: Alignment.bottomLeft,
         expandedCrossAxisAlignment: CrossAxisAlignment.start,
         childrenPadding: const EdgeInsets.only(left: 50),

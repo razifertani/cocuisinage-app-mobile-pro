@@ -11,6 +11,7 @@ import '../../../../Theme/my_colors.dart';
 import '../../../Theme/my_text_styles.dart';
 import '../../shared/custom_card.dart';
 import '../drawer/drawer.dart';
+import '../tutoriel/tutoriel_pop_up.dart';
 import 'commandes_annules.dart';
 import 'commandes_confirmes.dart';
 import 'commandes_en_attentes.dart';
@@ -98,18 +99,18 @@ class _MesCommandesScreenState extends State<MesCommandesScreen> {
             actions: [
               IconButton(
                   onPressed: () {
-                    // showDialog(
-                    //     context: context,
-                    //     builder: (_) => TutorielPopUp(
-                    //           title: "Mes commandes",
-                    //           description:
-                    //               "Vous pouvez gérer l’ensemble des commandes effectuées en ligne  ",
-                    //           numberOfPages: 3,
-                    //           secDescription:
-                    //               "La commande en attente sera à confirmer ou refusé. vous retrouverez l’ensemble des informations essentielles à la commande.",
-                    //           thirdDescription:
-                    //               "Si la commande est validée alors elle sera transmise au système de préparation de commande  et un compteur de préparation sera enclenché.",
-                    //         ));
+                    showDialog(
+                        context: context,
+                        builder: (_) => TutorielPopUp(
+                              title: "Mes commandes",
+                              description:
+                                  "Vous pouvez gérer l’ensemble des commandes effectuées en ligne  ",
+                              numberOfPages: 3,
+                              secDescription:
+                                  "La commande en attente sera à confirmer ou refusé. vous retrouverez l’ensemble des informations essentielles à la commande.",
+                              thirdDescription:
+                                  "Si la commande est validée alors elle sera transmise au système de préparation de commande  et un compteur de préparation sera enclenché.",
+                            ));
                   },
                   icon: Icon(Icons.question_mark))
             ],

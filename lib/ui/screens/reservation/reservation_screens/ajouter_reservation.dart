@@ -19,7 +19,7 @@ class _AjouterReservationState extends State<AjouterReservation> {
   TextEditingController heure = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController date = TextEditingController();
-  TextEditingController nmrTable = TextEditingController();
+
   TextEditingController cmntr = TextEditingController();
 
   @override

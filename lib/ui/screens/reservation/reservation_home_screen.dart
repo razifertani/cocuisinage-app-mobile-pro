@@ -13,6 +13,7 @@ import '../../shared/widgets/reservation/raduil_gauge_reservation.dart';
 import '../../shared/widgets/reservation/reservation_chart.dart';
 import '../drawer/drawer.dart';
 import '../preparation_de_commande/prep_commande.dart';
+import '../tutoriel/tutoriel_pop_up.dart';
 
 class ReservationHomeScreen extends StatefulWidget {
   bool? isChef;
@@ -39,7 +40,24 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
           "Réservations",
           style: MyTextStyles.appBarTextStyle,
         ),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.question_mark))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (_) => TutorielPopUp(
+                          title: "Réservation",
+                          description:
+                              "Vous pourrez voir le % de réservation, d’occupation de l’établissement",
+                          numberOfPages: 3,
+                          secDescription:
+                              "Vous pourrez gérer votre plan de table (disposition, capacité potentielle d’accueil, nombre de couverts par table)",
+                          thirdDescription:
+                              "De part cette gestion, le serveur pourra prendre la commande et l’affecter à une table.",
+                        ));
+              },
+              icon: Icon(Icons.question_mark))
+        ],
         centerTitle: true,
         backgroundColor: MyColors.red,
       ),
