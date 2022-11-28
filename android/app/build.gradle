@@ -35,7 +35,7 @@ android {
     defaultConfig {
         applicationId "com.cocuisinage.professionnel"
         multiDexEnabled true
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

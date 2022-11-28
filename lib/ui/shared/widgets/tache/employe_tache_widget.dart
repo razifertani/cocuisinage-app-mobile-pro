@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cocuisinage_app_mobile_pro/models/task.dart';
+import 'package:cocuisinage_app_mobile_pro/ui/shared/widgets/tache/add_asset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -76,7 +77,9 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                           context: context,
                           builder: (_) => PopUpWidget(
                             controller: msg,
-                            title: msg.text.isNotEmpty ? "Modifier un commentaire" : "Ajouter un commentaire",
+                            title: msg.text.isNotEmpty
+                                ? "Modifier un commentaire"
+                                : "Ajouter un commentaire",
                             function: (startLoading, stopLoading, btnState) {
                               if (msg.text != '') {
                                 startLoading();
@@ -89,12 +92,15 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                                   stopLoading();
                                   exceptionOrMessage.fold(
                                     (exception) {
-                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: false,
+                                          message: exception.toString());
                                     },
                                     (message) {
                                       msg.clear();
                                       setState(() {});
-                                      Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: true, message: message);
                                       Navigator.pop(context, msg.text);
                                     },
                                   );
@@ -113,6 +119,49 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                 const SizedBox(
                   width: 10,
                 ),
+                // ArgonButton(
+                //   height: 6.h,
+                //   width: 10.w,
+                //   minWidth: 10.w,
+                //   color: MyColors.red,
+                //   borderRadius: 15.0,
+                //   roundLoadingShape: false,
+                //   child: Center(
+                //     child: Icon(
+                //       Icons.camera_alt_outlined,
+                //       color: Colors.white,
+                //     ),
+                //   ),
+                //   loader: SpinKitRing(
+                //     color: Colors.white,
+                //     size: 40,
+                //     lineWidth: 4,
+                //   ),
+                //   onTap: (startLoading, stopLoading, btnState) async {
+                //     File? image = await pickImage();
+                //     if (image != null) {
+                //       startLoading();
+                //       updateTaskWS(
+                //         id: widget.task.id,
+                //         collegueID: widget.task.professionalId,
+                //         image: image,
+                //       ).then((exceptionOrMessage) {
+                //         stopLoading();
+                //         exceptionOrMessage.fold(
+                //           (exception) {
+                //             Utils.showCustomTopSnackBar(context,
+                //                 success: false, message: exception.toString());
+                //           },
+                //           (message) {
+                //             setState(() {});
+                //             Utils.showCustomTopSnackBar(context,
+                //                 success: true, message: message);
+                //           },
+                //         );
+                //       });
+                //     }
+                //   },
+                // ),
                 ArgonButton(
                   height: 6.h,
                   width: 10.w,
@@ -122,7 +171,7 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                   roundLoadingShape: false,
                   child: Center(
                     child: Icon(
-                      Icons.camera_alt_outlined,
+                      Icons.add,
                       color: Colors.white,
                     ),
                   ),
@@ -132,26 +181,29 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                     lineWidth: 4,
                   ),
                   onTap: (startLoading, stopLoading, btnState) async {
-                    File? image = await pickImage();
-                    if (image != null) {
-                      startLoading();
-                      updateTaskWS(
-                        id: widget.task.id,
-                        collegueID: widget.task.professionalId,
-                        image: image,
-                      ).then((exceptionOrMessage) {
-                        stopLoading();
-                        exceptionOrMessage.fold(
-                          (exception) {
-                            Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
-                          },
-                          (message) {
-                            setState(() {});
-                            Utils.showCustomTopSnackBar(context, success: true, message: message);
-                          },
-                        );
-                      });
-                    }
+                    Utils.pushScreen(context, AddAssetPopUp(), 0.3);
+                    // File? image = await pickImage();
+                    // if (image != null) {
+                    //   startLoading();
+                    //   updateTaskWS(
+                    //     id: widget.task.id,
+                    //     collegueID: widget.task.professionalId,
+                    //     image: image,
+                    //   ).then((exceptionOrMessage) {
+                    //     stopLoading();
+                    //     exceptionOrMessage.fold(
+                    //       (exception) {
+                    //         Utils.showCustomTopSnackBar(context,
+                    //             success: false, message: exception.toString());
+                    //       },
+                    //       (message) {
+                    //         setState(() {});
+                    //         Utils.showCustomTopSnackBar(context,
+                    //             success: true, message: message);
+                    //       },
+                    //     );
+                    //   });
+                    // }
                   },
                 ),
               ],
