@@ -18,6 +18,14 @@ class ReservationScreen extends StatefulWidget {
 
 class _ReservationScreenState extends State<ReservationScreen> {
   DateTime seledtedDate = DateTime.now();
+
+  DateTime selectedDate = DateTime.now();
+  changeDate(DateTime date) {
+    selectedDate = date;
+    setState(() {});
+    print(selectedDate);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +42,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
         ),
         centerTitle: true,
         backgroundColor: MyColors.red,
-        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -45,18 +55,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 height: 20,
               ),
               HorizontalCalendar(
-                ondateChanged: (date) {
-                  seledtedDate = date;
-                  setState(() {});
-                  // Hamed
-                },
-              ),
+                  initialDateTime: selectedDate, ondateChanged: changeDate),
               const RaduilGaugeReservation(),
               InkWell(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AjouterReservation()),
+                    MaterialPageRoute(
+                        builder: (context) => AjouterReservation()),
                   );
                 },
                 child: Card(
@@ -64,7 +70,10 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   elevation: 3,
-                  color: Theme.of(context).scaffoldBackgroundColor == Colors.black ? Color(0xFF202020) : Color(0xFFE1E1E1),
+                  color:
+                      Theme.of(context).scaffoldBackgroundColor == Colors.black
+                          ? Color(0xFF202020)
+                          : Color(0xFFE1E1E1),
                   child: const Center(
                       child: Padding(
                     padding: EdgeInsets.all(8.0),
@@ -81,14 +90,18 @@ class _ReservationScreenState extends State<ReservationScreen> {
               ListView.builder(
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
-                  itemCount: Globals.profile.getReservationsForDate(day: seledtedDate).length,
+                  itemCount: Globals.profile
+                      .getReservationsForDate(day: seledtedDate)
+                      .length,
                   itemBuilder: (context, index) {
-                    print(Globals.profile.getReservationsForDate(day: seledtedDate));
+                    print(Globals.profile
+                        .getReservationsForDate(day: seledtedDate));
 
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 6),
                       child: ReservationCard(
-                        reservation: Globals.profile.getReservationsForDate(day: seledtedDate)[index],
+                        reservation: Globals.profile
+                            .getReservationsForDate(day: seledtedDate)[index],
                       ),
                     );
                   }),
