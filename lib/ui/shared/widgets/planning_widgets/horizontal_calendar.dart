@@ -4,7 +4,8 @@ import 'package:calendar_timeline/calendar_timeline.dart';
 import '../../../../Theme/my_colors.dart';
 
 class HorizontalCalendar extends StatelessWidget {
-  const HorizontalCalendar({Key? key, this.ondateChanged, this.initialDateTime}) : super(key: key);
+  const HorizontalCalendar({Key? key, this.ondateChanged, this.initialDateTime})
+      : super(key: key);
   final Function(DateTime date)? ondateChanged;
   final DateTime? initialDateTime;
 
@@ -14,7 +15,10 @@ class HorizontalCalendar extends StatelessWidget {
       initialDate: initialDateTime ?? DateTime.now(),
       firstDate: DateTime(2022, 1, 15),
       lastDate: DateTime(2025, 12, 31),
-      onDateSelected: ondateChanged ?? (date) {},
+      onDateSelected: ondateChanged ??
+          (date) {
+            print("date");
+          },
 
       leftMargin: 20,
       monthColor: MyColors.red,
