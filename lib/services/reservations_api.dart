@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 
-Future<Either<Exception, String>> addReservationWS({required String clientName, required String clientPhoneNumber, required String nbPeople, required DateTime day, required DateTime hour, String? comment}) async {
+Future<Either<Exception, String>> addReservationWS({required String clientName, required String clientPhoneNumber, required String nbPeople, required String day, required String hour, String? comment}) async {
   try {
     final response = await http.post(
       Uri.parse(
@@ -19,11 +19,13 @@ Future<Either<Exception, String>> addReservationWS({required String clientName, 
       },
       body: {
         'establishment_id': Globals.params.currentEstablishmentID.toString(),
-        'clientName': clientName,
-        'clientPhoneNumber': clientPhoneNumber,
-        'nbPeople': nbPeople,
-        'day': DateFormat("yyyy-MM-dd").format(day),
-        'hour': DateFormat.Hm().format(hour),
+        'client_name': clientName,
+        'client_phone_number': clientPhoneNumber,
+        'nb_people': nbPeople,
+        'day': '2022-12-05',
+        'hour': '16:00',
+        // 'day': DateFormat("yyyy-MM-dd").format(DateTime.parse(day)),
+        // 'hour': DateFormat.Hm().format(DateTime.parse(hour)),
         if (comment != null) 'comment': comment,
       },
     );
