@@ -3,7 +3,7 @@ import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/role_permission.dar
 
 class Globals {
   // static String baseUrl = "http://127.0.0.1:8001/api";
-  // static String baseUrl = "https://371b-41-230-15-255.eu.ngrok.io/api";
+  // static String baseUrl = "https://0af1-41-230-15-255.eu.ngrok.io/api";
   static String baseUrl = "http://15.236.5.125:8008/api";
 
   static late Profile profile;

@@ -47,7 +47,10 @@ class _ReservationCardState extends State<ReservationCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.close, color: Colors.red)),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.close, color: Colors.red),
+                ),
                 Text(
                   '${widget.reservation.hour}',
                   style: MyTextStyles.cardTextStyle,
