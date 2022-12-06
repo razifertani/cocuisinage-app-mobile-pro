@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../../Theme/my_text_styles.dart';
 
+typedef void DateCallback(DateTime date);
+
 class PickDate extends StatefulWidget {
-  const PickDate({Key? key}) : super(key: key);
+  final DateCallback ondateChanged;
+  const PickDate({Key? key, required this.ondateChanged}) : super(key: key);
 
   @override
   State<PickDate> createState() => _PickDateState();
@@ -24,6 +27,7 @@ class _PickDateState extends State<PickDate> {
     if (newDate != null) {
       setState(() {
         _date = newDate;
+        widget.ondateChanged(_date);
       });
     }
   }
@@ -44,7 +48,8 @@ class _PickDateState extends State<PickDate> {
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             child: Text(
               DateFormat.yMd('fr').format(_date),
-              style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+              style:
+                  MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ),

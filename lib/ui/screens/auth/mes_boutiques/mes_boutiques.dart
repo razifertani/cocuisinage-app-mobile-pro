@@ -158,7 +158,7 @@ class _MesBoutiquesScreenState extends State<MesBoutiquesScreen> {
                       },
                     )
                   : Center(
-                      child: Text('Pas de boutiques créées !'),
+                      child: Text("Aucune boutique n'a été créée !"),
                     ),
               const SizedBox(
                 height: 20,
