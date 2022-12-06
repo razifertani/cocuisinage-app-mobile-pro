@@ -26,6 +26,20 @@ class _AjouterReservationState extends State<AjouterReservation> {
   TextEditingController heure = TextEditingController();
   TextEditingController cmntr = TextEditingController();
 
+  DateTime _date = DateTime.now();
+  void updateDate(DateTime dateTime) {
+    setState(() {
+      _date = dateTime;
+    });
+  }
+
+  TimeOfDay _time = TimeOfDay.now();
+  void updateTime(TimeOfDay timeOfDay) {
+    setState(() {
+      _time = timeOfDay;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +50,9 @@ class _AjouterReservationState extends State<AjouterReservation> {
           ),
           centerTitle: true,
           backgroundColor: MyColors.red,
-          leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context))),
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context))),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -49,12 +65,16 @@ class _AjouterReservationState extends State<AjouterReservation> {
                 height: 20,
               ),
               Center(
-                child: Text("Ajouter une réservation", style: MyTextStyles.headline.copyWith(color: MyColors.red, fontWeight: FontWeight.w600)),
+                child: Text("Ajouter une réservation",
+                    style: MyTextStyles.headline.copyWith(
+                        color: MyColors.red, fontWeight: FontWeight.w600)),
               ),
               const SizedBox(
                 height: 20,
               ),
-              Text("Nom de client", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
+              Text("Nom de client",
+                  style: MyTextStyles.subhead
+                      .copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: nom,
                 hintText: "nom",
@@ -68,7 +88,9 @@ class _AjouterReservationState extends State<AjouterReservation> {
               const SizedBox(
                 height: 10,
               ),
-              Text("Numéro de téléphone", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
+              Text("Numéro de téléphone",
+                  style: MyTextStyles.subhead
+                      .copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: phone,
                 hintText: "01.02.03.04.05",
@@ -83,7 +105,9 @@ class _AjouterReservationState extends State<AjouterReservation> {
               const SizedBox(
                 height: 10,
               ),
-              Text("Nombre de personne", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
+              Text("Nombre de personne",
+                  style: MyTextStyles.subhead
+                      .copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: nombre,
                 hintText: "2",
@@ -97,7 +121,9 @@ class _AjouterReservationState extends State<AjouterReservation> {
               const SizedBox(
                 height: 10,
               ),
-              Text("Date", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
+              Text("Date",
+                  style: MyTextStyles.subhead
+                      .copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: date,
                 hintText: "2022-04-22",
@@ -112,11 +138,23 @@ class _AjouterReservationState extends State<AjouterReservation> {
                   return null;
                 },
               ),
-              Center(child: PickDate()),
-              const SizedBox(
-                height: 10,
+              Center(
+                  child: PickDate(
+                ondateChanged: updateDate,
+              )),
+              InkWell(
+                onTap: () {
+                  print(_date.day);
+                },
+                child: Container(
+                  height: 10,
+                  width: 100,
+                  color: Colors.red,
+                ),
               ),
-              Text("Heure", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
+              Text("Heure",
+                  style: MyTextStyles.subhead
+                      .copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: heure,
                 hintText: "15:30",
@@ -130,11 +168,23 @@ class _AjouterReservationState extends State<AjouterReservation> {
                   return null;
                 },
               ),
-              Center(child: PickTime()),
-              const SizedBox(
-                height: 10,
+              Center(
+                  child: PickTime(
+                onTimeChanged: updateTime,
+              )),
+              InkWell(
+                onTap: () {
+                  print('${_time.hour}:${_time.minute}');
+                },
+                child: Container(
+                  height: 10,
+                  width: 100,
+                  color: Colors.red,
+                ),
               ),
-              Text("Commentaire", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
+              Text("Commentaire",
+                  style: MyTextStyles.subhead
+                      .copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: cmntr,
                 hintText: "Votre commentaire",
@@ -158,19 +208,22 @@ class _AjouterReservationState extends State<AjouterReservation> {
                           clientName: nom.text,
                           clientPhoneNumber: phone.text,
                           nbPeople: nombre.text,
-                          day: date.text,
-                          hour: heure.text,
+                          day: _date.day.toString(),
+                          hour: '${_time.hour} : ${_time.minute}',
                           comment: cmntr.text,
                         ).then(
                           (exceptionOrMessage) {
                             stopLoading();
                             exceptionOrMessage.fold(
                               (exception) {
-                                Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                Utils.showCustomTopSnackBar(context,
+                                    success: false,
+                                    message: exception.toString());
                               },
                               (message) {
                                 setState(() {});
-                                Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                Utils.showCustomTopSnackBar(context,
+                                    success: true, message: message);
                                 Navigator.pop(context);
                               },
                             );

@@ -3,8 +3,11 @@ import 'package:intl/intl.dart';
 
 import '../../../../Theme/my_text_styles.dart';
 
+typedef void TimeCallback(TimeOfDay time);
+
 class PickTime extends StatefulWidget {
-  const PickTime({Key? key}) : super(key: key);
+  final TimeCallback onTimeChanged;
+  const PickTime({Key? key, required this.onTimeChanged}) : super(key: key);
 
   @override
   State<PickTime> createState() => _PickTimeState();
@@ -31,6 +34,7 @@ class _PickTimeState extends State<PickTime> {
     if (newTime != null) {
       setState(() {
         _time = newTime;
+        widget.onTimeChanged(_time);
       });
     }
   }
@@ -44,7 +48,8 @@ class _PickTimeState extends State<PickTime> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
           child: Text(
-            DateFormat.Hm().format(DateTime(now.year, now.month, now.day, _time.hour, _time.minute)),
+            DateFormat.Hm().format(DateTime(
+                now.year, now.month, now.day, _time.hour, _time.minute)),
             style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
           ),
         ),
