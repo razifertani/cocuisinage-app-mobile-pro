@@ -22,7 +22,6 @@ class _ReservationScreenState extends State<ReservationScreen> {
   changeDate(DateTime date) {
     selectedDate = date;
     setState(() {});
-    print(selectedDate);
   }
 
   @override

@@ -1,6 +1,8 @@
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/tables_api.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/widgets/custom_card_text_form.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -8,15 +10,15 @@ import '../../../../../Theme/my_text_styles.dart';
 import '../../../../Theme/my_colors.dart';
 
 class AjouterNmrDeTablePopUp extends StatefulWidget {
-  AjouterNmrDeTablePopUp({
-    Key? key,
-  }) : super(key: key);
+  AjouterNmrDeTablePopUp({Key? key}) : super(key: key);
 
   @override
   State<AjouterNmrDeTablePopUp> createState() => _AjouterNmrDeTablePopUpState();
 }
 
 class _AjouterNmrDeTablePopUpState extends State<AjouterNmrDeTablePopUp> {
+  TextEditingController name = TextEditingController();
+
   int counter = 2;
   void incrementPersCounter(int counter) {
     setState(() {
@@ -35,13 +37,10 @@ class _AjouterNmrDeTablePopUpState extends State<AjouterNmrDeTablePopUp> {
 
   @override
   Widget build(BuildContext context) {
-    print(counter);
     return StatefulBuilder(builder: (context, set) {
       return AlertDialog(
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
           content: SizedBox(
             height: 35.h,
             width: 80.w,
@@ -52,7 +51,7 @@ class _AjouterNmrDeTablePopUpState extends State<AjouterNmrDeTablePopUp> {
                 ),
                 Center(
                   child: Text(
-                    "Ajouter un numéro  de table",
+                    "Ajouter un numéro de table",
                     textAlign: TextAlign.center,
                     style: MyTextStyles.headline.copyWith(
                       fontWeight: FontWeight.w600,
@@ -63,6 +62,7 @@ class _AjouterNmrDeTablePopUpState extends State<AjouterNmrDeTablePopUp> {
                   height: 10,
                 ),
                 CustomCardTextForm(
+                  controller: name,
                   hintText: "Nom",
                 ),
                 const SizedBox(
@@ -72,13 +72,10 @@ class _AjouterNmrDeTablePopUpState extends State<AjouterNmrDeTablePopUp> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                        onPressed: () => incrementPersCounter(counter),
-                        icon: Icon(Icons.add_circle, color: MyColors.red)),
+                    IconButton(onPressed: () => incrementPersCounter(counter), icon: Icon(Icons.add_circle, color: MyColors.red)),
                     Text(
                       '${counter} Pers',
-                      style: MyTextStyles.subhead
-                          .copyWith(fontWeight: FontWeight.w600),
+                      style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                     ),
                     IconButton(
                         onPressed: () {
@@ -94,8 +91,30 @@ class _AjouterNmrDeTablePopUpState extends State<AjouterNmrDeTablePopUp> {
                   height: 10,
                 ),
                 CustomButton(
-                  fun: (a, b, c) {},
-                  txt: "Valider",
+                  txt: "Ajouter",
+                  fun: (startLoading, stopLoading, btnState) {
+                    if (btnState == ButtonState.Idle) {
+                      // if (key.currentState!.validate()) {
+                      startLoading();
+                      addTableWS(
+                        name: name.text,
+                        nbPeople: counter.toString(),
+                      ).then((exceptionOrMessage) {
+                        stopLoading();
+                        exceptionOrMessage.fold(
+                          (exception) {
+                            Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                          },
+                          (message) {
+                            setState(() {});
+                            Utils.showCustomTopSnackBar(context, success: true, message: message);
+                            Navigator.of(context).pop();
+                          },
+                        );
+                      });
+                      // }
+                    }
+                  },
                 )
               ],
             ),

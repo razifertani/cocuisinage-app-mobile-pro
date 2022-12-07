@@ -23,9 +23,9 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   GlobalKey<FormState> key = GlobalKey<FormState>();
 
-  // TextEditingController email = TextEditingController(text: 'razifertani1@gmail.com');
-  TextEditingController email = TextEditingController(text: '');
-  TextEditingController motDePasse = TextEditingController(text: '123456');
+  TextEditingController email = TextEditingController(text: 'restoo@gmail.com');
+  // TextEditingController email = TextEditingController(text: '');
+  TextEditingController motDePasse = TextEditingController(text: 'password');
 
   bool isVisible = false;
   @override
@@ -52,16 +52,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 30.h,
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         "Bienvenue",
-                        style: MyTextStyles.headline.copyWith(
-                            color: MyColors.red,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 22.sp.clamp(30, 35)),
+                        style: MyTextStyles.headline.copyWith(color: MyColors.red, fontWeight: FontWeight.w600, fontSize: 22.sp.clamp(30, 35)),
                       ),
                     ),
                   ),
@@ -76,8 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           alignment: Alignment.topLeft,
                           child: Text(
                             "Email",
-                            style: MyTextStyles.subhead
-                                .copyWith(fontWeight: FontWeight.w600),
+                            style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                           ),
                         ),
                         CustomCardTextForm(
@@ -101,8 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           alignment: Alignment.topLeft,
                           child: Text(
                             "Mot de passe",
-                            style: MyTextStyles.subhead
-                                .copyWith(fontWeight: FontWeight.w600),
+                            style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                           ),
                         ),
                         CustomCardTextForm(
@@ -111,9 +105,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           obscureText: !isVisible,
                           suffixIcon: IconButton(
                             icon: Icon(
-                              isVisible
-                                  ? Icons.visibility_outlined
-                                  : Icons.visibility_off_outlined,
+                              isVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                               color: Colors.black,
                             ),
                             onPressed: () {
@@ -137,14 +129,12 @@ class _SignInScreenState extends State<SignInScreen> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => AjouterEmail()),
+                                MaterialPageRoute(builder: (context) => AjouterEmail()),
                               );
                             },
                             child: Text(
                               "Mot de passe oublier ?",
-                              style: MyTextStyles.body
-                                  .copyWith(color: Colors.grey),
+                              style: MyTextStyles.body.copyWith(color: Colors.grey),
                             ),
                           ),
                         ),
@@ -161,16 +151,12 @@ class _SignInScreenState extends State<SignInScreen> {
                                   stopLoading();
                                   exceptionOrProfile.fold(
                                     (exception) {
-                                      Utils.showCustomTopSnackBar(context,
-                                          success: false,
-                                          message: exception.toString());
+                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
                                     },
                                     (bool) {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                MesBoutiquesScreen()),
+                                        MaterialPageRoute(builder: (context) => MesBoutiquesScreen()),
                                       );
                                     },
                                   );
@@ -184,54 +170,39 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         RichText(
                             textAlign: TextAlign.center,
-                            text: TextSpan(
-                                text: "Pas encore membre ?",
-                                style: MyTextStyles.subhead
-                                    .copyWith(color: Colors.black),
-                                children: [
-                                  TextSpan(
-                                      text: "S'inscrire",
-                                      style: MyTextStyles.subhead
-                                          .copyWith(color: MyColors.red),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const SignUpScreen()),
-                                          );
-                                        }),
-                                ])),
+                            text: TextSpan(text: "Pas encore membre ?", style: MyTextStyles.subhead.copyWith(color: Colors.black), children: [
+                              TextSpan(
+                                  text: "S'inscrire",
+                                  style: MyTextStyles.subhead.copyWith(color: MyColors.red),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                                      );
+                                    }),
+                            ])),
                         SizedBox(
                           height: 10,
                         ),
                         RichText(
                             textAlign: TextAlign.center,
-                            text: TextSpan(
-                                text: "S'inscrire avec un ",
-                                style: MyTextStyles.subhead
-                                    .copyWith(color: Colors.black),
-                                children: [
-                                  TextSpan(
-                                      text: "lien",
-                                      style: MyTextStyles.subhead
-                                          .copyWith(color: MyColors.red),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const SignWithLink()),
-                                          );
-                                        }),
-                                  TextSpan(
-                                    text: "?",
-                                    style: MyTextStyles.subhead
-                                        .copyWith(color: Colors.black),
-                                  ),
-                                ])),
+                            text: TextSpan(text: "S'inscrire avec un ", style: MyTextStyles.subhead.copyWith(color: Colors.black), children: [
+                              TextSpan(
+                                  text: "lien",
+                                  style: MyTextStyles.subhead.copyWith(color: MyColors.red),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => const SignWithLink()),
+                                      );
+                                    }),
+                              TextSpan(
+                                text: "?",
+                                style: MyTextStyles.subhead.copyWith(color: Colors.black),
+                              ),
+                            ])),
                       ],
                     ),
                   ),

@@ -1,30 +1,27 @@
 import 'dart:math';
-
-import 'package:auto_size_text/auto_size_text.dart';
-
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/Theme/my_text_styles.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/table.dart' as Table;
 import 'package:flutter/material.dart';
 
-import '../../../../Theme/my_colors.dart';
-import '../../../../Theme/my_text_styles.dart';
-
 class PlanDeTableCard extends StatefulWidget {
-  final int nmr;
-  const PlanDeTableCard({Key? key, required this.nmr}) : super(key: key);
+  final DateTime date;
+
+  final Table.Table table;
+  const PlanDeTableCard({Key? key, required this.date, required this.table}) : super(key: key);
 
   @override
   State<PlanDeTableCard> createState() => _PlanDeTableCardState();
 }
 
-class _PlanDeTableCardState extends State<PlanDeTableCard>
-    with SingleTickerProviderStateMixin {
+class _PlanDeTableCardState extends State<PlanDeTableCard> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation _animation;
   AnimationStatus _status = AnimationStatus.dismissed;
+
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 800));
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
     _animation = Tween(end: 1.0, begin: 0.0).animate(_controller)
       ..addListener(() {
         setState(() {});
@@ -59,7 +56,7 @@ class _PlanDeTableCardState extends State<PlanDeTableCard>
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "00${widget.nmr}",
+                    "${widget.table.name}",
                     style: MyTextStyles.headline.copyWith(color: Colors.white),
                   ),
                 ),
@@ -98,29 +95,20 @@ class _PlanDeTableCardState extends State<PlanDeTableCard>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "00${widget.nmr}",
-                              style: MyTextStyles.headline
-                                  .copyWith(color: Colors.white),
+                              "${widget.table.name}",
+                              style: MyTextStyles.headline.copyWith(color: Colors.white),
                             ),
                             const Icon(
                               Icons.close,
                               color: Colors.white,
-                            )
+                            ),
                           ],
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Text("Mr Bonneau",
-                            style: MyTextStyles.subhead
-                                .copyWith(color: Colors.white)),
-                        Row(
-                          children: [
-                            Text("4 Pers",
-                                style: MyTextStyles.body
-                                    .copyWith(color: Colors.white)),
-                          ],
-                        ),
+                        widget.table.getReservationsAtDateTime(widget.date).length > 0 ? Text("${widget.table.getReservationsAtDateTime(widget.date).first.clientName}", style: MyTextStyles.subhead.copyWith(color: Colors.white)) : Text("Empty", style: MyTextStyles.subhead.copyWith(color: Colors.white)),
+                        widget.table.getReservationsAtDateTime(widget.date).length > 0 ? Text("${widget.table.getReservationsAtDateTime(widget.date).first.nbPeople} Pers", style: MyTextStyles.body.copyWith(color: Colors.white)) : Text("", style: MyTextStyles.subhead.copyWith(color: Colors.white)),
                       ],
                     ),
                   ),
