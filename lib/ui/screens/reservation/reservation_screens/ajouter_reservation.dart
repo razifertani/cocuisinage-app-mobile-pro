@@ -1,5 +1,6 @@
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/reservations_api.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/reservation/reservation_screens/reservation_screen.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/widgets/time_picker/pick_date.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/widgets/time_picker/pick_time.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
@@ -11,7 +12,8 @@ import '../../../shared/custom_button.dart';
 import '../../../shared/widgets/custom_card_text_form.dart';
 
 class AjouterReservation extends StatefulWidget {
-  AjouterReservation({Key? key}) : super(key: key);
+  final DateTime resDate;
+  AjouterReservation({Key? key, required this.resDate}) : super(key: key);
 
   @override
   State<AjouterReservation> createState() => _AjouterReservationState();
@@ -25,7 +27,13 @@ class _AjouterReservationState extends State<AjouterReservation> {
   TextEditingController heure = TextEditingController();
   TextEditingController cmntr = TextEditingController();
 
-  DateTime date = DateTime.now();
+  late DateTime _date;
+  @override
+  void initState() {
+    _date = widget.resDate;
+    super.initState();
+  }
+
   void updateDate(DateTime dateTime) {
     setState(() {
       date = dateTime;
@@ -128,6 +136,7 @@ class _AjouterReservationState extends State<AjouterReservation> {
               Center(
                   child: PickDate(
                 ondateChanged: updateDate,
+                initialDate: _date,
               )),
               Text("Heure", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
               // CustomCardTextForm(
