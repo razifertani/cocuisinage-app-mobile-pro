@@ -58,10 +58,16 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () async {
-                  await availableCameras().then((value) => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => CameraPage(cameras: value))));
+                  availableCameras()
+                      .then((value) async => await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => CameraPage(
+                                    cameras: value,
+                                  ))))
+                      .then((value) {
+                    if (value != null) {}
+                  });
                 },
                 child: Card(
                   elevation: 2,
@@ -122,8 +128,8 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
                 borderRadius: BorderRadius.circular(10),
                 onTap: () {
                   _openFilePicker().then((value) {
-                    if (value != null) {
-                      fileName = value.files.first.name;
+                    if (value != null && value.files.first.path != null) {
+                      image = File(value.files.first.path!);
                       setState(() {});
                     }
                   });
