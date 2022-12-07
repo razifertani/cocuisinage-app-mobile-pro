@@ -6,7 +6,10 @@ typedef void DateCallback(DateTime date);
 
 class PickDate extends StatefulWidget {
   final DateCallback ondateChanged;
-  const PickDate({Key? key, required this.ondateChanged}) : super(key: key);
+  final DateTime initialDate;
+  const PickDate(
+      {Key? key, required this.ondateChanged, required this.initialDate})
+      : super(key: key);
 
   @override
   State<PickDate> createState() => _PickDateState();
@@ -14,7 +17,12 @@ class PickDate extends StatefulWidget {
 
 class _PickDateState extends State<PickDate> {
   @override
-  DateTime _date = DateTime(2021, 11, 17);
+  late DateTime _date;
+  @override
+  void initState() {
+    _date = widget.initialDate;
+    super.initState();
+  }
 
   void _selectDate() async {
     final DateTime? newDate = await showDatePicker(
