@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+
+typedef void FileCallback(File file);
 
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key, required this.cameras}) : super(key: key);
@@ -37,6 +41,7 @@ class _CameraPageState extends State<CameraPage> {
     try {
       await _cameraController.setFlashMode(FlashMode.off);
       XFile picture = await _cameraController.takePicture();
+      Navigator.of(context).pop(File(picture.path));
       // Navigator.push(
       //     context,
       //     MaterialPageRoute(
