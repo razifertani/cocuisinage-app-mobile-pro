@@ -1,4 +1,6 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/reservation.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/reservations_api.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../Theme/my_text_styles.dart';
@@ -48,7 +50,19 @@ class _ReservationCardState extends State<ReservationCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    deleteReservationWS(id: widget.reservation.id).then((exceptionOrMessage) {
+                      exceptionOrMessage.fold(
+                        (exception) {
+                          Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                        },
+                        (message) {
+                          setState(() {});
+                          Utils.showCustomTopSnackBar(context, success: true, message: message);
+                        },
+                      );
+                    });
+                  },
                   icon: const Icon(Icons.close, color: Colors.red),
                 ),
                 Text(

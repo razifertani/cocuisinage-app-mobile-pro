@@ -47,13 +47,10 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
                     context: context,
                     builder: (_) => TutorielPopUp(
                           title: "Réservation",
-                          description:
-                              "Vous pourrez voir le % de réservation, d’occupation de l’établissement",
+                          description: "Vous pourrez voir le % de réservation, d’occupation de l’établissement",
                           numberOfPages: 3,
-                          secDescription:
-                              "Vous pourrez gérer votre plan de table (disposition, capacité potentielle d’accueil, nombre de couverts par table)",
-                          thirdDescription:
-                              "De part cette gestion, le serveur pourra prendre la commande et l’affecter à une table.",
+                          secDescription: "Vous pourrez gérer votre plan de table (disposition, capacité potentielle d’accueil, nombre de couverts par table)",
+                          thirdDescription: "De part cette gestion, le serveur pourra prendre la commande et l’affecter à une table.",
                         ));
               },
               icon: Icon(Icons.question_mark))
@@ -91,7 +88,7 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
                   CustomCard(
                       imgPath: "assets/primary_icons/plan_de_table.png",
                       txt: "Plan de table",
-                      quantite: 250,
+                      quantite: Globals.profile.getEstablishment().tables.length,
                       fun: () {
                         Navigator.push(
                           context,
