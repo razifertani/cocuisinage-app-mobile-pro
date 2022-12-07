@@ -77,9 +77,7 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                           context: context,
                           builder: (_) => PopUpWidget(
                             controller: msg,
-                            title: msg.text.isNotEmpty
-                                ? "Modifier un commentaire"
-                                : "Ajouter un commentaire",
+                            title: msg.text.isNotEmpty ? "Modifier un commentaire" : "Ajouter un commentaire",
                             function: (startLoading, stopLoading, btnState) {
                               if (msg.text != '') {
                                 startLoading();
@@ -92,15 +90,12 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                                   stopLoading();
                                   exceptionOrMessage.fold(
                                     (exception) {
-                                      Utils.showCustomTopSnackBar(context,
-                                          success: false,
-                                          message: exception.toString());
+                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
                                     },
                                     (message) {
                                       msg.clear();
                                       setState(() {});
-                                      Utils.showCustomTopSnackBar(context,
-                                          success: true, message: message);
+                                      Utils.showCustomTopSnackBar(context, success: true, message: message);
                                       Navigator.pop(context, msg.text);
                                     },
                                   );
@@ -182,6 +177,9 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                   ),
                   onTap: (startLoading, stopLoading, btnState) async {
                     Utils.pushScreen(context, AddAssetPopUp(), 0.3);
+
+                    // Hamed
+
                     // File? image = await pickImage();
                     // if (image != null) {
                     //   startLoading();
