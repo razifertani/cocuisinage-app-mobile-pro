@@ -27,10 +27,10 @@ class _AjouterReservationState extends State<AjouterReservation> {
   TextEditingController heure = TextEditingController();
   TextEditingController cmntr = TextEditingController();
 
-  late DateTime _date;
+  late DateTime date;
   @override
   void initState() {
-    _date = widget.resDate;
+    date = widget.resDate;
     super.initState();
   }
 
@@ -136,7 +136,7 @@ class _AjouterReservationState extends State<AjouterReservation> {
               Center(
                   child: PickDate(
                 ondateChanged: updateDate,
-                initialDate: _date,
+                initialDate: date,
               )),
               Text("Heure", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
               // CustomCardTextForm(

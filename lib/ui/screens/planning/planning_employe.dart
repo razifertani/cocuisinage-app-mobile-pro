@@ -64,9 +64,7 @@ class _PlanningEmployeState extends State<PlanningEmploye> {
                 CircleAvatar(
                   radius: 26,
                   backgroundImage: NetworkImage(
-                    Globals.profile
-                        .getColleague(id: widget.planning.professionalId)
-                        .imageUrl,
+                    Globals.profile.getColleague(id: widget.planning.professionalId).imageUrl,
                   ),
                   child: Material(
                     shape: const CircleBorder(),
@@ -104,27 +102,15 @@ class _PlanningEmployeState extends State<PlanningEmploye> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: BouncingScrollPhysics(),
-                itemCount: Globals.profile
-                    .getCollegueTasksForPart(
-                        collegueID: widget.planning.professionalId,
-                        dateTime: widget.selectedDate,
-                        part: widget.partOfTheDay)
-                    .length,
+                itemCount: Globals.profile.getCollegueTasksForPart(collegueID: widget.planning.professionalId, dateTime: widget.selectedDate, part: widget.partOfTheDay).length,
                 itemBuilder: (context, index) {
-                  // HAMED
                   return EmployeTacheWidget(
                     reloadParentCallback: reloadStateCallback,
-                    task: Globals.profile.getCollegueTasksForPart(
-                        collegueID: widget.planning.professionalId,
-                        dateTime: widget.selectedDate,
-                        part: widget.partOfTheDay)[index],
+                    task: Globals.profile.getCollegueTasksForPart(collegueID: widget.planning.professionalId, dateTime: widget.selectedDate, part: widget.partOfTheDay)[index],
                   );
                 },
               ),
-              if (Globals.profile.getPermissions().any((element) => [
-                    Permission.ADD_TASKS_TO_THE_TEAM
-                  ].contains(
-                      element.pivotEstablishmentsPermissions.permissionId)))
+              if (Globals.profile.getPermissions().any((element) => [Permission.ADD_TASKS_TO_THE_TEAM].contains(element.pivotEstablishmentsPermissions.permissionId)))
                 CustomButton(
                   txt: "Ajouter une tâche",
                   fun: (startLoading, stopLoading, btnState) {
@@ -146,15 +132,12 @@ class _PlanningEmployeState extends State<PlanningEmploye> {
                                 exceptionOrMessage.fold(
                                   (exception) {
                                     setState(() {});
-                                    Utils.showCustomTopSnackBar(context,
-                                        success: false,
-                                        message: exception.toString());
+                                    Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
                                   },
                                   (message) {
                                     setState(() {});
                                     tache.clear();
-                                    Utils.showCustomTopSnackBar(context,
-                                        success: true, message: message);
+                                    Utils.showCustomTopSnackBar(context, success: true, message: message);
                                     Navigator.pop(context);
                                   },
                                 );

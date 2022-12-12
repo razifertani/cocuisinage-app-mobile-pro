@@ -28,8 +28,7 @@ class EmployeHomeScreen extends StatefulWidget {
 }
 
 class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
-  RefreshController refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController refreshController = RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
@@ -123,16 +122,14 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                               ),
                               Text(
                                 'Vous êtes en repos aujourd’hui',
-                                style: MyTextStyles.body
-                                    .copyWith(color: Colors.grey),
+                                style: MyTextStyles.body.copyWith(color: Colors.grey),
                               ),
                             ],
                           )
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
-                            itemCount:
-                                Globals.profile.getMyPlanningsForToday().length,
+                            itemCount: Globals.profile.getMyPlanningsForToday().length,
                             itemBuilder: (context, index1) {
                               return Card(
                                 shape: RoundedRectangleBorder(
@@ -171,16 +168,13 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                                               width: 32.w.clamp(120, 160),
                                               child: FittedBox(
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     AutoSizeText(
                                                       '${Globals.profile.firstName} ${Globals.profile.lastName} ',
                                                       maxLines: 1,
-                                                      style:
-                                                          MyTextStyles.subhead,
+                                                      style: MyTextStyles.subhead,
                                                     ),
                                                     Text(
                                                       '${Globals.profile.getRole().name}',
@@ -197,78 +191,33 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                                           Container(
                                             width: 30.w.clamp(80, 110),
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: Globals.profile
-                                                          .getMyPlanningsForToday()[
-                                                              index1]
-                                                          .status ==
-                                                      Planning.NOT_YET
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: Globals.profile.getMyPlanningsForToday()[index1].status == Planning.NOT_YET
                                                   ? Color(0xFFF8D5D9)
-                                                  : Globals.profile
-                                                              .getMyPlanningsForToday()[
-                                                                  index1]
-                                                              .status ==
-                                                          Planning.IN_PROGRESS
+                                                  : Globals.profile.getMyPlanningsForToday()[index1].status == Planning.IN_PROGRESS
                                                       ? Color(0xFFFFE6BA)
-                                                      : Globals.profile
-                                                                  .getMyPlanningsForToday()[
-                                                                      index1]
-                                                                  .status ==
-                                                              Planning.DONE
+                                                      : Globals.profile.getMyPlanningsForToday()[index1].status == Planning.DONE
                                                           ? Color(0xffD2F3DC)
                                                           : Colors.black,
                                             ),
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 8),
+                                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                               child: AutoSizeText(
-                                                Globals.profile
-                                                            .getMyPlanningsForToday()[
-                                                                index1]
-                                                            .status ==
-                                                        Planning.NOT_YET
+                                                Globals.profile.getMyPlanningsForToday()[index1].status == Planning.NOT_YET
                                                     ? Planning.NOT_YET_TEXT
-                                                    : Globals.profile
-                                                                .getMyPlanningsForToday()[
-                                                                    index1]
-                                                                .status ==
-                                                            Planning.IN_PROGRESS
-                                                        ? Planning
-                                                            .IN_PROGRESS_TEXT
-                                                        : Globals.profile
-                                                                    .getMyPlanningsForToday()[
-                                                                        index1]
-                                                                    .status ==
-                                                                Planning.DONE
+                                                    : Globals.profile.getMyPlanningsForToday()[index1].status == Planning.IN_PROGRESS
+                                                        ? Planning.IN_PROGRESS_TEXT
+                                                        : Globals.profile.getMyPlanningsForToday()[index1].status == Planning.DONE
                                                             ? Planning.DONE_TEXT
                                                             : '!',
                                                 maxLines: 1,
-                                                style: MyTextStyles
-                                                    .buttonTextStyle
-                                                    .copyWith(
-                                                  color: Globals.profile
-                                                              .getMyPlanningsForToday()[
-                                                                  index1]
-                                                              .status ==
-                                                          Planning.NOT_YET
+                                                style: MyTextStyles.buttonTextStyle.copyWith(
+                                                  color: Globals.profile.getMyPlanningsForToday()[index1].status == Planning.NOT_YET
                                                       ? Color(0xFFD43347)
-                                                      : Globals.profile
-                                                                  .getMyPlanningsForToday()[
-                                                                      index1]
-                                                                  .status ==
-                                                              Planning
-                                                                  .IN_PROGRESS
+                                                      : Globals.profile.getMyPlanningsForToday()[index1].status == Planning.IN_PROGRESS
                                                           ? Color(0xFFF9A413)
-                                                          : Globals.profile
-                                                                      .getMyPlanningsForToday()[
-                                                                          index1]
-                                                                      .status ==
-                                                                  Planning.DONE
-                                                              ? Color(
-                                                                  0xFF2E9C61)
+                                                          : Globals.profile.getMyPlanningsForToday()[index1].status == Planning.DONE
+                                                              ? Color(0xFF2E9C61)
                                                               : Colors.black,
                                                 ),
                                               ),
@@ -290,8 +239,7 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                                         children: [
                                           Row(
                                             children: [
-                                              Image.asset(
-                                                  "assets/icons/black_calendar.png"),
+                                              Image.asset("assets/icons/black_calendar.png"),
                                               SizedBox(
                                                 width: 5,
                                               ),
@@ -300,46 +248,22 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                                                 style: MyTextStyles.subhead,
                                               ),
                                               Spacer(),
-                                              Globals.profile
-                                                          .getMyPlanningsForToday()[
-                                                              index1]
-                                                          .getDelayInMinutes() ==
-                                                      0
+                                              Globals.profile.getMyPlanningsForToday()[index1].getDelayInMinutes() == 0
                                                   ? Container()
                                                   : RichText(
                                                       text: TextSpan(
                                                         children: [
                                                           TextSpan(
-                                                            text:
-                                                                "Pointé en retard de ",
-                                                            style: MyTextStyles
-                                                                .body
-                                                                .copyWith(
-                                                                    color:
-                                                                        MyColors
-                                                                            .red),
+                                                            text: "Pointé en retard de ",
+                                                            style: MyTextStyles.body.copyWith(color: MyColors.red),
                                                           ),
                                                           TextSpan(
-                                                            text:
-                                                                "${Globals.profile.getMyPlanningsForToday()[index1].getDelayInMinutes()}",
-                                                            style: MyTextStyles
-                                                                .body
-                                                                .copyWith(
-                                                                    color:
-                                                                        MyColors
-                                                                            .red),
+                                                            text: "${Globals.profile.getMyPlanningsForToday()[index1].getDelayInMinutes()}",
+                                                            style: MyTextStyles.body.copyWith(color: MyColors.red),
                                                           ),
                                                           TextSpan(
                                                             text: " min",
-                                                            style: MyTextStyles
-                                                                .body
-                                                                .copyWith(
-                                                                    color:
-                                                                        MyColors
-                                                                            .red,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
+                                                            style: MyTextStyles.body.copyWith(color: MyColors.red, fontWeight: FontWeight.w600),
                                                           ),
                                                         ],
                                                       ),
@@ -352,20 +276,13 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                                           ListView.builder(
                                             shrinkWrap: true,
                                             physics: BouncingScrollPhysics(),
-                                            itemCount: Globals.profile
-                                                .getMyPlanningsForToday()[
-                                                    index1]
-                                                .tasks
-                                                .length,
+                                            itemCount: Globals.profile.getMyPlanningsForToday()[index1].tasks.length,
                                             itemBuilder: (context, index2) {
                                               return EmployeTacheWidget(
                                                 reloadParentCallback: () {
                                                   setState(() {});
                                                 },
-                                                task: Globals.profile
-                                                    .getMyPlanningsForToday()[
-                                                        index1]
-                                                    .tasks[index2],
+                                                task: Globals.profile.getMyPlanningsForToday()[index1].tasks[index2],
                                               );
                                             },
                                           )
@@ -391,9 +308,7 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                 bottom: -4.h,
                 right: -9.w,
                 child: AvatarGlow(
-                  glowColor: Globals.profile.isAvailableTargetPlanningForNow()
-                      ? MyColors.red
-                      : Colors.white,
+                  glowColor: Globals.profile.isAvailableTargetPlanningForNow() ? MyColors.red : Colors.white,
                   endRadius: 90.0,
                   duration: Duration(milliseconds: 2000),
                   repeatPauseDuration: Duration(milliseconds: 100),
@@ -401,9 +316,7 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                   showTwoGlows: true,
                   child: GestureDetector(
                     onTap: () async {
-                      if (Globals.profile.getPermissions().any((element) =>
-                          element.pivotEstablishmentsPermissions.permissionId ==
-                          Permission.REMOTE_WORK)) {
+                      if (Globals.profile.getPermissions().any((element) => element.pivotEstablishmentsPermissions.permissionId == Permission.REMOTE_WORK)) {
                         showDialog(
                           context: context,
                           builder: (_) => PointagePopUp(
@@ -420,14 +333,11 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                           double distanceInMeters = Geolocator.distanceBetween(
                             position.latitude,
                             position.longitude,
-                            double.parse(
-                                Globals.profile.getEstablishment().latitude),
-                            double.parse(
-                                Globals.profile.getEstablishment().longitude),
+                            double.parse(Globals.profile.getEstablishment().latitude),
+                            double.parse(Globals.profile.getEstablishment().longitude),
                           );
 
                           if (distanceInMeters < 10) {
-                            // Hamed
                             showDialog(
                               context: context,
                               builder: (_) => PointagePopUp(
@@ -440,8 +350,7 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                             Utils.showCustomTopSnackBar(
                               context,
                               success: false,
-                              message:
-                                  "Vous êtes encore loin de votre établissement ! (${distanceInMeters.toInt()} Mètres)",
+                              message: "Vous êtes encore loin de votre établissement ! (${distanceInMeters.toInt()} Mètres)",
                             );
                           }
                         });
@@ -466,9 +375,7 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
 }
 
 bool showTimeButton() {
-  if (Globals.profile.getPermissions().any((element) =>
-      element.pivotEstablishmentsPermissions.permissionId ==
-      Permission.FREE_WORK)) {
+  if (Globals.profile.getPermissions().any((element) => element.pivotEstablishmentsPermissions.permissionId == Permission.FREE_WORK)) {
     return true;
   } else if (Globals.profile.isAvailableTargetPlanningForNow()) {
     return true;
