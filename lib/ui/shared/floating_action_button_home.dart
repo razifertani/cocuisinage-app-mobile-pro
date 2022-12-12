@@ -10,12 +10,10 @@ import '../../Theme/my_colors.dart';
 
 class MyFloatingActButtonHome extends StatefulWidget {
   final Function function;
-  const MyFloatingActButtonHome({Key? key, required this.function})
-      : super(key: key);
+  const MyFloatingActButtonHome({Key? key, required this.function}) : super(key: key);
 
   @override
-  State<MyFloatingActButtonHome> createState() =>
-      _MyFloatingActButtonHomeState();
+  State<MyFloatingActButtonHome> createState() => _MyFloatingActButtonHomeState();
 }
 
 class _MyFloatingActButtonHomeState extends State<MyFloatingActButtonHome> {
@@ -37,8 +35,6 @@ class _MyFloatingActButtonHomeState extends State<MyFloatingActButtonHome> {
         //     onPressed: () {
         //       Planning planning =
         //           Globals.profile.getAvailableTargetPlanningForNow();
-
-        //       // HAMED
         //       showDialog(
         //         context: context,
         //         builder: (_) => PopUpWidget(
@@ -79,12 +75,8 @@ class _MyFloatingActButtonHomeState extends State<MyFloatingActButtonHome> {
         // );
 
         FloatingActionButton(
-      backgroundColor:
-          Theme.of(context).scaffoldBackgroundColor == Color(0xFFfafafa)
-              ? Colors.white
-              : Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor == Color(0xFFfafafa) ? Colors.white : Theme.of(context).primaryColor,
       onPressed: () {
-        // HAMED
         print(Theme.of(context).scaffoldBackgroundColor);
         widget.function();
       },

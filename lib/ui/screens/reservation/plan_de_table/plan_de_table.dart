@@ -7,9 +7,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../Theme/my_colors.dart';
 import '../../../../Theme/my_text_styles.dart';
-import '../../../shared/bottom_app_bar.dart';
-import '../../../shared/floating_action_button_home.dart';
-import '../../../shared/widgets/haccp/pop_up_widget.dart';
 import '../../../shared/widgets/planning_widgets/horizontal_calendar.dart';
 import '../../../shared/widgets/reservation/plan_de_table_card.dart';
 
@@ -74,9 +71,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                     ],
                   ),
                   Text(
-                    DateFormat.Hm(
-                      "fr",
-                    ).format(date),
+                    DateFormat.Hm("fr").format(date),
                     style: MyTextStyles.headline.copyWith(color: MyColors.red),
                   ),
                   Row(

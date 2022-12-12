@@ -44,4 +44,19 @@ class Table {
     });
     return reservations;
   }
+
+  bool isFreeAtDateTime(DateTime dateTime) {
+    bool isFree = true;
+    this.reservations.forEach((element) {
+      if (element.day.isSameDayAs(dateTime)) {
+        print(int.parse(element.hour.split(':')[0]));
+        // print(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, int.parse(element.hour.split(':')[0]), int.parse(element.hour.split(':')[1])));
+        if (!(dateTime.isAfter(DateTime(dateTime.year, dateTime.month, dateTime.day, int.parse(element.hour.split(':')[0]), int.parse(element.hour.split(':')[1])).add(Duration(hours: 1)))) || (dateTime.add(Duration(hours: 1)).isBefore(DateTime(dateTime.year, dateTime.month, dateTime.day, int.parse(element.hour.split(':')[0]), int.parse(element.hour.split(':')[1]))))) {
+          isFree = false;
+        }
+      }
+    });
+
+    return isFree;
+  }
 }
