@@ -39,9 +39,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
         ),
         centerTitle: true,
         backgroundColor: MyColors.red,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context)),
+        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -51,9 +49,8 @@ class _ReservationScreenState extends State<ReservationScreen> {
               const SizedBox(
                 height: 20,
               ),
-              HorizontalCalendar(
-                  initialDateTime: selectedDate, ondateChanged: changeDate),
-              const RaduilGaugeReservation(),
+              HorizontalCalendar(initialDateTime: selectedDate, ondateChanged: changeDate),
+              RaduilGaugeReservation(date: selectedDate),
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -69,10 +66,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   elevation: 3,
-                  color:
-                      Theme.of(context).scaffoldBackgroundColor == Colors.black
-                          ? Color(0xFF202020)
-                          : Color(0xFFE1E1E1),
+                  color: Theme.of(context).scaffoldBackgroundColor == Colors.black ? Color(0xFF202020) : Color(0xFFE1E1E1),
                   child: const Center(
                       child: Padding(
                     padding: EdgeInsets.all(8.0),
@@ -89,15 +83,12 @@ class _ReservationScreenState extends State<ReservationScreen> {
               ListView.builder(
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
-                  itemCount: Globals.profile
-                      .getReservationsForDate(day: selectedDate)
-                      .length,
+                  itemCount: Globals.profile.getReservationsForDate(day: selectedDate).length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 6),
                       child: ReservationCard(
-                        reservation: Globals.profile
-                            .getReservationsForDate(day: selectedDate)[index],
+                        reservation: Globals.profile.getReservationsForDate(day: selectedDate)[index],
                       ),
                     );
                   }),

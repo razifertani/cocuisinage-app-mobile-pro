@@ -38,6 +38,8 @@ class Table {
   List<Reservation> getReservationsAtDateTime(DateTime dateTime) {
     List<Reservation> reservations = [];
     this.reservations.forEach((element) {
+      // print('Test: ' + '${int.parse(element.hour.split(':').first)}');
+      // print('Test: ' + '${dateTime.hour}');
       if (element.day.isSameDayAs(dateTime) && int.parse(element.hour.split(':').first) == dateTime.hour) {
         reservations.add(element);
       }
@@ -49,9 +51,20 @@ class Table {
     bool isFree = true;
     this.reservations.forEach((element) {
       if (element.day.isSameDayAs(dateTime)) {
-        print(int.parse(element.hour.split(':')[0]));
-        // print(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, int.parse(element.hour.split(':')[0]), int.parse(element.hour.split(':')[1])));
-        if (!(dateTime.isAfter(DateTime(dateTime.year, dateTime.month, dateTime.day, int.parse(element.hour.split(':')[0]), int.parse(element.hour.split(':')[1])).add(Duration(hours: 1)))) || (dateTime.add(Duration(hours: 1)).isBefore(DateTime(dateTime.year, dateTime.month, dateTime.day, int.parse(element.hour.split(':')[0]), int.parse(element.hour.split(':')[1]))))) {
+        // if (!
+        // (
+        //   dateTime
+        // .isAfter(DateTime(dateTime.year, dateTime.month, dateTime.day, int.parse(element.hour.split(':')[0]),
+        // int.parse(element.hour.split(':')[1])).add(Duration(hours: 1)))
+        // )
+        // ||
+        // (
+        //   dateTime.add(Duration(hours: 1))
+        // .isBefore(DateTime(dateTime.year, dateTime.month, dateTime.day, int.parse(element.hour.split(':')[0]),
+        // int.parse(element.hour.split(':')[1])))
+        // )
+        // ) {
+        if (int.parse(element.hour.split(':').first) == dateTime.hour) {
           isFree = false;
         }
       }

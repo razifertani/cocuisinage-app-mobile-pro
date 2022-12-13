@@ -11,7 +11,8 @@ import '../../../shared/widgets/planning_widgets/horizontal_calendar.dart';
 import '../../../shared/widgets/reservation/plan_de_table_card.dart';
 
 class PlanDeTableScreen extends StatefulWidget {
-  const PlanDeTableScreen({Key? key}) : super(key: key);
+  final int? reservationID;
+  PlanDeTableScreen({Key? key, this.reservationID}) : super(key: key);
 
   @override
   State<PlanDeTableScreen> createState() => _PlanDeTableScreenState();
@@ -24,7 +25,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
     initializeDateFormatting();
   }
 
-  var date = DateTime.now();
+  var date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour, 0);
   TextEditingController nmr = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -65,30 +66,31 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                             color: MyColors.red,
                           )),
                       Text(
-                        DateFormat.Hm("fr").format(date.subtract(const Duration(hours: 1))),
+                        DateFormat.Hm().format(date.subtract(const Duration(hours: 1))),
                         style: MyTextStyles.body.copyWith(color: MyColors.red),
                       ),
                     ],
                   ),
                   Text(
-                    DateFormat.Hm("fr").format(date),
+                    DateFormat.Hm().format(date),
                     style: MyTextStyles.headline.copyWith(color: MyColors.red),
                   ),
                   Row(
                     children: [
                       Text(
-                        DateFormat.Hm("fr").format(date.add(const Duration(hours: 1))),
+                        DateFormat.Hm().format(date.add(const Duration(hours: 1))),
                         style: MyTextStyles.body.copyWith(color: MyColors.red),
                       ),
                       GestureDetector(
-                          onTap: () {
-                            date = date.add(const Duration(hours: 1));
-                            setState(() {});
-                          },
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: MyColors.red,
-                          )),
+                        onTap: () {
+                          date = date.add(const Duration(hours: 1));
+                          setState(() {});
+                        },
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: MyColors.red,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -126,6 +128,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                     Globals.profile.getEstablishment().tables.length,
                     (index) => PlanDeTableCard(
                       date: date,
+                      reservationID: widget.reservationID,
                       table: Globals.profile.getEstablishment().tables[index],
                     ),
                   ),

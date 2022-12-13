@@ -66,14 +66,19 @@ class _ReservationCardState extends State<ReservationCard> {
                   icon: const Icon(Icons.close, color: Colors.red),
                 ),
                 Text(
-                  '${widget.reservation.hour}',
+                  '${widget.reservation.hour}\nTable ${widget.reservation.table?.name ?? '?'}',
                   style: MyTextStyles.cardTextStyle,
+                  textAlign: TextAlign.center,
                 ),
                 IconButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PlanDeTableScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => PlanDeTableScreen(
+                          reservationID: widget.reservation.id,
+                        ),
+                      ),
                     );
                   },
                   icon: const Icon(

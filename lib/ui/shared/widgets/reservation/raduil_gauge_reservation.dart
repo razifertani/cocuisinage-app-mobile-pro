@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -7,7 +8,8 @@ import '../../../../Theme/my_colors.dart';
 import '../../../../Theme/my_text_styles.dart';
 
 class RaduilGaugeReservation extends StatelessWidget {
-  const RaduilGaugeReservation({Key? key}) : super(key: key);
+  final DateTime date;
+  RaduilGaugeReservation({Key? key, required this.date}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +22,11 @@ class RaduilGaugeReservation extends StatelessWidget {
           ranges: <GaugeRange>[
             GaugeRange(
               startValue: 0,
-              endValue: 60,
+              endValue: double.parse(Globals.profile.getPercentageForDate(date: date)),
               color: MyColors.red,
             ),
             GaugeRange(
-              startValue: 60,
+              startValue: double.parse(Globals.profile.getPercentageForDate(date: date)),
               endValue: 180,
               color: MyColors.red.withOpacity(0.3),
             ),
@@ -34,9 +36,7 @@ class RaduilGaugeReservation extends StatelessWidget {
                 widget: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('60%',
-                        style: MyTextStyles.headline
-                            .copyWith(color: MyColors.red)),
+                    Text('${Globals.profile.getPercentageForDate(date: date)}%', style: MyTextStyles.headline.copyWith(color: MyColors.red)),
                     AutoSizeText(
                       "de réservations",
                       style: MyTextStyles.subhead,

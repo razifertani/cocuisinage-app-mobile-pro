@@ -67,7 +67,7 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
                 height: 20,
               ),
               const HorizontalCalendar(),
-              const RaduilGaugeReservation(),
+              // const RaduilGaugeReservation(),
               const ReservationChart(),
               const SizedBox(
                 height: 20,
@@ -90,10 +90,10 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
                       txt: "Plan de table",
                       quantite: Globals.profile.getEstablishment().tables.length,
                       fun: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const PlanDeTableScreen()),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => PlanDeTableScreen()),
+                        // );
                       }),
                   CustomCard(
                       imgPath: "assets/primary_icons/service.png",
