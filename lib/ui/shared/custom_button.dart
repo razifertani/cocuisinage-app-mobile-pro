@@ -11,8 +11,9 @@ import '../../Theme/my_text_styles.dart';
 
 class CustomButton extends StatelessWidget {
   String txt;
+  Color? color;
   Function(Function, Function, ButtonState) fun;
-  CustomButton({Key? key, required this.txt, required this.fun}) : super(key: key);
+  CustomButton({Key? key, required this.txt, required this.fun, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class CustomButton extends StatelessWidget {
       height: 8.h,
       width: 42.w,
       minWidth: 42.w,
-      color: MyColors.red,
+      color: color ?? MyColors.red,
       borderRadius: 15.0,
       roundLoadingShape: false,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),

@@ -48,40 +48,6 @@ Future<Either<Exception, String>> addReservationWS({required String clientName, 
   }
 }
 
-// Future<Either<Exception, String>> updatePlanningWS({required Planning planning, bool? monthly}) async {
-//   try {
-//     final response = await http.post(
-//       Uri.parse(
-//         '${Globals.baseUrl}/planning/${planning.id}',
-//       ),
-//       headers: {
-//         HttpHeaders.acceptHeader: 'application/json',
-//         HttpHeaders.authorizationHeader: 'Bearer ${Globals.token}',
-//       },
-//       body: {
-//         'should_start_at': DateFormat.Hm().format(planning.shouldStartAt),
-//         'should_finish_at': DateFormat.Hm().format(planning.shouldFinishAt!),
-//         if (monthly != null) 'monthly': monthly ? "1" : "0",
-//       },
-//     );
-
-//     if (response.statusCode == 200) {
-//       if (!json.decode(response.body)['error']) {
-//         Globals.profile = await getUserWS();
-
-//         return Right(json.decode(response.body)['message']);
-//       } else {
-//         return Left(ApiException(message: json.decode(response.body)['message']));
-//       }
-//     } else {
-//       return Left(ApiException(message: json.decode(response.body)['message']));
-//     }
-//   } catch (e) {
-//     print(e);
-//     return Left(ApiException(message: e.toString()));
-//   }
-// }
-
 Future<Either<Exception, String>> deleteReservationWS({required int id}) async {
   try {
     final response = await http.delete(
@@ -91,6 +57,42 @@ Future<Either<Exception, String>> deleteReservationWS({required int id}) async {
       headers: {
         HttpHeaders.acceptHeader: 'application/json',
         HttpHeaders.authorizationHeader: 'Bearer ${Globals.token}',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      if (!json.decode(response.body)['error']) {
+        Globals.profile = await getUserWS();
+
+        return Right(json.decode(response.body)['message']);
+      } else {
+        return Left(ApiException(message: json.decode(response.body)['message']));
+      }
+    } else {
+      return Left(ApiException(message: json.decode(response.body)['message']));
+    }
+  } catch (e) {
+    print(e);
+    return Left(ApiException(message: e.toString()));
+  }
+}
+
+Future<Either<Exception, String>> assignTableToReservationWS({required int reservationID, required int tableID, required DateTime day, required String hour}) async {
+  try {
+    final response = await http.post(
+      Uri.parse(
+        '${Globals.baseUrl}/reservation/$reservationID/assign_table_to_reservation/$tableID',
+      ),
+      headers: {
+        HttpHeaders.acceptHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer ${Globals.token}',
+      },
+      body: {
+        'establishment_id': Globals.params.currentEstablishmentID.toString(),
+        'day': DateFormat("yyyy-MM-dd").format(day),
+        'hour': hour,
+        // 'hour': DateFormat.Hm().format(DateTime.parse(hour)),
+        // 'day': '2022-12-05',
       },
     );
 

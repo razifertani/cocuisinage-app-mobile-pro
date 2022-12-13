@@ -348,4 +348,14 @@ class Profile {
       return element.day.isSameDayAs(day);
     }).toList();
   }
+
+  String getPercentageForDate({required DateTime date}) {
+    int numberOfReservations = 0;
+    this.getEstablishment().reservations.forEach((element) {
+      if (element.day.isSameDayAs(date)) {
+        numberOfReservations++;
+      }
+    });
+    return ((numberOfReservations * 100) / 24).toStringAsFixed(2);
+  }
 }
