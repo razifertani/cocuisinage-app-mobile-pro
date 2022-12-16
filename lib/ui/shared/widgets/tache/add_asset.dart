@@ -55,162 +55,140 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          GestureDetector(
-              onTap: () {
-                if (image != null) {
-                  updateTaskWS(
-                    id: 21,
-                    collegueID: 2,
-                    image: image,
-                  ).then((exceptionOrMessage) {
-                    exceptionOrMessage.fold(
-                      (exception) {
-                        Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
-                      },
-                      (message) {
-                        setState(() {});
-                        Utils.showCustomTopSnackBar(context, success: true, message: message);
-                      },
-                    );
-                  });
-                }
-              },
-              child: Container(child: Text('Aa'))),
-          InkWell(
-            borderRadius: BorderRadius.circular(10),
-            onTap: () async {
-              availableCameras()
-                  .then((value) async => await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => CameraPage(
-                                cameras: value,
-
-                                fileCallback: (file) {
-                                  image = file;
-                                  setState(() {});
-                                  if (image != null)
-                                    widget.fileCallback(image!, fileName);
-                                },
-                              ))));
-                },
-                child: Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Icon(
-                            Icons.camera_alt_outlined,
-                            color: MyColors.red,
-                          ),
-                        ),
-                        Text(
-                          "Ouvrir caméra",
-                          style: MyTextStyles.subhead,
-                        ),
-                      ],
-
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          InkWell(
-            borderRadius: BorderRadius.circular(10),
-            onTap: () {
-              pickImage();
-            },
-            child: Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Icon(
-                        Icons.photo,
-                        color: MyColors.red,
-                      ),
-                    ),
-                    Text(
-                      "Ouvrir galerie",
-                      style: MyTextStyles.subhead,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          InkWell(
-            borderRadius: BorderRadius.circular(10),
-            onTap: () {
-              _openFilePicker().then((value) {
-                if (value != null && value.files.first.path != null) {
-                  image = File(value.files.first.path!);
-                  setState(() {});
-                }
-              });
-            },
-            child: Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            GestureDetector(
                 onTap: () {
-                  _openFilePicker().then((value) {
-                    if (value != null) {
-                      fileName = value.files.first.name;
-                      setState(() {});
-                      widget.fileCallback(
-                          File(value.files.first.path!), fileName);
-                    }
-                  });
+                  if (image != null) {
+                    updateTaskWS(
+                      id: 21,
+                      collegueID: 2,
+                      image: image,
+                    ).then((exceptionOrMessage) {
+                      exceptionOrMessage.fold(
+                        (exception) {
+                          Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                        },
+                        (message) {
+                          setState(() {});
+                          Utils.showCustomTopSnackBar(context, success: true, message: message);
+                        },
+                      );
+                    });
+                  }
                 },
-                child: Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                child: Container(child: Text('Aa'))),
+            InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () async {
+                availableCameras().then((value) async => await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => CameraPage(
+                              cameras: value,
+                              fileCallback: (file) {
+                                image = file;
+                                setState(() {});
+                                if (image != null) widget.fileCallback(image!, fileName);
+                              },
+                            ))));
+              },
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Icon(
+                          Icons.camera_alt_outlined,
+                          color: MyColors.red,
+                        ),
+                      ),
+                      Text(
+                        "Ouvrir caméra",
+                        style: MyTextStyles.subhead,
+                      ),
+                    ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Icon(
-                            Icons.file_open,
-                            color: MyColors.red,
-                          ),
-                        ),
-                        Text(
-                          "Joindre un fichier",
-                          style: MyTextStyles.subhead,
-                        ),
-                      ],
-
-                    ),
-                  ],
                 ),
               ),
             ),
-          ),
-        ]),
+            InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () {
+                pickImage();
+              },
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Icon(
+                          Icons.photo,
+                          color: MyColors.red,
+                        ),
+                      ),
+                      Text(
+                        "Ouvrir galerie",
+                        style: MyTextStyles.subhead,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () {
+                _openFilePicker().then((value) {
+                  if (value != null) {
+                    fileName = value.files.first.name;
+                    setState(() {});
+                    widget.fileCallback(File(value.files.first.path!), fileName);
+                  }
+                });
+              },
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Icon(
+                          Icons.file_open,
+                          color: MyColors.red,
+                        ),
+                      ),
+                      Text(
+                        "Joindre un fichier",
+                        style: MyTextStyles.subhead,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ]),
+        ),
       ),
-    ));
+    );
   }
 }
