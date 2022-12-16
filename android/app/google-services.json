@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:217296477080:android:216689ba29ac85718169ed",
         "android_client_info": {
-          "package_name": "com.cocuisinage.professionnel"
+          "package_name": "com.cocuisinagesoftware.v1"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "217296477080-l8k4j5m462j7ltn59hsj14ve1qoisau2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.cocuisinage.professionnel"
+                "bundle_id": "com.cocuisinagesoftware.v1"
               }
             }
           ]
