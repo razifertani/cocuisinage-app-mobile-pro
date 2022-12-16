@@ -89,7 +89,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset("assets/images/notif.png"),
+                  Image.asset(
+                    "assets/images/notif.png",
+                    color: Theme.of(context).primaryColor,
+                  ),
                   SizedBox(
                     height: 30,
                   ),

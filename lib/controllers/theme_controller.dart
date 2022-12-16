@@ -11,6 +11,7 @@ class ThemeController extends ChangeNotifier {
 
   ThemeData get themeData => dark
       ? ThemeData.dark().copyWith(
+          primaryColor: Colors.white,
           expansionTileTheme: const ExpansionTileThemeData(
               iconColor: Colors.white, textColor: Colors.white),
           scaffoldBackgroundColor: Colors.black,
@@ -21,6 +22,7 @@ class ThemeController extends ChangeNotifier {
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: MyColors.red))
       : ThemeData.light().copyWith(
+          primaryColor: Colors.black,
           expansionTileTheme: const ExpansionTileThemeData(
               iconColor: Colors.black, textColor: Colors.black),
           colorScheme:
