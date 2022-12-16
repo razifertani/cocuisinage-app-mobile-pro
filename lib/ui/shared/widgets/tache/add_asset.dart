@@ -17,9 +17,13 @@ import '../../../../../Theme/my_text_styles.dart';
 import '../../../../Theme/my_colors.dart';
 import 'camera_page.dart';
 
+typedef void FileCallback(File file, String fileName);
+
 class AddAssetPopUp extends StatefulWidget {
+  final FileCallback fileCallback;
   AddAssetPopUp({
     Key? key,
+    required this.fileCallback,
   }) : super(key: key);
 
   @override
@@ -33,6 +37,7 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       final imageTemp = File(image.path);
+      widget.fileCallback(File(image.path), fileName);
       setState(() => this.image = imageTemp);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
@@ -84,30 +89,37 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
                       MaterialPageRoute(
                           builder: (_) => CameraPage(
                                 cameras: value,
-                              ))))
-                  .then((value) {
-                if (value != null) {}
-              });
-            },
-            child: Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Icon(
-                        Icons.camera_alt_outlined,
-                        color: MyColors.red,
-                      ),
-                    ),
-                    Text(
-                      "Ouvrir caméra",
-                      style: MyTextStyles.subhead,
+
+                                fileCallback: (file) {
+                                  image = file;
+                                  setState(() {});
+                                  if (image != null)
+                                    widget.fileCallback(image!, fileName);
+                                },
+                              ))));
+                },
+                child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Icon(
+                            Icons.camera_alt_outlined,
+                            color: MyColors.red,
+                          ),
+                        ),
+                        Text(
+                          "Ouvrir caméra",
+                          style: MyTextStyles.subhead,
+                        ),
+                      ],
+
                     ),
                   ],
                 ),
@@ -158,21 +170,39 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
               elevation: 2,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Icon(
-                        Icons.file_open,
-                        color: MyColors.red,
-                      ),
-                    ),
-                    Text(
-                      "Joindre un fichier",
-                      style: MyTextStyles.subhead,
+
+                onTap: () {
+                  _openFilePicker().then((value) {
+                    if (value != null) {
+                      fileName = value.files.first.name;
+                      setState(() {});
+                      widget.fileCallback(
+                          File(value.files.first.path!), fileName);
+                    }
+                  });
+                },
+                child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Icon(
+                            Icons.file_open,
+                            color: MyColors.red,
+                          ),
+                        ),
+                        Text(
+                          "Joindre un fichier",
+                          style: MyTextStyles.subhead,
+                        ),
+                      ],
+
                     ),
                   ],
                 ),
