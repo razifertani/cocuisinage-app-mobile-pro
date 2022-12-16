@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:math';
+
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +45,9 @@ class _CameraPageState extends State<CameraPage> {
     try {
       await _cameraController.setFlashMode(FlashMode.off);
       XFile picture = await _cameraController.takePicture();
+
       widget.fileCallback(File(picture.path));
+
     } on CameraException catch (e) {
       debugPrint('Error occured while taking picture: $e');
       return null;
