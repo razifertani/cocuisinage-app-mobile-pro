@@ -16,9 +16,13 @@ import '../../../../../Theme/my_text_styles.dart';
 import '../../../../Theme/my_colors.dart';
 import 'camera_page.dart';
 
+typedef void FileCallback(File file, String fileName);
+
 class AddAssetPopUp extends StatefulWidget {
+  final FileCallback fileCallback;
   AddAssetPopUp({
     Key? key,
+    required this.fileCallback,
   }) : super(key: key);
 
   @override
@@ -32,6 +36,7 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       final imageTemp = File(image.path);
+      widget.fileCallback(File(image.path), fileName);
       setState(() => this.image = imageTemp);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
@@ -61,7 +66,15 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
                   await availableCameras().then((value) => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => CameraPage(cameras: value))));
+                          builder: (_) => CameraPage(
+                                cameras: value,
+                                fileCallback: (file) {
+                                  image = file;
+                                  setState(() {});
+                                  if (image != null)
+                                    widget.fileCallback(image!, fileName);
+                                },
+                              ))));
                 },
                 child: Card(
                   elevation: 2,
@@ -125,6 +138,8 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
                     if (value != null) {
                       fileName = value.files.first.name;
                       setState(() {});
+                      widget.fileCallback(
+                          File(value.files.first.path!), fileName);
                     }
                   });
                 },

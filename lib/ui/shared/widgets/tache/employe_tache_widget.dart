@@ -43,6 +43,8 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
     }
   }
 
+  String fileName = "";
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -181,29 +183,36 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                     lineWidth: 4,
                   ),
                   onTap: (startLoading, stopLoading, btnState) async {
-                    Utils.pushScreen(context, AddAssetPopUp(), 0.3);
+                    Utils.pushScreen(context, AddAssetPopUp(
+                      fileCallback: (file, fileName) {
+                        image = file;
+                        fileName = fileName;
+                        setState(() {});
+                        print("&&&&&" + image!.path.toString());
+                      },
+                    ), 0.3);
                     // File? image = await pickImage();
-                    // if (image != null) {
-                    //   startLoading();
-                    //   updateTaskWS(
-                    //     id: widget.task.id,
-                    //     collegueID: widget.task.professionalId,
-                    //     image: image,
-                    //   ).then((exceptionOrMessage) {
-                    //     stopLoading();
-                    //     exceptionOrMessage.fold(
-                    //       (exception) {
-                    //         Utils.showCustomTopSnackBar(context,
-                    //             success: false, message: exception.toString());
-                    //       },
-                    //       (message) {
-                    //         setState(() {});
-                    //         Utils.showCustomTopSnackBar(context,
-                    //             success: true, message: message);
-                    //       },
-                    //     );
-                    //   });
-                    // }
+                    if (image != null) {
+                      startLoading();
+                      updateTaskWS(
+                        id: widget.task.id,
+                        collegueID: widget.task.professionalId,
+                        image: image,
+                      ).then((exceptionOrMessage) {
+                        stopLoading();
+                        exceptionOrMessage.fold(
+                          (exception) {
+                            Utils.showCustomTopSnackBar(context,
+                                success: false, message: exception.toString());
+                          },
+                          (message) {
+                            setState(() {});
+                            Utils.showCustomTopSnackBar(context,
+                                success: true, message: message);
+                          },
+                        );
+                      });
+                    }
                   },
                 ),
               ],
