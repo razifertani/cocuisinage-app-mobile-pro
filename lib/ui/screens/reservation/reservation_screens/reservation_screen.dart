@@ -65,7 +65,15 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   //             resDate: selectedDate,
                   //           )),
                   // );
-                  Utils.pushScreen(context, MainResScreen(), 0.8);
+                  Utils.pushScreen(
+                      context,
+                      MainResScreen(
+                        resDate: selectedDate,
+                        function: () {
+                          setState(() {});
+                        },
+                      ),
+                      0.8);
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(

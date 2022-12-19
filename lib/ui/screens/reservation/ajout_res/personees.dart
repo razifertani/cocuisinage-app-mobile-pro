@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 
 import '../../../../Theme/my_colors.dart';
 
+typedef void PersCallback(int nbr);
+
 class PersonnesScreen extends StatefulWidget {
-  const PersonnesScreen({Key? key}) : super(key: key);
+  final PersCallback onnbrChanged;
+  const PersonnesScreen({Key? key, required this.onnbrChanged})
+      : super(key: key);
 
   @override
   State<PersonnesScreen> createState() => _PersonnesScreenState();
@@ -15,6 +19,7 @@ class _PersonnesScreenState extends State<PersonnesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    widget.onnbrChanged(counter);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

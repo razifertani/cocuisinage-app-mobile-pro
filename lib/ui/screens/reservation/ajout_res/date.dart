@@ -1,3 +1,4 @@
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/widgets/time_picker/pick_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
@@ -9,8 +10,16 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../../Theme/my_colors.dart';
 
+typedef void DateCallback(DateTime date);
+
 class DateScreen extends StatefulWidget {
-  const DateScreen({Key? key}) : super(key: key);
+  final DateCallback ondateChanged;
+  final DateTime? initialDateTime;
+  DateScreen({
+    Key? key,
+    required this.ondateChanged,
+    this.initialDateTime,
+  }) : super(key: key);
 
   @override
   State<DateScreen> createState() => _DateScreenState();
@@ -18,18 +27,11 @@ class DateScreen extends StatefulWidget {
 
 class _DateScreenState extends State<DateScreen> {
   @override
+  late DateTime currentDate;
   void initState() {
     super.initState();
     initializeDateFormatting();
-  }
-
-  var currentDate = DateTime.now();
-  int currentVIndex = 0;
-  int currentHIndex = 0;
-  void switchIndex(hIndex, vIndex) {
-    currentHIndex = hIndex;
-    currentVIndex = vIndex;
-    setState(() {});
+    currentDate = widget.initialDateTime ?? DateTime.now();
   }
 
   @override
@@ -41,7 +43,10 @@ class _DateScreenState extends State<DateScreen> {
         margin: EdgeInsets.symmetric(horizontal: 12),
         child: CalendarCarousel<Event>(
           onDayPressed: (DateTime date, List<Event> events) {
-            setState(() => currentDate = date);
+            setState(() {
+              currentDate = date;
+              widget.ondateChanged(date);
+            });
           },
           weekendTextStyle: TextStyle(color: Theme.of(context).primaryColor),
           thisMonthDayBorderColor: Colors.grey,
