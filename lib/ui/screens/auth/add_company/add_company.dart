@@ -31,7 +31,6 @@ class _AddCompanyState extends State<AddCompany> {
   TextEditingController companyName = TextEditingController();
   TextEditingController companyEmail = TextEditingController();
   TextEditingController companyPhoneNumber = TextEditingController();
-  TextEditingController companyRib = TextEditingController();
   TextEditingController companySiret = TextEditingController();
 
   bool checkedValue = false;
@@ -95,25 +94,6 @@ class _AddCompanyState extends State<AddCompany> {
                             textInputType: TextInputType.phone,
                           ),
                         ),
-                        PreTextForm(txt: "RIB"),
-                        SizedBox(
-                          width: 90.w,
-                          child: CustomCardTextForm(
-                            controller: companyRib,
-                            hintText: "RIB",
-                            obscureText: !isVisible,
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                isVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                                color: Colors.black,
-                              ),
-                              onPressed: () {
-                                isVisible = !isVisible;
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                        ),
                         PreTextForm(txt: "Numéro de siret"),
                         SizedBox(
                           width: 90.w,
@@ -139,7 +119,6 @@ class _AddCompanyState extends State<AddCompany> {
                                 companyEmail: companyEmail.text,
                                 companyName: companyName.text,
                                 companyPhoneNumber: companyPhoneNumber.text,
-                                companyRib: companyRib.text,
                                 companySiret: companySiret.text,
                               ).then((exceptionOrMessage) {
                                 stopLoading();

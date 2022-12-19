@@ -61,27 +61,27 @@ class _AddAssetPopUpState extends State<AddAssetPopUp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GestureDetector(
-                  onTap: () {
-                    if (image != null) {
-                      updateTaskWS(
-                        id: 21,
-                        collegueID: 2,
-                        image: image,
-                      ).then((exceptionOrMessage) {
-                        exceptionOrMessage.fold(
-                          (exception) {
-                            Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
-                          },
-                          (message) {
-                            setState(() {});
-                            Utils.showCustomTopSnackBar(context, success: true, message: message);
-                          },
-                        );
-                      });
-                    }
-                  },
-                  child: Container(child: Text('Aa'))),
+              // GestureDetector(
+              //     onTap: () {
+              //       if (image != null) {
+              //         updateTaskWS(
+              //           id: 21,
+              //           collegueID: 2,
+              //           image: image,
+              //         ).then((exceptionOrMessage) {
+              //           exceptionOrMessage.fold(
+              //             (exception) {
+              //               Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+              //             },
+              //             (message) {
+              //               setState(() {});
+              //               Utils.showCustomTopSnackBar(context, success: true, message: message);
+              //             },
+              //           );
+              //         });
+              //       }
+              //     },
+              //     child: Container(child: Text('Aa'))),
               InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () async {

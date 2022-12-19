@@ -71,7 +71,7 @@ Future<Either<Exception, bool>> loginWS({required String email, required String 
   }
 }
 
-Future<Either<Exception, String>> registerWS({required String ownerEmail, required String ownerFirstName, required String ownerLastName, required String ownerPassword, required String companyName, required String companyEmail, required String companyPhoneNumber, required String companyRib, required String companySiret}) async {
+Future<Either<Exception, String>> registerWS({required String ownerEmail, required String ownerFirstName, required String ownerLastName, required String ownerPassword, required String companyName, required String companyEmail, required String companyPhoneNumber, required String companySiret}) async {
   try {
     var response = await http.post(
       Uri.parse('${Globals.baseUrl}/register'),
@@ -86,7 +86,6 @@ Future<Either<Exception, String>> registerWS({required String ownerEmail, requir
         'company_name': companyName,
         'company_email': companyEmail,
         'company_phone_number': companyPhoneNumber,
-        'company_rib': companyRib,
         'company_siret': companySiret,
       },
     );

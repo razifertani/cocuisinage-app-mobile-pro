@@ -177,39 +177,36 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                     size: 40,
                     lineWidth: 4,
                   ),
-                  onTap: (startLoading, stopLoading, btnState) async {
-
+                  onTap: (startLoading, stopLoading, btnState) {
                     Utils.pushScreen(context, AddAssetPopUp(
                       fileCallback: (file, fileName) {
                         image = file;
                         fileName = fileName;
                         setState(() {});
-                        print("&&&&&" + image!.path.toString());
+
+                        print(image?.path);
+
+                        if (image != null) {
+                          startLoading();
+                          updateTaskWS(
+                            id: widget.task.id,
+                            collegueID: widget.task.professionalId,
+                            image: image,
+                          ).then((exceptionOrMessage) {
+                            stopLoading();
+                            exceptionOrMessage.fold(
+                              (exception) {
+                                Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                              },
+                              (message) {
+                                setState(() {});
+                                Utils.showCustomTopSnackBar(context, success: true, message: message);
+                              },
+                            );
+                          });
+                        }
                       },
                     ), 0.3);
-
-                    // File? image = await pickImage();
-                    if (image != null) {
-                      startLoading();
-                      updateTaskWS(
-                        id: widget.task.id,
-                        collegueID: widget.task.professionalId,
-                        image: image,
-                      ).then((exceptionOrMessage) {
-                        stopLoading();
-                        exceptionOrMessage.fold(
-                          (exception) {
-                            Utils.showCustomTopSnackBar(context,
-                                success: false, message: exception.toString());
-                          },
-                          (message) {
-                            setState(() {});
-                            Utils.showCustomTopSnackBar(context,
-                                success: true, message: message);
-                          },
-                        );
-                      });
-                    }
                   },
                 ),
               ],

@@ -25,7 +25,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   // TextEditingController email = TextEditingController(text: 'razifertani1@gmail.com');
   TextEditingController email = TextEditingController(text: '');
-  TextEditingController motDePasse = TextEditingController(text: '123456');
+  TextEditingController motDePasse = TextEditingController(text: '');
 
   bool isVisible = false;
   @override
