@@ -6,9 +6,12 @@ import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/mon_equipe/equi
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/mon_equipe/equipe/detail_planning/detail_planning.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
+import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../../../shared/widgets/roles/delete_confirmation_popup.dart';
 
 class Equipe extends StatefulWidget {
   const Equipe({Key? key}) : super(key: key);
@@ -55,63 +58,89 @@ class _EquipeState extends State<Equipe> {
                       ).then((value) => setState(() {}));
                     }
                   },
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 2.5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: CircleAvatar(
-                            radius: 45,
-                            backgroundColor: MyColors.red,
-                            child: CircleAvatar(
-                              radius: 42,
-                              backgroundImage: NetworkImage(
-                                "${Globals.profile.getColleagues()[index].imageUrl}",
-                              ),
-                              child: Material(
-                                shape: const CircleBorder(),
-                                clipBehavior: Clip.hardEdge,
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {},
+                  child: Stack(
+                    children: [
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 2.5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: CircleAvatar(
+                                radius: 45,
+                                backgroundColor: MyColors.red,
+                                child: CircleAvatar(
+                                  radius: 42,
+                                  backgroundImage: NetworkImage(
+                                    "${Globals.profile.getColleagues()[index].imageUrl}",
+                                  ),
+                                  child: Material(
+                                    shape: const CircleBorder(),
+                                    clipBehavior: Clip.hardEdge,
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () {},
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: AutoSizeText(
+                                "${Globals.profile.getColleagues()[index].firstName} ${Globals.profile.getColleagues()[index].lastName}",
+                                style: MyTextStyles.subhead,
+                                maxLines: 1,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: AutoSizeText(
+                                "${Globals.profile.getColleagueRole(id: Globals.profile.getColleagues()[index].id).name}",
+                                maxLines: 1,
+                                style: MyTextStyles.body
+                                    .copyWith(color: Colors.grey),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: Globals.profile.id != 0,
+                        //different id de patron
+                        child: Positioned(
+                          right: 20,
+                          top: 5,
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => ConfirmationShowmodel(
+                                        title:
+                                            "vous étes sur de supprimer cet employé ?",
+                                      ));
+                            },
+                            child: Icon(
+                              Icons.remove,
+                              color: Colors.red,
+                            ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: AutoSizeText(
-                            "${Globals.profile.getColleagues()[index].firstName} ${Globals.profile.getColleagues()[index].lastName}",
-                            style: MyTextStyles.subhead,
-                            maxLines: 1,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: AutoSizeText(
-                            "${Globals.profile.getColleagueRole(id: Globals.profile.getColleagues()[index].id).name}",
-                            maxLines: 1,
-                            style:
-                                MyTextStyles.body.copyWith(color: Colors.grey),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               );
