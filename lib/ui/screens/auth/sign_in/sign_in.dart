@@ -44,170 +44,198 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 30.h,
+            padding: const EdgeInsets.all(12),
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 30.h,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Bienvenue",
+                      style: MyTextStyles.headline.copyWith(
+                          color: MyColors.red,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 22.sp.clamp(30, 35)),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Bienvenue",
-                        style: MyTextStyles.headline.copyWith(color: MyColors.red, fontWeight: FontWeight.w600, fontSize: 22.sp.clamp(30, 35)),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Form(
+                  key: key,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Email",
+                          style: MyTextStyles.subhead
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Form(
-                    key: key,
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
+                      CustomCardTextForm(
+                        controller: email,
+                        hintText: "Email",
+                        textInputType: TextInputType.emailAddress,
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'Email est requis !';
+                          }
+                          if (!Utils.emailRegExp.hasMatch(value)) {
+                            return 'Email n\'est pas valide !';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Mot de passe",
+                          style: MyTextStyles.subhead
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      CustomCardTextForm(
+                        controller: motDePasse,
+                        hintText: "Mot de passe",
+                        obscureText: !isVisible,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isVisible
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            isVisible = !isVisible;
+                            setState(() {});
+                          },
+                        ),
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'Mot de passe est requis !';
+                          }
+                          if (value.length < 4) {
+                            return 'Mot de passe n\'est pas valide !';
+                          }
+                          return null;
+                        },
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AjouterEmail()),
+                            );
+                          },
                           child: Text(
-                            "Email",
-                            style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
+                            "Mot de passe oublier ?",
+                            style:
+                                MyTextStyles.body.copyWith(color: Colors.grey),
                           ),
                         ),
-                        CustomCardTextForm(
-                          controller: email,
-                          hintText: "Email",
-                          textInputType: TextInputType.emailAddress,
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return 'Email est requis !';
+                      ),
+                      CustomButton(
+                        txt: "Connexion",
+                        fun: (startLoading, stopLoading, btnState) {
+                          if (btnState == ButtonState.Idle) {
+                            if (key.currentState!.validate()) {
+                              startLoading();
+                              loginWS(
+                                email: email.text,
+                                password: motDePasse.text,
+                              ).then((exceptionOrProfile) {
+                                stopLoading();
+                                exceptionOrProfile.fold(
+                                  (exception) {
+                                    Utils.showCustomTopSnackBar(context,
+                                        success: false,
+                                        message: exception.toString());
+                                  },
+                                  (bool) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MesBoutiquesScreen()),
+                                    );
+                                  },
+                                );
+                              });
                             }
-                            if (!Utils.emailRegExp.hasMatch(value)) {
-                              return 'Email n\'est pas valide !';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Mot de passe",
-                            style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        CustomCardTextForm(
-                          controller: motDePasse,
-                          hintText: "Mot de passe",
-                          obscureText: !isVisible,
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              isVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              isVisible = !isVisible;
-                              setState(() {});
-                            },
-                          ),
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return 'Mot de passe est requis !';
-                            }
-                            if (value.length < 4) {
-                              return 'Mot de passe n\'est pas valide !';
-                            }
-                            return null;
-                          },
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => AjouterEmail()),
-                              );
-                            },
-                            child: Text(
-                              "Mot de passe oublier ?",
-                              style: MyTextStyles.body.copyWith(color: Colors.grey),
-                            ),
-                          ),
-                        ),
-                        CustomButton(
-                          txt: "Connexion",
-                          fun: (startLoading, stopLoading, btnState) {
-                            if (btnState == ButtonState.Idle) {
-                              if (key.currentState!.validate()) {
-                                startLoading();
-                                loginWS(
-                                  email: email.text,
-                                  password: motDePasse.text,
-                                ).then((exceptionOrProfile) {
-                                  stopLoading();
-                                  exceptionOrProfile.fold(
-                                    (exception) {
-                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
-                                    },
-                                    (bool) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => MesBoutiquesScreen()),
-                                      );
-                                    },
-                                  );
-                                });
-                              }
-                            }
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(text: "Pas encore membre ?", style: MyTextStyles.subhead.copyWith(color: Colors.black), children: [
-                              TextSpan(
-                                  text: "S'inscrire",
-                                  style: MyTextStyles.subhead.copyWith(color: MyColors.red),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => const SignUpScreen()),
-                                      );
-                                    }),
-                            ])),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(text: "S'inscrire avec un ", style: MyTextStyles.subhead.copyWith(color: Colors.black), children: [
-                              TextSpan(
-                                  text: "lien",
-                                  style: MyTextStyles.subhead.copyWith(color: MyColors.red),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => const SignWithLink()),
-                                      );
-                                    }),
-                              TextSpan(
-                                text: "?",
-                                style: MyTextStyles.subhead.copyWith(color: Colors.black),
-                              ),
-                            ])),
-                      ],
-                    ),
+                          }
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                              text: "Pas encore membre ?",
+                              style: MyTextStyles.subhead
+                                  .copyWith(color: Colors.black),
+                              children: [
+                                TextSpan(
+                                    text: "S'inscrire",
+                                    style: MyTextStyles.subhead
+                                        .copyWith(color: MyColors.red),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SignUpScreen()),
+                                        );
+                                      }),
+                              ])),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                              text: "S'inscrire avec un ",
+                              style: MyTextStyles.subhead
+                                  .copyWith(color: Colors.black),
+                              children: [
+                                TextSpan(
+                                    text: "lien",
+                                    style: MyTextStyles.subhead
+                                        .copyWith(color: MyColors.red),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SignWithLink()),
+                                        );
+                                      }),
+                                TextSpan(
+                                  text: "?",
+                                  style: MyTextStyles.subhead
+                                      .copyWith(color: Colors.black),
+                                ),
+                              ])),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
