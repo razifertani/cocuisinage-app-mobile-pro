@@ -125,13 +125,17 @@ class _EquipeState extends State<Equipe> {
                           right: 20,
                           top: 5,
                           child: GestureDetector(
-                            onTap: () {
-                              showDialog(
+                            onTap: () async {
+                              bool delete = await showDialog(
                                   context: context,
                                   builder: (context) => ConfirmationShowmodel(
                                         title:
                                             "vous étes sur de supprimer cet employé ?",
                                       ));
+                              print(delete);
+                              if (delete) {
+                                print("object");
+                              }
                             },
                             child: Icon(
                               Icons.remove,
