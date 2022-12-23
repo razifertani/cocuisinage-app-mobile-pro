@@ -23,9 +23,9 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   GlobalKey<FormState> key = GlobalKey<FormState>();
 
-  TextEditingController email = TextEditingController(text: 'restoo@gmail.com');
+  TextEditingController email = TextEditingController(text: '@gmail.com');
   // TextEditingController email = TextEditingController(text: '');
-  TextEditingController motDePasse = TextEditingController(text: 'password');
+  TextEditingController motDePasse = TextEditingController(text: '123456');
 
   bool isVisible = false;
   @override

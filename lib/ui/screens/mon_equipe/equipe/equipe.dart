@@ -2,10 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/Theme/my_colors.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/Theme/my_text_styles.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/role_permission.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/professional_api.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/auth/sign_in/sign_in.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/mon_equipe/equipe/ajouter_equipier.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/mon_equipe/equipe/detail_planning/detail_planning.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 import 'package:flutter/gestures.dart';
 
 import 'package:flutter/material.dart';
@@ -44,15 +47,12 @@ class _EquipeState extends State<Equipe> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: GestureDetector(
                   onTap: () {
-                    if (Globals.profile.isOwner ||
-                        Globals.profile.id ==
-                            Globals.profile.getColleagues()[index].id) {
+                    if (Globals.profile.isOwner || Globals.profile.id == Globals.profile.getColleagues()[index].id) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => DetailPlanning(
-                            collegueID:
-                                Globals.profile.getColleagues()[index].id,
+                            collegueID: Globals.profile.getColleagues()[index].id,
                           ),
                         ),
                       ).then((value) => setState(() {}));
@@ -108,8 +108,7 @@ class _EquipeState extends State<Equipe> {
                               child: AutoSizeText(
                                 "${Globals.profile.getColleagueRole(id: Globals.profile.getColleagues()[index].id).name}",
                                 maxLines: 1,
-                                style: MyTextStyles.body
-                                    .copyWith(color: Colors.grey),
+                                style: MyTextStyles.body.copyWith(color: Colors.grey),
                               ),
                             ),
                             const SizedBox(
@@ -119,8 +118,7 @@ class _EquipeState extends State<Equipe> {
                         ),
                       ),
                       Visibility(
-                        visible: Globals.profile.id != 0,
-                        //different id de patron
+                        visible: Globals.profile.isOwner || Globals.profile.id == Globals.profile.getColleagues()[index].id,
                         child: Positioned(
                           right: 20,
                           top: 5,
@@ -129,12 +127,28 @@ class _EquipeState extends State<Equipe> {
                               bool delete = await showDialog(
                                   context: context,
                                   builder: (context) => ConfirmationShowmodel(
-                                        title:
-                                            "vous étes sur de supprimer cet employé ?",
+                                        title: "Vous êtes sur de supprimer cet employé ?",
                                       ));
-                              print(delete);
                               if (delete) {
-                                print("object");
+                                deleteUserWS(
+                                  userID: Globals.profile.getColleagues()[index].id,
+                                ).then((exceptionOrMessage) {
+                                  exceptionOrMessage.fold(
+                                    (exception) {
+                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                    },
+                                    (message) {
+                                      Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                      if (!Globals.profile.isOwner) {
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => const SignInScreen()),
+                                          (Route<dynamic> route) => false,
+                                        );
+                                      }
+                                    },
+                                  );
+                                });
                               }
                             },
                             child: Icon(
@@ -153,16 +167,13 @@ class _EquipeState extends State<Equipe> {
           const SizedBox(
             height: 20,
           ),
-          if (Globals.profile.getPermissions().any((element) => [
-                Permission.ADD_COLLABORATORS
-              ].contains(element.pivotEstablishmentsPermissions.permissionId)))
+          if (Globals.profile.getPermissions().any((element) => [Permission.ADD_COLLABORATORS].contains(element.pivotEstablishmentsPermissions.permissionId)))
             CustomButton(
                 txt: "Ajouter un membre",
                 fun: (startLoading, stopLoading, btnState) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const AjouterEquipier()),
+                    MaterialPageRoute(builder: (context) => const AjouterEquipier()),
                   ).then((value) => setState(() {}));
                 }),
           SizedBox(
