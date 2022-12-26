@@ -1,3 +1,7 @@
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/estbalishments_api.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../Theme/my_colors.dart';
@@ -11,12 +15,8 @@ class DureeDeServiceScreen extends StatefulWidget {
 }
 
 class _DureeDeServiceScreenState extends State<DureeDeServiceScreen> {
-  final List<String> times = ["30 min", "45 min", "60 min", "75 min"];
-  int currentIndex = 0;
-  void switchIndex(int index) {
-    currentIndex = index;
-    setState(() {});
-  }
+  final List<int> times = [30, 45, 60, 75];
+  int currentDuration = Globals.profile.getEstablishment().bookingDuration;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +38,8 @@ class _DureeDeServiceScreenState extends State<DureeDeServiceScreen> {
               height: 10,
             ),
             Text(
-              "Tranche horraire",
-              style:
-                  MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+              "Tranche horaire",
+              style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
             ),
             SizedBox(
               height: 10,
@@ -48,33 +47,45 @@ class _DureeDeServiceScreenState extends State<DureeDeServiceScreen> {
             Wrap(
               children: [
                 ...List.generate(
-                    4,
-                    (index) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
-                          child: InkWell(
-                            onTap: () {
-                              switchIndex(index);
+                  4,
+                  (index) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentDuration = times[index];
+                        });
+
+                        updateEstablishmentBookingDurationWS(
+                          establishmentID: Globals.profile.getEstablishment().id,
+                          bookingDuration: times[index],
+                        ).then((exceptionOrMessage) {
+                          exceptionOrMessage.fold(
+                            (exception) {
+                              setState(() {});
+                              Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
                             },
-                            child: Card(
-                              elevation: 3,
-                              color:
-                                  currentIndex == index ? MyColors.red : null,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 20),
-                                child: Text(times[index],
-                                    style: MyTextStyles.subhead.copyWith(
-                                        color: currentIndex == index
-                                            ? Colors.white
-                                            : Colors.grey)),
-                              ),
-                            ),
-                          ),
-                        ))
+                            (message) {
+                              setState(() {});
+                              Utils.showCustomTopSnackBar(context, success: true, message: message);
+                            },
+                          );
+                        });
+                      },
+                      child: Card(
+                        elevation: 3,
+                        color: currentDuration == times[index] ? MyColors.red : null,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                          child: Text('${times[index]} min', style: MyTextStyles.subhead.copyWith(color: currentDuration == times[index] ? Colors.white : Colors.grey)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             )
           ],

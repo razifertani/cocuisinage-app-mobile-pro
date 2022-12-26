@@ -6,15 +6,9 @@ import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<Either<Exception, String>> addEstablishmentWS(
-    {required File image,
-    required String name,
-    required String city,
-    required String longitude,
-    required String latitude}) async {
+Future<Either<Exception, String>> addEstablishmentWS({required File image, required String name, required String city, required String longitude, required String latitude}) async {
   try {
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('${Globals.baseUrl}/establishments'))
+    var request = http.MultipartRequest('POST', Uri.parse('${Globals.baseUrl}/establishments'))
       ..headers.addAll({
         HttpHeaders.acceptHeader: 'application/json',
         HttpHeaders.authorizationHeader: 'Bearer ${Globals.token}',
@@ -40,8 +34,7 @@ Future<Either<Exception, String>> addEstablishmentWS(
 
         return Right(json.decode(response.body)['message']);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));
@@ -64,10 +57,7 @@ Future<Either<Exception, String>> updateEstablishmentWS({
     http.Response response;
 
     if (image != null) {
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              '${Globals.baseUrl}/establishment/${establishmentID.toString()}'))
+      var request = http.MultipartRequest('POST', Uri.parse('${Globals.baseUrl}/establishment/${establishmentID.toString()}'))
         ..headers.addAll({
           HttpHeaders.acceptHeader: 'application/json',
           HttpHeaders.authorizationHeader: 'Bearer ${Globals.token}',
@@ -110,8 +100,7 @@ Future<Either<Exception, String>> updateEstablishmentWS({
 
         return Right(json.decode(response.body)['message']);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));
@@ -122,8 +111,36 @@ Future<Either<Exception, String>> updateEstablishmentWS({
   }
 }
 
-Future<Either<Exception, String>> deleteEstablishmentWS(
-    {required int establishmentID}) async {
+Future<Either<Exception, String>> updateEstablishmentBookingDurationWS({required int establishmentID, required int bookingDuration}) async {
+  try {
+    final response = await http.post(
+      Uri.parse(
+        '${Globals.baseUrl}/establishment/${establishmentID.toString()}/booking_duration/${bookingDuration.toString()}',
+      ),
+      headers: {
+        HttpHeaders.acceptHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer ${Globals.token}',
+      },
+      body: {},
+    );
+    if (response.statusCode == 200) {
+      if (!json.decode(response.body)['error']) {
+        Globals.profile = await getUserWS();
+
+        return Right(json.decode(response.body)['message']);
+      } else {
+        return Left(ApiException(message: json.decode(response.body)['message']));
+      }
+    } else {
+      return Left(ApiException(message: json.decode(response.body)['message']));
+    }
+  } catch (e) {
+    print(e);
+    return Left(ApiException(message: e.toString()));
+  }
+}
+
+Future<Either<Exception, String>> deleteEstablishmentWS({required int establishmentID}) async {
   try {
     final response = await http.delete(
       Uri.parse(
@@ -141,8 +158,7 @@ Future<Either<Exception, String>> deleteEstablishmentWS(
 
         return Right(json.decode(response.body)['message']);
       } else {
-        return Left(
-            ApiException(message: json.decode(response.body)['message']));
+        return Left(ApiException(message: json.decode(response.body)['message']));
       }
     } else {
       return Left(ApiException(message: json.decode(response.body)['message']));

@@ -16,11 +16,11 @@ class Establishment {
   late String latitude;
   String? description;
   late String imageUrl;
+  late int bookingDuration;
   String? createdAt;
   String? updatedAt;
   late List<Collegue> collegues;
   List<Planning>? plannings;
-
   late List<Reservation> reservations;
   late List<Table> tables;
 
@@ -37,6 +37,7 @@ class Establishment {
     required this.latitude,
     this.description,
     required this.imageUrl,
+    required this.bookingDuration,
     this.createdAt,
     this.updatedAt,
     required this.collegues,
@@ -58,6 +59,7 @@ class Establishment {
     latitude = json['latitude'];
     description = json['description'];
     imageUrl = json['image_url'];
+    bookingDuration = json['booking_duration'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     if (json['professionals'] != null) {
