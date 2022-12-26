@@ -1,5 +1,8 @@
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/tables_api.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/reservation/reservation_parametrage/capacite_etab/ajout_capacit.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -14,7 +17,22 @@ class CapacitEtablisScreen extends StatefulWidget {
 }
 
 class _CapacitEtablisScreenState extends State<CapacitEtablisScreen> {
-  Map tables = {};
+  int nbCouvert = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    calculateCouverts();
+  }
+
+  calculateCouverts() {
+    nbCouvert = 0;
+    Globals.profile.getEstablishment().tables.forEach((element) {
+      nbCouvert = nbCouvert + element.nbPersons;
+    });
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +52,7 @@ class _CapacitEtablisScreenState extends State<CapacitEtablisScreen> {
             SizedBox(
               height: 10,
             ),
-            tables.length == 0
+            Globals.profile.getEstablishment().tables.length == 0
                 ? Center(
                     child: Column(
                       children: [
@@ -43,9 +61,8 @@ class _CapacitEtablisScreenState extends State<CapacitEtablisScreen> {
                           height: 10,
                         ),
                         Text(
-                          "Ajouter des tables jusqua a 10 couverts",
-                          style:
-                              MyTextStyles.subhead.copyWith(color: Colors.grey),
+                          "Ajouter des tables jusqua à 10 couverts",
+                          style: MyTextStyles.subhead.copyWith(color: Colors.grey),
                         )
                       ],
                     ),
@@ -59,9 +76,8 @@ class _CapacitEtablisScreenState extends State<CapacitEtablisScreen> {
                             style: MyTextStyles.subhead,
                           ),
                           Text(
-                            "42 couverts",
-                            style: MyTextStyles.subhead
-                                .copyWith(fontWeight: FontWeight.w600),
+                            "$nbCouvert couverts",
+                            style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
@@ -75,14 +91,14 @@ class _CapacitEtablisScreenState extends State<CapacitEtablisScreen> {
                             Expanded(
                               flex: 3,
                               child: Text(
-                                "Table",
+                                "Nom de la table",
                                 style: MyTextStyles.headline,
                               ),
                             ),
                             Expanded(
                               flex: 2,
                               child: Text(
-                                "Nb Table",
+                                "Nb. de couverts",
                                 style: MyTextStyles.headline,
                               ),
                             )
@@ -95,40 +111,38 @@ class _CapacitEtablisScreenState extends State<CapacitEtablisScreen> {
                         thickness: 2,
                       ),
                       ...List.generate(
-                          tables.length,
-                          (index) => Column(
+                        Globals.profile.getEstablishment().tables.length,
+                        (index) => Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 3,
-                                          child: Text(
-                                            tables.keys.toList()[index],
-                                            style: MyTextStyles.body,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: Text(
-                                            tables.values
-                                                .toList()[index]
-                                                .toString(),
-                                            style: MyTextStyles.subhead,
-                                          ),
-                                        )
-                                      ],
+                                  Expanded(
+                                    flex: 3,
+                                    child: Text(
+                                      '${Globals.profile.getEstablishment().tables[index].name}',
+                                      style: MyTextStyles.body,
                                     ),
                                   ),
-                                  Divider(
-                                    indent: 10,
-                                    endIndent: 10,
-                                    thickness: 2,
-                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Text(
+                                      '${Globals.profile.getEstablishment().tables[index].nbPersons}',
+                                      style: MyTextStyles.subhead,
+                                    ),
+                                  )
                                 ],
-                              )),
+                              ),
+                            ),
+                            Divider(
+                              indent: 10,
+                              endIndent: 10,
+                              thickness: 2,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
             SizedBox(
@@ -136,13 +150,32 @@ class _CapacitEtablisScreenState extends State<CapacitEtablisScreen> {
             ),
             CustomButton(
               txt: "Ajouter",
-              fun: (p0, p1, p2) {
+              fun: (startLoading, stopLoading, btnState) {
+                List<int> newTables = [1, 2];
                 showDialog(
                   context: context,
                   builder: (context) => AjoutCapacite(
-                    tableMap: tables,
+                    newTables: newTables,
                     callBack: () {
-                      setState(() {});
+                      setState(() {
+                        for (var i = 0; i < newTables[0]; i++) {
+                          addTableWS(
+                            name: '0$i',
+                            nbPeople: newTables[1].toString(),
+                          ).then((exceptionOrMessage) {
+                            exceptionOrMessage.fold(
+                              (exception) {
+                                Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                              },
+                              (message) {
+                                calculateCouverts();
+                                setState(() {});
+                                // Utils.showCustomTopSnackBar(context, success: true, message: message);
+                              },
+                            );
+                          });
+                        }
+                      });
                     },
                   ),
                 );

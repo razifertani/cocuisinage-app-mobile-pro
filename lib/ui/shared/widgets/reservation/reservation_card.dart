@@ -76,7 +76,7 @@ class _ReservationCardState extends State<ReservationCard> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => PlanDeTableScreen(
-                          reservationID: widget.reservation.id,
+                          reservation: widget.reservation,
                         ),
                       ),
                     );

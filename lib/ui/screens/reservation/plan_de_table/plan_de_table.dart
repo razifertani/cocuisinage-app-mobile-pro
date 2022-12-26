@@ -1,3 +1,4 @@
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/reservation.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/porte_monnaie.dart/histo_de_depense.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/reservation/plan_de_table/historique_de_table/histo_de_table.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/reservation/plan_de_table/modifier_nmr_de_table/modifier_nmr_de_table.dart';
@@ -17,18 +18,22 @@ import '../../../shared/widgets/reservation/plan_de_table_card.dart';
 import '../../../shared/widgets/roles/delete_confirmation_popup.dart';
 
 class PlanDeTableScreen extends StatefulWidget {
-  final int? reservationID;
-  PlanDeTableScreen({Key? key, this.reservationID}) : super(key: key);
+  final Reservation? reservation;
+  PlanDeTableScreen({Key? key, this.reservation}) : super(key: key);
 
   @override
   State<PlanDeTableScreen> createState() => _PlanDeTableScreenState();
 }
 
 class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
+  var date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour, 0);
+
   @override
   void initState() {
     super.initState();
     initializeDateFormatting();
+
+    date = DateTime(widget.reservation!.day.year, widget.reservation!.day.month, widget.reservation!.day.day, int.parse(widget.reservation!.hour.split(':')[0]), int.parse(widget.reservation!.hour.split(':')[1]));
   }
 
   var date = DateTime(DateTime.now().year, DateTime.now().month,
@@ -134,8 +139,8 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            date = date.subtract(const Duration(hours: 1));
-                            setState(() {});
+                            // date = date.subtract(const Duration(hours: 1));
+                            // setState(() {});
                           },
                           child: Icon(
                             Icons.arrow_back_ios,
@@ -161,8 +166,8 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          date = date.add(const Duration(hours: 1));
-                          setState(() {});
+                          // date = date.add(const Duration(hours: 1));
+                          // setState(() {});
                         },
                         child: Icon(
                           Icons.arrow_forward_ios,
@@ -184,6 +189,30 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                 mainAxisSpacing: 1.5.h,
                 crossAxisSpacing: 1.5.h,
                 children: [
+                  // InkWell(
+                  //   onTap: () {
+                  //     showDialog(context: context, builder: (_) => new AjouterNmrDeTablePopUp()).then((value) => setState(() {}));
+                  //   },
+                  //   child: Card(
+                  //     color: const Color(0xFFE1E1E1),
+                  //     elevation: 3,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //     ),
+                  //     child: const Center(
+                  //       child: Icon(
+                  //         Icons.add,
+                  //         color: Color(0xFFAEAEAE),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  ...List.generate(
+                    Globals.profile.getEstablishment().tables.length,
+                    (index) => PlanDeTableCard(
+                      date: date,
+                      reservation: widget.reservation,
+                      table: Globals.profile.getEstablishment().tables[index],
                   InkWell(
                     onTap: () {
                       showDialog(

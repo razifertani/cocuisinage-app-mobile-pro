@@ -7,24 +7,20 @@ import '../../../../shared/custom_button.dart';
 
 class AjoutCapacite extends StatefulWidget {
   final Function callBack;
-  Map tableMap;
-  AjoutCapacite({Key? key, required this.tableMap, required this.callBack})
-      : super(key: key);
+  List<int> newTables;
+  AjoutCapacite({Key? key, required this.newTables, required this.callBack}) : super(key: key);
 
   @override
   State<AjoutCapacite> createState() => _AjoutCapaciteState();
 }
 
 class _AjoutCapaciteState extends State<AjoutCapacite> {
-  int pers = 1;
-  int couvert = 2;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       insetPadding: EdgeInsets.zero,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0))),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
       content: Builder(
         builder: (context) {
           return SizedBox(
@@ -38,7 +34,7 @@ class _AjoutCapaciteState extends State<AjoutCapacite> {
                       height: 20,
                     ),
                     Text(
-                      "Nombre de table a $couvert couverts",
+                      "Nombre de table à ${widget.newTables[1]} couverts",
                       style: MyTextStyles.subhead,
                     ),
                     SizedBox(
@@ -49,7 +45,7 @@ class _AjoutCapaciteState extends State<AjoutCapacite> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            if (couvert > 1) couvert--;
+                            if (widget.newTables[1] > 1) widget.newTables[1]--;
                             setState(() {});
                           },
                           child: Icon(
@@ -63,7 +59,7 @@ class _AjoutCapaciteState extends State<AjoutCapacite> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                if (pers > 1) pers--;
+                                if (widget.newTables[0] > 1) widget.newTables[0]--;
                                 setState(() {});
                               },
                               child: Card(
@@ -83,7 +79,7 @@ class _AjoutCapaciteState extends State<AjoutCapacite> {
                               width: 100,
                               height: 50,
                               child: Card(
-                                child: Center(child: Text('$pers')),
+                                child: Center(child: Text('${widget.newTables[0]}')),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
@@ -91,7 +87,7 @@ class _AjoutCapaciteState extends State<AjoutCapacite> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                pers++;
+                                widget.newTables[0]++;
                                 setState(() {});
                               },
                               child: Card(
@@ -111,7 +107,7 @@ class _AjoutCapaciteState extends State<AjoutCapacite> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            couvert++;
+                            widget.newTables[1]++;
                             setState(() {});
                           },
                           child: Icon(
@@ -128,7 +124,7 @@ class _AjoutCapaciteState extends State<AjoutCapacite> {
                     CustomButton(
                         txt: "Valider",
                         fun: (startLoading, stopLoading, btnState) {
-                          widget.tableMap["Table a $couvert couvets"] = pers;
+                          // widget.tableMap["$couvert"] = pers;
                           widget.callBack();
                           Navigator.pop(context);
                         })
