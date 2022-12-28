@@ -9,7 +9,8 @@ import '../../../screens/reservation/plan_de_table/plan_de_table.dart';
 class ReservationCard extends StatefulWidget {
   final Reservation reservation;
 
-  const ReservationCard({Key? key, required this.reservation}) : super(key: key);
+  const ReservationCard({Key? key, required this.reservation})
+      : super(key: key);
 
   @override
   State<ReservationCard> createState() => _ReservationCardState();
@@ -44,21 +45,26 @@ class _ReservationCardState extends State<ReservationCard> {
               height: 10,
             ),
             Divider(
-              color: Theme.of(context).scaffoldBackgroundColor == Colors.black ? Colors.white : Colors.black,
+              color: Theme.of(context).scaffoldBackgroundColor == Colors.black
+                  ? Colors.white
+                  : Colors.black,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   onPressed: () {
-                    deleteReservationWS(id: widget.reservation.id).then((exceptionOrMessage) {
+                    deleteReservationWS(id: widget.reservation.id)
+                        .then((exceptionOrMessage) {
                       exceptionOrMessage.fold(
                         (exception) {
-                          Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                          Utils.showCustomTopSnackBar(context,
+                              success: false, message: exception.toString());
                         },
                         (message) {
                           setState(() {});
-                          Utils.showCustomTopSnackBar(context, success: true, message: message);
+                          Utils.showCustomTopSnackBar(context,
+                              success: true, message: message);
                         },
                       );
                     });

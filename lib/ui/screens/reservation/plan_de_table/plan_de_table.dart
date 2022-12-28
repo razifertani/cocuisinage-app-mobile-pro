@@ -106,6 +106,11 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
     }
   }
 
+  changeDate(DateTime dateTime) {
+    date = dateTime;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +133,8 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
               const SizedBox(
                 height: 20,
               ),
-              HorizontalCalendar(),
+              HorizontalCalendar(
+                  initialDateTime: date, ondateChanged: changeDate),
               const SizedBox(
                 height: 20,
               ),
