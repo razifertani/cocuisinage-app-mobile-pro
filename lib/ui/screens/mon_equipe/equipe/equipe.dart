@@ -47,12 +47,15 @@ class _EquipeState extends State<Equipe> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: GestureDetector(
                   onTap: () {
-                    if (Globals.profile.isOwner || Globals.profile.id == Globals.profile.getColleagues()[index].id) {
+                    if (Globals.profile.isOwner ||
+                        Globals.profile.id ==
+                            Globals.profile.getColleagues()[index].id) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => DetailPlanning(
-                            collegueID: Globals.profile.getColleagues()[index].id,
+                            collegueID:
+                                Globals.profile.getColleagues()[index].id,
                           ),
                         ),
                       ).then((value) => setState(() {}));
@@ -60,65 +63,71 @@ class _EquipeState extends State<Equipe> {
                   },
                   child: Stack(
                     children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 2.5,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: CircleAvatar(
-                                radius: 45,
-                                backgroundColor: MyColors.red,
+                      SizedBox(
+                        width: double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 2.5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(12),
                                 child: CircleAvatar(
-                                  radius: 42,
-                                  backgroundImage: NetworkImage(
-                                    "${Globals.profile.getColleagues()[index].imageUrl}",
-                                  ),
-                                  child: Material(
-                                    shape: const CircleBorder(),
-                                    clipBehavior: Clip.hardEdge,
-                                    color: Colors.transparent,
-                                    child: InkWell(
-                                      onTap: () {},
+                                  radius: 45,
+                                  backgroundColor: MyColors.red,
+                                  child: CircleAvatar(
+                                    radius: 42,
+                                    backgroundImage: NetworkImage(
+                                      "${Globals.profile.getColleagues()[index].imageUrl}",
+                                    ),
+                                    child: Material(
+                                      shape: const CircleBorder(),
+                                      clipBehavior: Clip.hardEdge,
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        onTap: () {},
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: AutoSizeText(
-                                "${Globals.profile.getColleagues()[index].firstName} ${Globals.profile.getColleagues()[index].lastName}",
-                                style: MyTextStyles.subhead,
-                                maxLines: 1,
+                              const SizedBox(
+                                height: 8,
                               ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: AutoSizeText(
-                                "${Globals.profile.getColleagueRole(id: Globals.profile.getColleagues()[index].id).name}",
-                                maxLines: 1,
-                                style: MyTextStyles.body.copyWith(color: Colors.grey),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: AutoSizeText(
+                                  "${Globals.profile.getColleagues()[index].firstName} ${Globals.profile.getColleagues()[index].lastName}",
+                                  style: MyTextStyles.subhead,
+                                  maxLines: 1,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                          ],
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: AutoSizeText(
+                                  "${Globals.profile.getColleagueRole(id: Globals.profile.getColleagues()[index].id).name}",
+                                  maxLines: 1,
+                                  style: MyTextStyles.body
+                                      .copyWith(color: Colors.grey),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Visibility(
-                        visible: Globals.profile.isOwner || Globals.profile.id == Globals.profile.getColleagues()[index].id,
+                        visible: Globals.profile.isOwner ||
+                            Globals.profile.id ==
+                                Globals.profile.getColleagues()[index].id,
                         child: Positioned(
                           right: 20,
                           top: 5,
@@ -127,22 +136,29 @@ class _EquipeState extends State<Equipe> {
                               bool delete = await showDialog(
                                   context: context,
                                   builder: (context) => ConfirmationShowmodel(
-                                        title: "Vous êtes sur de supprimer cet employé ?",
+                                        title:
+                                            "Vous êtes sur de supprimer cet employé ?",
                                       ));
                               if (delete) {
                                 deleteUserWS(
-                                  userID: Globals.profile.getColleagues()[index].id,
+                                  userID:
+                                      Globals.profile.getColleagues()[index].id,
                                 ).then((exceptionOrMessage) {
                                   exceptionOrMessage.fold(
                                     (exception) {
-                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: false,
+                                          message: exception.toString());
                                     },
                                     (message) {
-                                      Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: true, message: message);
                                       if (!Globals.profile.isOwner) {
                                         Navigator.pushAndRemoveUntil(
                                           context,
-                                          MaterialPageRoute(builder: (context) => const SignInScreen()),
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SignInScreen()),
                                           (Route<dynamic> route) => false,
                                         );
                                       }
@@ -167,13 +183,16 @@ class _EquipeState extends State<Equipe> {
           const SizedBox(
             height: 20,
           ),
-          if (Globals.profile.getPermissions().any((element) => [Permission.ADD_COLLABORATORS].contains(element.pivotEstablishmentsPermissions.permissionId)))
+          if (Globals.profile.getPermissions().any((element) => [
+                Permission.ADD_COLLABORATORS
+              ].contains(element.pivotEstablishmentsPermissions.permissionId)))
             CustomButton(
                 txt: "Ajouter un membre",
                 fun: (startLoading, stopLoading, btnState) {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const AjouterEquipier()),
+                    MaterialPageRoute(
+                        builder: (context) => const AjouterEquipier()),
                   ).then((value) => setState(() {}));
                 }),
           SizedBox(
