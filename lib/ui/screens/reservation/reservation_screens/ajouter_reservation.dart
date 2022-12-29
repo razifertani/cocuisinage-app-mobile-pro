@@ -57,9 +57,7 @@ class _AjouterReservationState extends State<AjouterReservation> {
           ),
           centerTitle: true,
           backgroundColor: MyColors.red,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context))),
+          leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context))),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -72,16 +70,12 @@ class _AjouterReservationState extends State<AjouterReservation> {
                 height: 20,
               ),
               Center(
-                child: Text("Ajouter une réservation",
-                    style: MyTextStyles.headline.copyWith(
-                        color: MyColors.red, fontWeight: FontWeight.w600)),
+                child: Text("Ajouter une réservation", style: MyTextStyles.headline.copyWith(color: MyColors.red, fontWeight: FontWeight.w600)),
               ),
               const SizedBox(
                 height: 20,
               ),
-              Text("Nom de client",
-                  style: MyTextStyles.subhead
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text("Nom de client", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: nom,
                 hintText: "nom",
@@ -95,9 +89,7 @@ class _AjouterReservationState extends State<AjouterReservation> {
               const SizedBox(
                 height: 10,
               ),
-              Text("Numéro de téléphone",
-                  style: MyTextStyles.subhead
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text("Numéro de téléphone", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: phone,
                 hintText: "01.02.03.04.05",
@@ -112,9 +104,7 @@ class _AjouterReservationState extends State<AjouterReservation> {
               const SizedBox(
                 height: 10,
               ),
-              Text("Nombre de personne",
-                  style: MyTextStyles.subhead
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text("Nombre de personne", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: nombre,
                 hintText: "2",
@@ -128,9 +118,7 @@ class _AjouterReservationState extends State<AjouterReservation> {
               const SizedBox(
                 height: 10,
               ),
-              Text("Date",
-                  style: MyTextStyles.subhead
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text("Date", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
               // CustomCardTextForm(
               //   controller: date,
               //   hintText: "2022-04-22",
@@ -150,9 +138,7 @@ class _AjouterReservationState extends State<AjouterReservation> {
                 ondateChanged: updateDate,
                 initialDate: date,
               )),
-              Text("Heure",
-                  style: MyTextStyles.subhead
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text("Heure", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
               // CustomCardTextForm(
               //   controller: heure,
               //   hintText: "15:30",
@@ -168,11 +154,10 @@ class _AjouterReservationState extends State<AjouterReservation> {
               // ),
               Center(
                   child: PickTime(
+                time: TimeOfDay(hour: 7, minute: 15),
                 onTimeChanged: updateTime,
               )),
-              Text("Commentaire",
-                  style: MyTextStyles.subhead
-                      .copyWith(fontWeight: FontWeight.w600)),
+              Text("Commentaire", style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600)),
               CustomCardTextForm(
                 controller: cmntr,
                 hintText: "Votre commentaire",
@@ -204,14 +189,11 @@ class _AjouterReservationState extends State<AjouterReservation> {
                             stopLoading();
                             exceptionOrMessage.fold(
                               (exception) {
-                                Utils.showCustomTopSnackBar(context,
-                                    success: false,
-                                    message: exception.toString());
+                                Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
                               },
                               (message) {
                                 setState(() {});
-                                Utils.showCustomTopSnackBar(context,
-                                    success: true, message: message);
+                                Utils.showCustomTopSnackBar(context, success: true, message: message);
                                 Navigator.pop(context);
                               },
                             );
