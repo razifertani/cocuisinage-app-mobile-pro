@@ -36,8 +36,6 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
     date = DateTime(widget.reservation!.day.year, widget.reservation!.day.month, widget.reservation!.day.day, int.parse(widget.reservation!.hour.split(':')[0]), int.parse(widget.reservation!.hour.split(':')[1]));
   }
 
-  var date = DateTime(DateTime.now().year, DateTime.now().month,
-      DateTime.now().day, DateTime.now().hour, 0);
   TextEditingController nmr = TextEditingController();
   // Tap location will be used use to position the context menu
   Offset _tapPosition = Offset.zero;
@@ -50,37 +48,29 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
 
   // This function will be called when you long press on the blue box or the image
   void _showContextMenu(BuildContext context) async {
-    final RenderObject? overlay =
-        Overlay.of(context)?.context.findRenderObject();
+    final RenderObject? overlay = Overlay.of(context)?.context.findRenderObject();
 
-    final result = await showMenu(
-        context: context,
-        position: RelativeRect.fromRect(
-            Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
-            Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width,
-                overlay.paintBounds.size.height)),
-        items: [
-          const PopupMenuItem(
-            value: 'Historique',
-            child: Text('Historique'),
-          ),
-          const PopupMenuItem(
-            value: 'Scaner code QR',
-            child: Text('Scaner code QR'),
-          ),
-          const PopupMenuItem(
-            value: 'Modifier',
-            child: Text('Modifier numéro de table'),
-          ),
-          const PopupMenuItem(
-            value: 'Supprimer',
-            child: Text('Supprimer'),
-          ),
-        ]);
+    final result = await showMenu(context: context, position: RelativeRect.fromRect(Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30), Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width, overlay.paintBounds.size.height)), items: [
+      const PopupMenuItem(
+        value: 'Historique',
+        child: Text('Historique'),
+      ),
+      const PopupMenuItem(
+        value: 'Scaner code QR',
+        child: Text('Scaner code QR'),
+      ),
+      const PopupMenuItem(
+        value: 'Modifier',
+        child: Text('Modifier numéro de table'),
+      ),
+      const PopupMenuItem(
+        value: 'Supprimer',
+        child: Text('Supprimer'),
+      ),
+    ]);
     switch (result) {
       case 'Historique':
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => HistoriqueDeTable()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HistoriqueDeTable()));
 
         break;
       case 'Scaner code QR':
@@ -121,9 +111,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
         ),
         centerTitle: true,
         backgroundColor: MyColors.red,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context)),
+        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -133,8 +121,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
               const SizedBox(
                 height: 20,
               ),
-              HorizontalCalendar(
-                  initialDateTime: date, ondateChanged: changeDate),
+              HorizontalCalendar(initialDateTime: date, ondateChanged: changeDate),
               const SizedBox(
                 height: 20,
               ),
@@ -153,8 +140,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                             color: MyColors.red,
                           )),
                       Text(
-                        DateFormat.Hm()
-                            .format(date.subtract(const Duration(hours: 1))),
+                        DateFormat.Hm().format(date.subtract(const Duration(hours: 1))),
                         style: MyTextStyles.body.copyWith(color: MyColors.red),
                       ),
                     ],
@@ -166,8 +152,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                   Row(
                     children: [
                       Text(
-                        DateFormat.Hm()
-                            .format(date.add(const Duration(hours: 1))),
+                        DateFormat.Hm().format(date.add(const Duration(hours: 1))),
                         style: MyTextStyles.body.copyWith(color: MyColors.red),
                       ),
                       GestureDetector(
@@ -195,36 +180,9 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                 mainAxisSpacing: 1.5.h,
                 crossAxisSpacing: 1.5.h,
                 children: [
-                  // InkWell(
-                  //   onTap: () {
-                  //     showDialog(context: context, builder: (_) => new AjouterNmrDeTablePopUp()).then((value) => setState(() {}));
-                  //   },
-                  //   child: Card(
-                  //     color: const Color(0xFFE1E1E1),
-                  //     elevation: 3,
-                  //     shape: RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.circular(10),
-                  //     ),
-                  //     child: const Center(
-                  //       child: Icon(
-                  //         Icons.add,
-                  //         color: Color(0xFFAEAEAE),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  ...List.generate(
-                    Globals.profile.getEstablishment().tables.length,
-                    (index) => PlanDeTableCard(
-                      date: date,
-                      reservation: widget.reservation,
-                      table: Globals.profile.getEstablishment().tables[index],
                   InkWell(
                     onTap: () {
-                      showDialog(
-                              context: context,
-                              builder: (_) => new AjouterNmrDeTablePopUp())
-                          .then((value) => setState(() {}));
+                      showDialog(context: context, builder: (_) => new AjouterNmrDeTablePopUp()).then((value) => setState(() {}));
                     },
                     child: Card(
                       color: const Color(0xFFE1E1E1),
@@ -242,16 +200,10 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                   ),
                   ...List.generate(
                     Globals.profile.getEstablishment().tables.length,
-                    (index) => GestureDetector(
-                      // get tap location
-                      onTapDown: (details) => _getTapPosition(details),
-                      // show the context menu
-                      onLongPress: () => _showContextMenu(context),
-                      child: PlanDeTableCard(
-                        date: date,
-                        reservationID: widget.reservationID,
-                        table: Globals.profile.getEstablishment().tables[index],
-                      ),
+                    (index) => PlanDeTableCard(
+                      date: date,
+                      reservation: widget.reservation,
+                      table: Globals.profile.getEstablishment().tables[index],
                     ),
                   ),
                 ],

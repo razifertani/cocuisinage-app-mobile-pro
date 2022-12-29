@@ -115,7 +115,7 @@ Future<Either<Exception, String>> updateEstablishmentBookingDurationWS({required
   try {
     final response = await http.post(
       Uri.parse(
-        '${Globals.baseUrl}/establishment/${establishmentID.toString()}/booking_duration/${bookingDuration.toString()}',
+        '${Globals.baseUrl}/establishment/${establishmentID.toString()}/update_booking_duration/${bookingDuration.toString()}',
       ),
       headers: {
         HttpHeaders.acceptHeader: 'application/json',

@@ -2,6 +2,7 @@ import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/collegue.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/planning.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/reservation.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/table.dart';
+import 'package:intl/intl.dart';
 
 class Establishment {
   late int id;
@@ -23,6 +24,7 @@ class Establishment {
   List<Planning>? plannings;
   late List<Reservation> reservations;
   late List<Table> tables;
+  late List<Schedule> schedules;
 
   Establishment({
     required this.id,
@@ -44,6 +46,7 @@ class Establishment {
     this.plannings,
     required this.reservations,
     required this.tables,
+    required this.schedules,
   });
 
   Establishment.fromJson(Map<String, dynamic> json) {
@@ -86,5 +89,33 @@ class Establishment {
         tables.add(new Table.fromJson(v));
       });
     }
+    if (json['schedules'] != null) {
+      schedules = <Schedule>[];
+      json['schedules'].forEach((v) {
+        schedules.add(new Schedule.fromJson(v));
+      });
+    }
+  }
+}
+
+class Schedule {
+  late int id;
+  late int establishmentId;
+  late int day;
+  DateTime? begin;
+  DateTime? ending;
+  DateTime? secondBegin;
+  DateTime? secondEnd;
+
+  Schedule({required this.id, required this.establishmentId, required this.day, this.begin, this.ending, this.secondBegin, this.secondEnd});
+
+  Schedule.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    establishmentId = json['establishment_id'];
+    day = int.parse(json['day']);
+    begin = json['begin'] != null ? DateFormat.Hm().parse(json['begin']) : null;
+    ending = json['ending'] != null ? DateFormat.Hm().parse(json['ending']) : null;
+    secondBegin = json['second_begin'] != null ? DateFormat.Hm().parse(json['second_begin']) : null;
+    secondEnd = json['second_end'] != null ? DateFormat.Hm().parse(json['second_end']) : null;
   }
 }
