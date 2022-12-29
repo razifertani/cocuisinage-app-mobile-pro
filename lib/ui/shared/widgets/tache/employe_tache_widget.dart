@@ -79,7 +79,9 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                           context: context,
                           builder: (_) => PopUpWidget(
                             controller: msg,
-                            title: msg.text.isNotEmpty ? "Modifier un commentaire" : "Ajouter un commentaire",
+                            title: msg.text.isNotEmpty
+                                ? "Modifier un commentaire"
+                                : "Ajouter un commentaire",
                             function: (startLoading, stopLoading, btnState) {
                               if (msg.text != '') {
                                 startLoading();
@@ -92,12 +94,15 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                                   stopLoading();
                                   exceptionOrMessage.fold(
                                     (exception) {
-                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: false,
+                                          message: exception.toString());
                                     },
                                     (message) {
                                       msg.clear();
                                       setState(() {});
-                                      Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: true, message: message);
                                       Navigator.pop(context, msg.text);
                                     },
                                   );
@@ -196,11 +201,14 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                             stopLoading();
                             exceptionOrMessage.fold(
                               (exception) {
-                                Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                Utils.showCustomTopSnackBar(context,
+                                    success: false,
+                                    message: exception.toString());
                               },
                               (message) {
                                 setState(() {});
-                                Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                Utils.showCustomTopSnackBar(context,
+                                    success: true, message: message);
                               },
                             );
                           });
@@ -242,9 +250,11 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                 height: 15.h,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    widget.task.imageUrl!,
-                  ),
+                  child: widget.task.imageUrl!.contains(".pdf")
+                      ? Text(widget.task.imageUrl!)
+                      : Image.network(
+                          widget.task.imageUrl!,
+                        ),
                 ),
               ),
             ),
@@ -281,9 +291,11 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                     height: 15.h,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        widget.task.imageUrl!,
-                      ),
+                      child: widget.task.imageUrl!.contains(".pdf")
+                          ? Text(widget.task.imageUrl!)
+                          : Image.network(
+                              widget.task.imageUrl!,
+                            ),
                     ),
                   ),
                 ),
