@@ -8,6 +8,7 @@ import '../../../Theme/my_text_styles.dart';
 
 import '../../../controllers/theme_controller.dart';
 import '../../shared/widgets/commandes_widgets/expansiontile_widget.dart';
+import 'commandes_details/commandes_details_screen.dart';
 
 class CommadesAnnules extends StatelessWidget {
   const CommadesAnnules({Key? key}) : super(key: key);
@@ -35,65 +36,55 @@ class CommadesAnnules extends StatelessWidget {
           ),
           ExpansionTileCommandWidget(
             title: "A domicile",
-            prix: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFFD43347).withOpacity(0.16),
-              ),
-              height: 5.h,
-              width: 20.w,
-              child: Center(
-                  child: Text(
-                "30.00 €",
-                style: MyTextStyles.body
-                    .copyWith(color: p.dark ? Colors.white : MyColors.red),
-              )),
-            ),
-            statue: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFFD43347).withOpacity(0.16),
-              ),
-              height: 5.h,
-              width: 20.w,
-              child: Center(
-                  child: Text(
-                "Annulé",
-                style: MyTextStyles.body
-                    .copyWith(color: p.dark ? Colors.white : MyColors.red),
-              )),
-            ),
-          ),
-          ExpansionTileCommandWidget(
-            title: "Click and collecte",
-            prix: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFFD43347).withOpacity(0.16),
-              ),
-              height: 5.h,
-              width: 20.w,
-              child: Center(
-                  child: Text(
-                "30.00 €",
-                style: MyTextStyles.body
-                    .copyWith(color: p.dark ? Colors.white : MyColors.red),
-              )),
-            ),
-            statue: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFFD43347).withOpacity(0.16),
-              ),
-              height: 5.h,
-              width: 20.w,
-              child: Center(
-                  child: Text(
-                "Annulé",
-                style: MyTextStyles.body
-                    .copyWith(color: p.dark ? Colors.white : MyColors.red),
-              )),
-            ),
+            rows: [
+              ...List.generate(
+                3,
+                (index) => DataRow(cells: [
+                  DataCell(
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFD43347).withOpacity(0.16),
+                      ),
+                      height: 5.h,
+                      width: 20.w,
+                      child: Center(
+                          child: Text(
+                        "30.00 €",
+                        style: MyTextStyles.body.copyWith(
+                            color: p.dark ? Colors.white : MyColors.red),
+                      )),
+                    ),
+                  ),
+                  DataCell(
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFD43347).withOpacity(0.16),
+                      ),
+                      height: 5.h,
+                      width: 20.w,
+                      child: Center(
+                          child: Text(
+                        "Annulé",
+                        style: MyTextStyles.body.copyWith(
+                            color: p.dark ? Colors.white : MyColors.red),
+                      )),
+                    ),
+                  ),
+                  DataCell(IconButton(
+                    icon: const Icon(Icons.info_outline),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CommandDetailScreen()),
+                      );
+                    },
+                  )),
+                ]),
+              )
+            ],
           ),
           const SizedBox(
             height: 20,

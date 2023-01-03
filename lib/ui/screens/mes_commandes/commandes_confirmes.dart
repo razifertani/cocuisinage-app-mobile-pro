@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../controllers/theme_controller.dart';
+import 'commandes_details/commandes_details_screen.dart';
 
 class CommandesConfirm extends StatelessWidget {
   const CommandesConfirm({Key? key}) : super(key: key);
@@ -34,65 +35,57 @@ class CommandesConfirm extends StatelessWidget {
           ),
           ExpansionTileCommandWidget(
             title: "A domicile",
-            prix: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFFD43347).withOpacity(0.16),
-              ),
-              height: 5.h,
-              width: 20.w,
-              child: Center(
-                  child: Text(
-                "30.00 €",
-                style: MyTextStyles.body
-                    .copyWith(color: p.dark ? Colors.white : MyColors.red),
-              )),
-            ),
-            statue: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFFFCC669).withOpacity(0.6),
-              ),
-              height: 5.h,
-              width: 20.w,
-              child: Center(
-                  child: Text(
-                "En cours",
-                style: MyTextStyles.body.copyWith(
-                    color: p.dark ? Colors.white : const Color(0xFFD97808)),
-              )),
-            ),
-          ),
-          ExpansionTileCommandWidget(
-            title: "Click and collecte",
-            prix: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFFD43347).withOpacity(0.16),
-              ),
-              height: 5.h,
-              width: 20.w,
-              child: Center(
-                  child: Text(
-                "30.00 €",
-                style: MyTextStyles.body
-                    .copyWith(color: p.dark ? Colors.white : MyColors.red),
-              )),
-            ),
-            statue: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFF52C781).withOpacity(0.36),
-              ),
-              height: 5.h,
-              width: 20.w,
-              child: Center(
-                  child: Text(
-                "Terminé",
-                style: MyTextStyles.body
-                    .copyWith(color: p.dark ? Colors.white : Color(0xFF489A69)),
-              )),
-            ),
+            rows: [
+              ...List.generate(
+                3,
+                (index) => DataRow(cells: [
+                  DataCell(
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFD43347).withOpacity(0.16),
+                      ),
+                      height: 5.h,
+                      width: 20.w,
+                      child: Center(
+                          child: Text(
+                        "30.00 €",
+                        style: MyTextStyles.body.copyWith(
+                            color: p.dark ? Colors.white : MyColors.red),
+                      )),
+                    ),
+                  ),
+                  DataCell(
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFFCC669).withOpacity(0.6),
+                      ),
+                      height: 5.h,
+                      width: 20.w,
+                      child: Center(
+                          child: Text(
+                        "En cours",
+                        style: MyTextStyles.body.copyWith(
+                            color: p.dark
+                                ? Colors.white
+                                : const Color(0xFFD97808)),
+                      )),
+                    ),
+                  ),
+                  DataCell(IconButton(
+                    icon: const Icon(Icons.info_outline),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CommandDetailScreen()),
+                      );
+                    },
+                  )),
+                ]),
+              )
+            ],
           ),
           const SizedBox(
             height: 20,
