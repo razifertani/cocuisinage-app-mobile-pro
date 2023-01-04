@@ -1,4 +1,6 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/Theme/my_colors.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/commande.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +12,24 @@ import '../../../controllers/theme_controller.dart';
 import '../../shared/widgets/commandes_widgets/expansiontile_widget.dart';
 import 'commandes_details/commandes_details_screen.dart';
 
-class CommadesAnnules extends StatelessWidget {
+class CommadesAnnules extends StatefulWidget {
   const CommadesAnnules({Key? key}) : super(key: key);
+
+  @override
+  State<CommadesAnnules> createState() => _CommadesAnnulesState();
+}
+
+class _CommadesAnnulesState extends State<CommadesAnnules> {
+  List<Commande> commandes = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      commandes = Globals.profile.getEstablishment().commandes.where((element) => element.status == 2).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +45,7 @@ class CommadesAnnules extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Text(
               "Mes commandes",
-              style:
-                  MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+              style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           const SizedBox(
@@ -38,52 +55,55 @@ class CommadesAnnules extends StatelessWidget {
             title: "A domicile",
             rows: [
               ...List.generate(
-                3,
-                (index) => DataRow(cells: [
-                  DataCell(
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xFFD43347).withOpacity(0.16),
-                      ),
-                      height: 5.h,
-                      width: 20.w,
-                      child: Center(
+                commandes.length,
+                (index) => DataRow(
+                  cells: [
+                    DataCell(
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: const Color(0xFFD43347).withOpacity(0.16),
+                        ),
+                        height: 5.h,
+                        width: 20.w,
+                        child: Center(
                           child: Text(
-                        "30.00 €",
-                        style: MyTextStyles.body.copyWith(
-                            color: p.dark ? Colors.white : MyColors.red),
-                      )),
-                    ),
-                  ),
-                  DataCell(
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xFFD43347).withOpacity(0.16),
+                            "${commandes[index].montant} €",
+                            style: MyTextStyles.body.copyWith(color: p.dark ? Colors.white : MyColors.red),
+                          ),
+                        ),
                       ),
-                      height: 5.h,
-                      width: 20.w,
-                      child: Center(
-                          child: Text(
-                        "Annulé",
-                        style: MyTextStyles.body.copyWith(
-                            color: p.dark ? Colors.white : MyColors.red),
-                      )),
                     ),
-                  ),
-                  DataCell(IconButton(
-                    icon: const Icon(Icons.info_outline),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CommandDetailScreen()),
-                      );
-                    },
-                  )),
-                ]),
-              )
+                    DataCell(
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: const Color(0xFFD43347).withOpacity(0.16),
+                        ),
+                        height: 5.h,
+                        width: 20.w,
+                        child: Center(
+                          child: Text(
+                            "Annulé",
+                            style: MyTextStyles.body.copyWith(color: p.dark ? Colors.white : MyColors.red),
+                          ),
+                        ),
+                      ),
+                    ),
+                    DataCell(
+                      IconButton(
+                        icon: const Icon(Icons.info_outline),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CommandDetailScreen()),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           const SizedBox(

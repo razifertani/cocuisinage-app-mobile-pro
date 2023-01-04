@@ -1,4 +1,5 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/collegue.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/commande.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/planning.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/reservation.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/table.dart';
@@ -25,6 +26,7 @@ class Establishment {
   late List<Reservation> reservations;
   late List<Table> tables;
   late List<Schedule> schedules;
+  late List<Commande> commandes;
 
   Establishment({
     required this.id,
@@ -47,6 +49,7 @@ class Establishment {
     required this.reservations,
     required this.tables,
     required this.schedules,
+    required this.commandes,
   });
 
   Establishment.fromJson(Map<String, dynamic> json) {
@@ -93,6 +96,12 @@ class Establishment {
       schedules = <Schedule>[];
       json['schedules'].forEach((v) {
         schedules.add(new Schedule.fromJson(v));
+      });
+    }
+    if (json['commandes'] != null) {
+      commandes = <Commande>[];
+      json['commandes'].forEach((v) {
+        commandes.add(new Commande.fromJson(v));
       });
     }
   }
