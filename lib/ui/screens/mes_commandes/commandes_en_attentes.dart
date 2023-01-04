@@ -1,5 +1,6 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/Theme/my_colors.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/commande.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -24,7 +25,9 @@ class _CommandesEnAttentesState extends State<CommandesEnAttentes> {
   void initState() {
     super.initState();
     setState(() {
-      commandes = Globals.profile.getEstablishment().commandes.where((element) => element.status == 3 || element.status == 4).toList();
+      commandes = Globals.profile.getEstablishment().commandes.where((element) {
+        return DateTime.parse(element.createdAt!).isSameDayAs(DateTime(2023, 01, 03)) && (element.status == 3 || element.status == 4);
+      }).toList();
     });
   }
 

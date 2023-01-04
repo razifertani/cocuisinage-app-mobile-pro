@@ -1,6 +1,7 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/Theme/my_colors.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/commande.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,9 @@ class _CommadesAnnulesState extends State<CommadesAnnules> {
     super.initState();
 
     setState(() {
-      commandes = Globals.profile.getEstablishment().commandes.where((element) => element.status == 2).toList();
+      commandes = Globals.profile.getEstablishment().commandes.where((element) {
+        return DateTime.parse(element.createdAt!).isSameDayAs(DateTime(2023, 01, 03)) && element.status == 2;
+      }).toList();
     });
   }
 
