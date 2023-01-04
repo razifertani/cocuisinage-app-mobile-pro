@@ -92,7 +92,7 @@ class _CommandesConfirmState extends State<CommandesConfirm> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CommandDetailScreen()),
+                            MaterialPageRoute(builder: (context) => CommandDetailScreen(commande: commandes[index])),
                           );
                         },
                       ),

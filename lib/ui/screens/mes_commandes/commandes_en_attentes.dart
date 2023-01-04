@@ -82,7 +82,7 @@ class _CommandesEnAttentesState extends State<CommandesEnAttentes> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CommandDetailScreen()),
+                        MaterialPageRoute(builder: (context) => CommandDetailScreen(commande: commandes[index])),
                       );
                     },
                   )),

@@ -96,7 +96,7 @@ class _CommadesAnnulesState extends State<CommadesAnnules> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CommandDetailScreen()),
+                            MaterialPageRoute(builder: (context) => CommandDetailScreen(commande: commandes[index])),
                           );
                         },
                       ),
