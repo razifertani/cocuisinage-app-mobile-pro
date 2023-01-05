@@ -12,7 +12,8 @@ import '../../shared/widgets/commandes_widgets/expansiontile_widget.dart';
 import 'commandes_details/commandes_details_screen.dart';
 
 class CommandesEnAttentes extends StatefulWidget {
-  const CommandesEnAttentes({Key? key}) : super(key: key);
+  DateTime selectedDate;
+  CommandesEnAttentes({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
   State<CommandesEnAttentes> createState() => _CommandesEnAttentesState();
@@ -26,7 +27,9 @@ class _CommandesEnAttentesState extends State<CommandesEnAttentes> {
     super.initState();
     setState(() {
       commandes = Globals.profile.getEstablishment().commandes.where((element) {
-        return DateTime.parse(element.createdAt!).isSameDayAs(DateTime(2023, 01, 03)) && (element.status == 3 || element.status == 4);
+        return DateTime.parse(element.createdAt!)
+                .isSameDayAs(widget.selectedDate) &&
+            (element.status == 3 || element.status == 4);
       }).toList();
     });
   }
@@ -45,7 +48,8 @@ class _CommandesEnAttentesState extends State<CommandesEnAttentes> {
             alignment: Alignment.topLeft,
             child: Text(
               "Mes commandes",
-              style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+              style:
+                  MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           const SizedBox(
@@ -68,15 +72,19 @@ class _CommandesEnAttentesState extends State<CommandesEnAttentes> {
                       child: Center(
                           child: Text(
                         "${commandes[index].montant} €",
-                        style: MyTextStyles.body.copyWith(color: p.dark ? Colors.white : MyColors.red),
+                        style: MyTextStyles.body.copyWith(
+                            color: p.dark ? Colors.white : MyColors.red),
                       )),
                     ),
                   ),
                   DataCell(
                     Row(
                       children: [
-                        GestureDetector(child: Image.asset("assets/icons/close-square.png")),
-                        GestureDetector(child: Image.asset("assets/icons/tick-square.png")),
+                        GestureDetector(
+                            child:
+                                Image.asset("assets/icons/close-square.png")),
+                        GestureDetector(
+                            child: Image.asset("assets/icons/tick-square.png")),
                       ],
                     ),
                   ),
@@ -85,7 +93,9 @@ class _CommandesEnAttentesState extends State<CommandesEnAttentes> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CommandDetailScreen(commande: commandes[index])),
+                        MaterialPageRoute(
+                            builder: (context) => CommandDetailScreen(
+                                commande: commandes[index])),
                       );
                     },
                   )),

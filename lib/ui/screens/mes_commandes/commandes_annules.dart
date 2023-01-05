@@ -14,7 +14,8 @@ import '../../shared/widgets/commandes_widgets/expansiontile_widget.dart';
 import 'commandes_details/commandes_details_screen.dart';
 
 class CommadesAnnules extends StatefulWidget {
-  const CommadesAnnules({Key? key}) : super(key: key);
+  DateTime selectedDate;
+  CommadesAnnules({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
   State<CommadesAnnules> createState() => _CommadesAnnulesState();
@@ -29,7 +30,9 @@ class _CommadesAnnulesState extends State<CommadesAnnules> {
 
     setState(() {
       commandes = Globals.profile.getEstablishment().commandes.where((element) {
-        return DateTime.parse(element.createdAt!).isSameDayAs(DateTime(2023, 01, 03)) && element.status == 2;
+        return DateTime.parse(element.createdAt!)
+                .isSameDayAs(widget.selectedDate) &&
+            element.status == 2;
       }).toList();
     });
   }
@@ -48,7 +51,8 @@ class _CommadesAnnulesState extends State<CommadesAnnules> {
             alignment: Alignment.topLeft,
             child: Text(
               "Mes commandes",
-              style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+              style:
+                  MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           const SizedBox(
@@ -72,7 +76,8 @@ class _CommadesAnnulesState extends State<CommadesAnnules> {
                         child: Center(
                           child: Text(
                             "${commandes[index].montant} €",
-                            style: MyTextStyles.body.copyWith(color: p.dark ? Colors.white : MyColors.red),
+                            style: MyTextStyles.body.copyWith(
+                                color: p.dark ? Colors.white : MyColors.red),
                           ),
                         ),
                       ),
@@ -88,7 +93,8 @@ class _CommadesAnnulesState extends State<CommadesAnnules> {
                         child: Center(
                           child: Text(
                             "Annulé",
-                            style: MyTextStyles.body.copyWith(color: p.dark ? Colors.white : MyColors.red),
+                            style: MyTextStyles.body.copyWith(
+                                color: p.dark ? Colors.white : MyColors.red),
                           ),
                         ),
                       ),
@@ -99,7 +105,9 @@ class _CommadesAnnulesState extends State<CommadesAnnules> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CommandDetailScreen(commande: commandes[index])),
+                            MaterialPageRoute(
+                                builder: (context) => CommandDetailScreen(
+                                    commande: commandes[index])),
                           );
                         },
                       ),

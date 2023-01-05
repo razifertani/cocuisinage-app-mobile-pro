@@ -10,38 +10,35 @@ typedef void TimeCallback(String date);
 
 class HeureScreen extends StatefulWidget {
   final TimeCallback ontimeChanged;
-  const HeureScreen({Key? key, required this.ontimeChanged}) : super(key: key);
+  final DateTime currentDate;
+  const HeureScreen(
+      {Key? key, required this.ontimeChanged, required this.currentDate})
+      : super(key: key);
 
   @override
   State<HeureScreen> createState() => _HeureScreenState();
 }
 
 class _HeureScreenState extends State<HeureScreen> {
+  late int date;
+
   @override
   void initState() {
     super.initState();
     initializeDateFormatting();
+    date = widget.currentDate.weekday - 1;
   }
 
-  var date = DateTime.now();
   int currentVIndex = 0;
   int currentHIndex = 0;
   void switchIndex(hIndex, vIndex) {
     currentHIndex = hIndex;
     currentVIndex = vIndex;
-    // widget.ontimeChanged.call(hIndex == 0
-    //     ? ptDejTemp[vIndex]
-    //     : hIndex == 1
-    //         ? dejTemp[vIndex]
-    //         : dinerTemp[vIndex]);
+    print(date);
     setState(() {});
   }
 
-  List<String> labels = ["Petit Déjeuner", "Déjeuner", "Dinner"];
-
-  // List<String> ptDejTemp = ["8:00", "8:15", "8:30", "8:45", "9:00"];
-  // List<String> dejTemp = ["12:00", "12:15", "12:30", "12:45", "13:00"];
-  // List<String> dinerTemp = ["18:00", "18:15", "18:30", "18:45", "19:00"];
+  List<String> labels = ["Petit Déjeuner", "Déjeuner"];
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +53,7 @@ class _HeureScreenState extends State<HeureScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ...List.generate(
-                  3,
+                  2,
                   (hIndex) => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -71,7 +68,34 @@ class _HeureScreenState extends State<HeureScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ...List.generate(
-                                  5,
+                                  hIndex == 0
+                                      ? (((Globals.profile
+                                                              .getEstablishment()
+                                                              .schedules[date]
+                                                              .ending ??
+                                                          DateTime(
+                                                              2022, 1, 1, 12, 0))
+                                                      .difference(Globals
+                                                              .profile
+                                                              .getEstablishment()
+                                                              .schedules[date]
+                                                              .begin ??
+                                                          DateTime(
+                                                              2022, 1, 1, 8, 0)))
+                                                  .inMinutes)
+                                              .toInt() ~/
+                                          Globals.profile
+                                              .getEstablishment()
+                                              .bookingDuration
+                                      : (((Globals.profile
+                                                              .getEstablishment()
+                                                              .schedules[date]
+                                                              .secondEnd ??
+                                                          DateTime(2022, 1, 1, 12, 0))
+                                                      .difference(Globals.profile.getEstablishment().schedules[date].secondBegin ?? DateTime(2022, 1, 1, 8, 0)))
+                                                  .inMinutes)
+                                              .toInt() ~/
+                                          Globals.profile.getEstablishment().bookingDuration,
                                   (vIndex) => Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 4),
@@ -83,22 +107,21 @@ class _HeureScreenState extends State<HeureScreen> {
                                             height: 45,
                                             width: 60,
                                             child: Center(
-                                              child: hIndex == 0
-                                                  ? Text(DateFormat.Hm().format(
-                                                      DateTime(2022, 1, 1, 8, 0)
-                                                          .add(Duration(
-                                                              minutes: Globals
-                                                                      .profile
-                                                                      .getEstablishment()
-                                                                      .bookingDuration *
-                                                                  (vIndex)))))
-                                                  : hIndex == 1
-                                                      ? Text(DateFormat.Hm().format(
-                                                          DateTime(2022, 1, 1, 12, 0)
-                                                              .add(Duration(
-                                                                  minutes: Globals.profile.getEstablishment().bookingDuration * (vIndex)))))
-                                                      : Text(DateFormat.Hm().format(DateTime(2022, 1, 1, 18, 0).add(Duration(minutes: Globals.profile.getEstablishment().bookingDuration * (vIndex))))),
-                                            ),
+                                                child: hIndex == 0
+                                                    ? Text(DateFormat.Hm().format(Globals
+                                                            .profile
+                                                            .getEstablishment()
+                                                            .schedules[1]
+                                                            .begin ??
+                                                        DateTime(2022, 1, 1, 8, 0)
+                                                            .add(Duration(
+                                                                minutes: Globals
+                                                                        .profile
+                                                                        .getEstablishment()
+                                                                        .bookingDuration *
+                                                                    (vIndex)))))
+                                                    : Text(
+                                                        DateFormat.Hm().format(Globals.profile.getEstablishment().schedules[1].secondBegin ?? DateTime(2022, 1, 1, 12, 0).add(Duration(minutes: Globals.profile.getEstablishment().bookingDuration * (vIndex)))))),
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(6),

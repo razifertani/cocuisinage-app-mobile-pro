@@ -32,6 +32,12 @@ class _MesCommandesScreenState extends State<MesCommandesScreen> {
     initializeDateFormatting();
   }
 
+  DateTime selectedDate = DateTime.now();
+  changeDate(DateTime date) {
+    selectedDate = date;
+    setState(() {});
+  }
+
   TabBar get _tabBar => TabBar(
         indicatorColor: Colors.red,
         tabs: [
@@ -40,7 +46,11 @@ class _MesCommandesScreenState extends State<MesCommandesScreen> {
               'Confirmé',
               group: myGroup,
               maxLines: 1,
-              style: MyTextStyles.subhead.copyWith(color: Theme.of(context).scaffoldBackgroundColor != Colors.black ? Colors.black : null),
+              style: MyTextStyles.subhead.copyWith(
+                  color:
+                      Theme.of(context).scaffoldBackgroundColor != Colors.black
+                          ? Colors.black
+                          : null),
             ),
           ),
           Tab(
@@ -48,7 +58,11 @@ class _MesCommandesScreenState extends State<MesCommandesScreen> {
               'En attente',
               group: myGroup,
               maxLines: 1,
-              style: MyTextStyles.subhead.copyWith(color: Theme.of(context).scaffoldBackgroundColor != Colors.black ? Colors.black : null),
+              style: MyTextStyles.subhead.copyWith(
+                  color:
+                      Theme.of(context).scaffoldBackgroundColor != Colors.black
+                          ? Colors.black
+                          : null),
             ),
           ),
           Tab(
@@ -56,7 +70,11 @@ class _MesCommandesScreenState extends State<MesCommandesScreen> {
               'Annulé',
               group: myGroup,
               maxLines: 1,
-              style: MyTextStyles.subhead.copyWith(color: Theme.of(context).scaffoldBackgroundColor != Colors.black ? Colors.black : null),
+              style: MyTextStyles.subhead.copyWith(
+                  color:
+                      Theme.of(context).scaffoldBackgroundColor != Colors.black
+                          ? Colors.black
+                          : null),
             ),
           ),
         ],
@@ -75,7 +93,9 @@ class _MesCommandesScreenState extends State<MesCommandesScreen> {
             bottom: PreferredSize(
               preferredSize: _tabBar.preferredSize,
               child: Consumer<ThemeController>(
-                builder: (context, value, child) => ColoredBox(color: value.dark ? Colors.black : Colors.white, child: _tabBar),
+                builder: (context, value, child) => ColoredBox(
+                    color: value.dark ? Colors.black : Colors.white,
+                    child: _tabBar),
               ),
             ),
             title: Text(
@@ -89,10 +109,13 @@ class _MesCommandesScreenState extends State<MesCommandesScreen> {
                       context: context,
                       builder: (_) => TutorielPopUp(
                             title: "Mes commandes",
-                            description: "Vous pouvez gérer l’ensemble des commandes effectuées en ligne  ",
+                            description:
+                                "Vous pouvez gérer l’ensemble des commandes effectuées en ligne  ",
                             numberOfPages: 3,
-                            secDescription: "La commande en attente sera à confirmer ou refusé. vous retrouverez l’ensemble des informations essentielles à la commande.",
-                            thirdDescription: "Si la commande est validée alors elle sera transmise au système de préparation de commande  et un compteur de préparation sera enclenché.",
+                            secDescription:
+                                "La commande en attente sera à confirmer ou refusé. vous retrouverez l’ensemble des informations essentielles à la commande.",
+                            thirdDescription:
+                                "Si la commande est validée alors elle sera transmise au système de préparation de commande  et un compteur de préparation sera enclenché.",
                           ));
                 },
                 icon: Icon(Icons.question_mark),
@@ -105,34 +128,46 @@ class _MesCommandesScreenState extends State<MesCommandesScreen> {
             children: [
               SingleChildScrollView(
                 child: Column(
-                  children: const [
+                  children: [
                     SizedBox(
                       height: 20,
                     ),
-                    HorizontalCalendar(),
-                    CommandesConfirm(),
+                    HorizontalCalendar(
+                        initialDateTime: selectedDate,
+                        ondateChanged: changeDate),
+                    CommandesConfirm(
+                      selectedDate: selectedDate,
+                    ),
                   ],
                 ),
               ),
               SingleChildScrollView(
                 child: Column(
-                  children: const [
+                  children: [
                     SizedBox(
                       height: 20,
                     ),
-                    HorizontalCalendar(),
-                    CommandesEnAttentes(),
+                    HorizontalCalendar(
+                        initialDateTime: selectedDate,
+                        ondateChanged: changeDate),
+                    CommandesEnAttentes(
+                      selectedDate: selectedDate,
+                    ),
                   ],
                 ),
               ),
               SingleChildScrollView(
                 child: Column(
-                  children: const [
+                  children: [
                     SizedBox(
                       height: 20,
                     ),
-                    HorizontalCalendar(),
-                    CommadesAnnules(),
+                    HorizontalCalendar(
+                        initialDateTime: selectedDate,
+                        ondateChanged: changeDate),
+                    CommadesAnnules(
+                      selectedDate: selectedDate,
+                    ),
                   ],
                 ),
               ),
