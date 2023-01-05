@@ -47,141 +47,143 @@ class _CapacitEtablisScreenState extends State<CapacitEtablisScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Globals.profile.getEstablishment().tables.length == 0
-                ? Center(
-                    child: Column(
-                      children: [
-                        Image.asset("assets/images/table.png"),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Ajouter des tables jusqua à 10 couverts",
-                          style: MyTextStyles.subhead.copyWith(color: Colors.grey),
-                        )
-                      ],
-                    ),
-                  )
-                : Column(
-                    children: [
-                      Row(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10,
+              ),
+              Globals.profile.getEstablishment().tables.length == 0
+                  ? Center(
+                      child: Column(
                         children: [
-                          Text(
-                            "Capacité total : ",
-                            style: MyTextStyles.subhead,
+                          Image.asset("assets/images/table.png"),
+                          SizedBox(
+                            height: 10,
                           ),
                           Text(
-                            "$nbCouvert couverts",
-                            style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
-                          ),
+                            "Ajouter des tables jusqua à 10 couverts",
+                            style: MyTextStyles.subhead.copyWith(color: Colors.grey),
+                          )
                         ],
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
+                    )
+                  : Column(
+                      children: [
+                        Row(
                           children: [
-                            Expanded(
-                              flex: 3,
-                              child: Text(
-                                "Nom de la table",
-                                style: MyTextStyles.headline,
-                              ),
+                            Text(
+                              "Capacité total : ",
+                              style: MyTextStyles.subhead,
                             ),
-                            Expanded(
-                              flex: 2,
-                              child: Text(
-                                "Nb. de couverts",
-                                style: MyTextStyles.headline,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        indent: 10,
-                        endIndent: 10,
-                        thickness: 2,
-                      ),
-                      ...List.generate(
-                        Globals.profile.getEstablishment().tables.length,
-                        (index) => Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Text(
-                                      '${Globals.profile.getEstablishment().tables[index].name}',
-                                      style: MyTextStyles.body,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      '${Globals.profile.getEstablishment().tables[index].nbPersons}',
-                                      style: MyTextStyles.subhead,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Divider(
-                              indent: 10,
-                              endIndent: 10,
-                              thickness: 2,
+                            Text(
+                              "$nbCouvert couverts",
+                              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-            SizedBox(
-              height: 10.h,
-            ),
-            CustomButton(
-              txt: "Ajouter",
-              fun: (startLoading, stopLoading, btnState) {
-                List<int> newTables = [1, 2];
-                showDialog(
-                  context: context,
-                  builder: (context) => AjoutCapacite(
-                    newTables: newTables,
-                    callBack: () {
-                      setState(() {
-                        for (var i = 0; i < newTables[0]; i++) {
-                          addTableWS(
-                            name: '0$i',
-                            nbPeople: newTables[1].toString(),
-                          ).then((exceptionOrMessage) {
-                            exceptionOrMessage.fold(
-                              (exception) {
-                                Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
-                              },
-                              (message) {
-                                calculateCouverts();
-                                setState(() {});
-                                // Utils.showCustomTopSnackBar(context, success: true, message: message);
-                              },
-                            );
-                          });
-                        }
-                      });
-                    },
-                  ),
-                );
-              },
-            )
-          ],
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: Text(
+                                  "Nom de la table",
+                                  style: MyTextStyles.headline,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  "Nb. de couverts",
+                                  style: MyTextStyles.headline,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          indent: 10,
+                          endIndent: 10,
+                          thickness: 2,
+                        ),
+                        ...List.generate(
+                          Globals.profile.getEstablishment().tables.length,
+                          (index) => Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Text(
+                                        '${Globals.profile.getEstablishment().tables[index].name}',
+                                        style: MyTextStyles.body,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        '${Globals.profile.getEstablishment().tables[index].nbPersons}',
+                                        style: MyTextStyles.subhead,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                indent: 10,
+                                endIndent: 10,
+                                thickness: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+              SizedBox(
+                height: 10.h,
+              ),
+              CustomButton(
+                txt: "Ajouter",
+                fun: (startLoading, stopLoading, btnState) {
+                  List<int> newTables = [1, 2];
+                  showDialog(
+                    context: context,
+                    builder: (context) => AjoutCapacite(
+                      newTables: newTables,
+                      callBack: () {
+                        setState(() {
+                          for (var i = 0; i < newTables[0]; i++) {
+                            addTableWS(
+                              name: Globals.profile.getEstablishment().tables.isEmpty ? '${i + 1}' : "${int.parse(Globals.profile.getEstablishment().tables.last.name) + i + 1}",
+                              nbPeople: newTables[1].toString(),
+                            ).then((exceptionOrMessage) {
+                              exceptionOrMessage.fold(
+                                (exception) {
+                                  Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                },
+                                (message) {
+                                  calculateCouverts();
+                                  setState(() {});
+                                  // Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                },
+                              );
+                            });
+                          }
+                        });
+                      },
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

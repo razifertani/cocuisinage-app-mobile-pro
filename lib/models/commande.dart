@@ -1,7 +1,7 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/product.dart';
 
 class Commande {
-  int? id;
+  late int id;
   int? particulierId;
   double? montant;
   String? typeLivraison;
@@ -15,7 +15,7 @@ class Commande {
   String? message;
   late List<CommandeProduct> commandeProduct;
 
-  Commande({this.id, this.particulierId, this.montant, this.typeLivraison, this.status, this.createdAt, this.updatedAt, this.establishmentId, this.commingHour, this.recevedHour, this.shipType, this.message, required this.commandeProduct});
+  Commande({required this.id, this.particulierId, this.montant, this.typeLivraison, this.status, this.createdAt, this.updatedAt, this.establishmentId, this.commingHour, this.recevedHour, this.shipType, this.message, required this.commandeProduct});
 
   Commande.fromJson(Map<String, dynamic> json) {
     id = json['id'];

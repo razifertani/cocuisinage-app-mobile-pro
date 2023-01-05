@@ -56,7 +56,7 @@ class EstablishmentProduct {
     establishmentId = json['establishment_id'];
     productId = json['product_id'];
     unit = json['unit'];
-    priceByUnit = json['price_by_unit'];
+    priceByUnit = double.parse(json['price_by_unit'].toString());
     location = json['location'];
     stockQuantity = json['stock_quantity'];
     dlc = json['dlc'];
@@ -72,7 +72,7 @@ class EstablishmentProduct {
     minimumQuantityToOrder = json['minimum_quantity_to_order'];
     maximumQuantityToOrder = json['maximum_quantity_to_order'];
     imageUrl = json['image_url'];
-    product = new Product.fromJson(json['product']);
+    product = json['product'] == null ? Product(name: 'Test') : new Product.fromJson(json['product']);
   }
 }
 
