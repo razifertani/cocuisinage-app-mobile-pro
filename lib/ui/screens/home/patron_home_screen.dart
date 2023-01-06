@@ -19,8 +19,7 @@ class PatronHomeScreen extends StatefulWidget {
 }
 
 class _PatronHomeScreenState extends State<PatronHomeScreen> {
-  RefreshController refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController refreshController = RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +99,7 @@ class _PatronHomeScreenState extends State<PatronHomeScreen> {
                     ? ListView.builder(
                         shrinkWrap: true,
                         physics: BouncingScrollPhysics(),
-                        itemCount:
-                            Globals.profile.getColleguesPlanningsToday().length,
+                        itemCount: Globals.profile.getColleguesPlanningsToday().length,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -117,8 +115,7 @@ class _PatronHomeScreenState extends State<PatronHomeScreen> {
                           Image.asset("assets/images/no_data.png"),
                           Text(
                             "Repos pour toute l'équipe aujourd'hui",
-                            style: MyTextStyles.subhead
-                                .copyWith(color: Colors.grey),
+                            style: MyTextStyles.subhead.copyWith(color: Colors.grey),
                           ),
                         ],
                       )),
