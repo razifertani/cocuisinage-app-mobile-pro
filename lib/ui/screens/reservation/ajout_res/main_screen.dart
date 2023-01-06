@@ -127,6 +127,7 @@ class _MainResScreenState extends State<MainResScreen> {
             if (currentIndex == 1)
               HeureScreen(
                 ontimeChanged: changeHeure,
+                currentDate: date,
               ),
             if (currentIndex == 2)
               PersonnesScreen(
