@@ -18,8 +18,8 @@ class EstablishmentProduct {
   int? showHome;
   String? description;
   int? autoUpgradeShoppingList;
-  String? minimumQuantityToOrder;
-  String? maximumQuantityToOrder;
+  double? minimumQuantityToOrder;
+  double? maximumQuantityToOrder;
   String? imageUrl;
   late Product product;
 
@@ -69,8 +69,8 @@ class EstablishmentProduct {
     showHome = json['show_home'];
     description = json['description'];
     autoUpgradeShoppingList = json['auto_upgrade_shopping_list'];
-    minimumQuantityToOrder = json['minimum_quantity_to_order'];
-    maximumQuantityToOrder = json['maximum_quantity_to_order'];
+    // minimumQuantityToOrder = json['minimum_quantity_to_order'];
+    // maximumQuantityToOrder = json['maximum_quantity_to_order'];
     imageUrl = json['image_url'];
     product = json['product'] == null ? Product(name: 'Test') : new Product.fromJson(json['product']);
   }

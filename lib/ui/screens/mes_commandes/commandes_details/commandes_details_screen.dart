@@ -1,5 +1,6 @@
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/commande.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/commandes_api.dart';
 // import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/commandes_api.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
@@ -29,8 +30,7 @@ class _CommandDetailScreenState extends State<CommandDetailScreen> {
         actions: [
           PopupMenuButton(
             padding: const EdgeInsets.all(0),
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
             icon: const Icon(
               Icons.more_vert,
             ),
@@ -109,13 +109,11 @@ class _CommandDetailScreenState extends State<CommandDetailScreen> {
               ),
               Text(
                 "Détails du commande n° ${widget.commande.id}",
-                style:
-                    MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+                style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
               ),
               Text(
                 "Id client : ${widget.commande.particulierId} ",
-                style:
-                    MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+                style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
               ),
               const SizedBox(
                 height: 20,
@@ -134,13 +132,11 @@ class _CommandDetailScreenState extends State<CommandDetailScreen> {
                 children: [
                   Text(
                     "Sous-totale",
-                    style: MyTextStyles.headline
-                        .copyWith(fontWeight: FontWeight.w600),
+                    style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
                   ),
                   Text(
                     "${widget.commande.montant} €",
-                    style: MyTextStyles.headline
-                        .copyWith(fontWeight: FontWeight.w600),
+                    style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
@@ -153,24 +149,24 @@ class _CommandDetailScreenState extends State<CommandDetailScreen> {
                   fun: (startLoading, stopLoading, btnState) {
                     if (btnState == ButtonState.Idle) {
                       startLoading();
-                      // updateCommandeStatusWS(
-                      //   id: widget.commande.id,
-                      //   status: '1',
-                      // ).then(
-                      //   (exceptionOrMessage) {
-                      //     stopLoading();
-                      //     exceptionOrMessage.fold(
-                      //       (exception) {
-                      //         Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
-                      //       },
-                      //       (message) {
-                      //         setState(() {});
-                      //         Utils.showCustomTopSnackBar(context, success: true, message: message);
-                      //         Navigator.pop(context);
-                      //       },
-                      //     );
-                      //   },
-                      // );
+                      updateCommandeStatusWS(
+                        id: widget.commande.id,
+                        status: '4',
+                      ).then(
+                        (exceptionOrMessage) {
+                          stopLoading();
+                          exceptionOrMessage.fold(
+                            (exception) {
+                              Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                            },
+                            (message) {
+                              setState(() {});
+                              Utils.showCustomTopSnackBar(context, success: true, message: message);
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+                      );
                     }
                   },
                 ),

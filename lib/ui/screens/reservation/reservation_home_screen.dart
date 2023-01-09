@@ -48,13 +48,10 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
                     context: context,
                     builder: (_) => TutorielPopUp(
                           title: "Réservation",
-                          description:
-                              "Vous pourrez voir le % de réservation, d’occupation de l’établissement",
+                          description: "Vous pourrez voir le % de réservation, d’occupation de l’établissement",
                           numberOfPages: 3,
-                          secDescription:
-                              "Vous pourrez gérer votre plan de table (disposition, capacité potentielle d’accueil, nombre de couverts par table)",
-                          thirdDescription:
-                              "De part cette gestion, le serveur pourra prendre la commande et l’affecter à une table.",
+                          secDescription: "Vous pourrez gérer votre plan de table (disposition, capacité potentielle d’accueil, nombre de couverts par table)",
+                          thirdDescription: "De part cette gestion, le serveur pourra prendre la commande et l’affecter à une table.",
                         ));
               },
               icon: Icon(Icons.question_mark)),
@@ -87,53 +84,38 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
               ),
               SizedBox(
                 height: 28.h,
-                child: GridView.count(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    crossAxisCount: 1,
-                    childAspectRatio: 1,
-                    mainAxisSpacing: 1.5.h,
-                    crossAxisSpacing: 1.5.h,
-                    children: [
-                      CustomCard(
-                          imgPath: "assets/primary_icons/reservation.png",
-                          txt: "Reservations",
-                          quantite: Globals.profile
-                              .getEstablishment()
-                              .reservations
-                              .length,
-                          fun: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ReservationScreen()),
-                            );
-                          }),
-                      CustomCard(
-                          imgPath: "assets/primary_icons/plan_de_table.png",
-                          txt: "Plan de table",
-                          quantite:
-                              Globals.profile.getEstablishment().tables.length,
-                          fun: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => PlanDeTableScreen()),
-                            // );
-                          }),
-                      CustomCard(
-                          imgPath: "assets/primary_icons/service.png",
-                          txt: "Mon service",
-                          quantite: 250,
-                          fun: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PreparationDeCommandeScreen()),
-                            );
-                          }),
-                    ]),
+                child: GridView.count(shrinkWrap: true, scrollDirection: Axis.horizontal, crossAxisCount: 1, childAspectRatio: 1, mainAxisSpacing: 1.5.h, crossAxisSpacing: 1.5.h, children: [
+                  CustomCard(
+                      imgPath: "assets/primary_icons/reservation.png",
+                      txt: "Reservations",
+                      quantite: Globals.profile.getEstablishment().reservations.length,
+                      fun: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ReservationScreen()),
+                        );
+                      }),
+                  CustomCard(
+                      imgPath: "assets/primary_icons/plan_de_table.png",
+                      txt: "Plan de table",
+                      quantite: Globals.profile.getEstablishment().tables.length,
+                      fun: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => PlanDeTableScreen()),
+                        // );
+                      }),
+                  CustomCard(
+                      imgPath: "assets/primary_icons/service.png",
+                      txt: "Mon service",
+                      quantite: Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).length,
+                      fun: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PreparationDeCommandeScreen()),
+                        );
+                      }),
+                ]),
               ),
               const SizedBox(
                 height: 20,
