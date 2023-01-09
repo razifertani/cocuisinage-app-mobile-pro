@@ -13,10 +13,12 @@ class PreparationDeCommandeScreen extends StatefulWidget {
   const PreparationDeCommandeScreen({Key? key}) : super(key: key);
 
   @override
-  State<PreparationDeCommandeScreen> createState() => _PreparationDeCommandeScreenState();
+  State<PreparationDeCommandeScreen> createState() =>
+      _PreparationDeCommandeScreenState();
 }
 
-class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScreen> {
+class _PreparationDeCommandeScreenState
+    extends State<PreparationDeCommandeScreen> {
   Color itemColor = Colors.white;
   int currentIndex = 0;
 
@@ -27,7 +29,8 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
 
   final ScrollController _controller = ScrollController();
   void scrollAnimated(double position) {
-    _controller.animateTo(position, duration: const Duration(milliseconds: 600), curve: Curves.linear);
+    _controller.animateTo(position,
+        duration: const Duration(milliseconds: 600), curve: Curves.linear);
   }
 
   @override
@@ -46,13 +49,20 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                   showDialog(
                       context: context,
                       builder: (_) => TutorielPopUp(
-                          title: "Prépation de commande", description: "Chaque employé responsable d’un poste de travail (dessert, entrée,…) reçoit le ticket et la préparation à effectuer. ", numberOfPages: 2, secDescription: "Pour que le ticket soit validé, il faut que l’ensemble des employés responsable d’un poste de travail valide la faisabilité de la préparation (devient vert)."));
+                          title: "Prépation de commande",
+                          description:
+                              "Chaque employé responsable d’un poste de travail (dessert, entrée,…) reçoit le ticket et la préparation à effectuer. ",
+                          numberOfPages: 2,
+                          secDescription:
+                              "Pour que le ticket soit validé, il faut que l’ensemble des employés responsable d’un poste de travail valide la faisabilité de la préparation (devient vert)."));
                 },
                 icon: const Icon(Icons.question_mark))
           ],
           centerTitle: true,
           backgroundColor: MyColors.red,
-          leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context))),
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context))),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -66,11 +76,13 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                 children: [
                   Text(
                     "Tickets en cours",
-                    style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+                    style: MyTextStyles.headline
+                        .copyWith(fontWeight: FontWeight.w600),
                   ),
                   Text(
                     "${Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).length}",
-                    style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+                    style: MyTextStyles.headline
+                        .copyWith(fontWeight: FontWeight.w600),
                   )
                 ],
               ),
@@ -92,7 +104,11 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                 child: Row(
                   children: [
                     ...List.generate(
-                      Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).length,
+                      Globals.profile
+                          .getEstablishment()
+                          .commandes
+                          .where((element) => element.status == 4)
+                          .length,
                       (index) => GestureDetector(
                         onTap: () {
                           switchTab(index);
@@ -100,8 +116,11 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                         },
                         child: currentIndex != index
                             ? Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 6),
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: MyColors.red)),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 6),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(color: MyColors.red)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
@@ -111,7 +130,8 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                                 ),
                               )
                             : Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 6),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 6),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   color: const Color(0xFF3A3244),
@@ -120,10 +140,13 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Text("Table ${index + 1}-24-15h:22", style: MyTextStyles.subhead.copyWith(color: Colors.white)),
+                                      Text("Table ${index + 1}-24-15h:22",
+                                          style: MyTextStyles.subhead
+                                              .copyWith(color: Colors.white)),
                                       Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                           color: MyColors.red,
                                         ),
                                         child: Padding(
@@ -136,7 +159,9 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                                               ),
                                               Text(
                                                 "Appeler le serveur",
-                                                style: MyTextStyles.body.copyWith(color: Colors.white),
+                                                style: MyTextStyles.body
+                                                    .copyWith(
+                                                        color: Colors.white),
                                               )
                                             ],
                                           ),
@@ -167,12 +192,14 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                         height: 20,
                       ),
                       Text(
-                        "Table 1-24-15h:22",
+                        "Table ${currentIndex + 1}-24-15h:22",
                         style: MyTextStyles.headline,
                       ),
+                      //par exemple liste de temps et vous allez passez curreentIndex : temps[currentIndex]
                       Text(
                         "10mn",
-                        style: MyTextStyles.headline.copyWith(color: Colors.blue),
+                        style:
+                            MyTextStyles.headline.copyWith(color: Colors.blue),
                       ),
                       const Divider(
                         thickness: 1,
@@ -183,6 +210,7 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                       const SizedBox(
                         height: 20,
                       ),
+                      //List.genreate ou ListViewBuilder tables[currentIndex].food.name par exemple
                       ItemCard(name: "Menu pizza", quantite: 1),
                       const SizedBox(
                         height: 10,
@@ -240,7 +268,10 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                     child: Container(
                       height: 8.h,
                       width: 40.w,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: MyColors.red), color: MyColors.red),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: MyColors.red),
+                          color: MyColors.red),
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
                         child: Text("Suivant",
