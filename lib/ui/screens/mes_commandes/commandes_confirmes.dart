@@ -28,9 +28,7 @@ class _CommandesConfirmState extends State<CommandesConfirm> {
     super.initState();
     setState(() {
       commandes = Globals.profile.getEstablishment().commandes.where((element) {
-        return DateTime.parse(element.createdAt!)
-                .isSameDayAs(widget.selectedDate) &&
-            element.status == 1;
+        return DateTime.parse(element.createdAt!).isSameDayAs(widget.selectedDate) && element.status == 4;
       }).toList();
     });
   }
@@ -49,8 +47,7 @@ class _CommandesConfirmState extends State<CommandesConfirm> {
             alignment: Alignment.topLeft,
             child: Text(
               "Mes commandes",
-              style:
-                  MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+              style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           const SizedBox(
@@ -74,8 +71,7 @@ class _CommandesConfirmState extends State<CommandesConfirm> {
                         child: Center(
                             child: Text(
                           "${commandes[index].montant} €",
-                          style: MyTextStyles.body.copyWith(
-                              color: p.dark ? Colors.white : MyColors.red),
+                          style: MyTextStyles.body.copyWith(color: p.dark ? Colors.white : MyColors.red),
                         )),
                       ),
                     ),
@@ -90,10 +86,7 @@ class _CommandesConfirmState extends State<CommandesConfirm> {
                         child: Center(
                             child: Text(
                           "En cours",
-                          style: MyTextStyles.body.copyWith(
-                              color: p.dark
-                                  ? Colors.white
-                                  : const Color(0xFFD97808)),
+                          style: MyTextStyles.body.copyWith(color: p.dark ? Colors.white : const Color(0xFFD97808)),
                         )),
                       ),
                     ),
@@ -103,9 +96,7 @@ class _CommandesConfirmState extends State<CommandesConfirm> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => CommandDetailScreen(
-                                    commande: commandes[index])),
+                            MaterialPageRoute(builder: (context) => CommandDetailScreen(commande: commandes[index])),
                           );
                         },
                       ),

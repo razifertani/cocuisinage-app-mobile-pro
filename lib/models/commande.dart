@@ -40,7 +40,7 @@ class Commande {
 }
 
 class CommandeProduct {
-  int? id;
+  late int id;
   int? establishmentProductId;
   int? qte;
   double? prix;
@@ -53,7 +53,7 @@ class CommandeProduct {
   String? message;
   EstablishmentProduct? establishmentProduct;
 
-  CommandeProduct({this.id, this.establishmentProductId, this.qte, this.prix, this.commandeId, this.createdAt, this.updatedAt, this.status, this.commingHour, this.shipType, this.message, this.establishmentProduct});
+  CommandeProduct({required this.id, this.establishmentProductId, this.qte, this.prix, this.commandeId, this.createdAt, this.updatedAt, this.status, this.commingHour, this.shipType, this.message, this.establishmentProduct});
 
   CommandeProduct.fromJson(Map<String, dynamic> json) {
     id = json['id'];

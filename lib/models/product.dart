@@ -72,7 +72,7 @@ class EstablishmentProduct {
     // minimumQuantityToOrder = json['minimum_quantity_to_order'];
     // maximumQuantityToOrder = json['maximum_quantity_to_order'];
     imageUrl = json['image_url'];
-    product = json['product'] == null ? Product(name: 'Test') : new Product.fromJson(json['product']);
+    product = new Product.fromJson(json['product']);
   }
 }
 
@@ -260,8 +260,8 @@ class DefaultTag {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     firstParent = json['first_parent'];
-    scorePef = json['score_pef'];
-    ciqualCode = json['ciqual_code'];
+    // scorePef = json['score_pef'];
+    // ciqualCode = json['ciqual_code'];
     defaultProductId = json['default_product_id'];
     creatorId = json['creator_id'];
     isChecked = json['is_checked'];
