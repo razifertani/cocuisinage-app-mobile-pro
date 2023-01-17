@@ -17,15 +17,15 @@ import '../../../shared/widgets/pop_qr/pop_up_qr_code.dart';
 import '../../../shared/widgets/reservation/plan_de_table_card.dart';
 import '../../../shared/widgets/roles/delete_confirmation_popup.dart';
 
-class PlanDeTableScreen extends StatefulWidget {
-  final Reservation? reservation;
-  PlanDeTableScreen({Key? key, this.reservation}) : super(key: key);
+class PlanDeTableScreenExterne extends StatefulWidget {
+  PlanDeTableScreenExterne({Key? key}) : super(key: key);
 
   @override
-  State<PlanDeTableScreen> createState() => _PlanDeTableScreenState();
+  State<PlanDeTableScreenExterne> createState() =>
+      _PlanDeTableScreenExterneState();
 }
 
-class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
+class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
   var date = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, DateTime.now().hour, 0);
 
@@ -33,13 +33,16 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
   void initState() {
     super.initState();
     initializeDateFormatting();
-
-    date = DateTime(
-        widget.reservation!.day.year,
-        widget.reservation!.day.month,
-        widget.reservation!.day.day,
-        int.parse(widget.reservation!.hour.split(':')[0]),
-        int.parse(widget.reservation!.hour.split(':')[1]));
+    // if (widget.reservation != null) {
+    //   date = DateTime(
+    //       widget.reservation!.day.year,
+    //       widget.reservation!.day.month,
+    //       widget.reservation!.day.day,
+    //       int.parse(widget.reservation!.hour.split(':')[0]),
+    //       int.parse(widget.reservation!.hour.split(':')[1]));
+    // } else {
+    //   date = DateTime.now();
+    // }
   }
 
   TextEditingController nmr = TextEditingController();
@@ -133,69 +136,61 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
                 height: 20,
               ),
-              // HorizontalCalendar(initialDateTime: date, ondateChanged: (a) {}),
-              Text(
-                DateFormat.yMMMMEEEEd('fr').format(date),
-                style: MyTextStyles.headline,
-              ),
+              HorizontalCalendar(
+                  initialDateTime: date, ondateChanged: changeDate),
               const SizedBox(
                 height: 20,
               ),
-              Text(
-                DateFormat.jm('fr').format(date),
-                style: MyTextStyles.subhead,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            date = date.subtract(const Duration(hours: 1));
+                            setState(() {});
+                          },
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: MyColors.red,
+                          )),
+                      Text(
+                        DateFormat.Hm()
+                            .format(date.subtract(const Duration(hours: 1))),
+                        style: MyTextStyles.body.copyWith(color: MyColors.red),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    DateFormat.Hm().format(date),
+                    style: MyTextStyles.headline.copyWith(color: MyColors.red),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        DateFormat.Hm()
+                            .format(date.add(const Duration(hours: 1))),
+                        style: MyTextStyles.body.copyWith(color: MyColors.red),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          date = date.add(const Duration(hours: 1));
+                          setState(() {});
+                        },
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: MyColors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Row(
-              //       children: [
-              //         GestureDetector(
-              //             onTap: () {
-              //               date = date.subtract(const Duration(hours: 1));
-              //               setState(() {});
-              //             },
-              //             child: Icon(
-              //               Icons.arrow_back_ios,
-              //               color: MyColors.red,
-              //             )),
-              //         Text(
-              //           DateFormat.Hm()
-              //               .format(date.subtract(const Duration(hours: 1))),
-              //           style: MyTextStyles.body.copyWith(color: MyColors.red),
-              //         ),
-              //       ],
-              //     ),
-              //     Text(
-              //       DateFormat.Hm().format(date),
-              //       style: MyTextStyles.headline.copyWith(color: MyColors.red),
-              //     ),
-              //     Row(
-              //       children: [
-              //         Text(
-              //           DateFormat.Hm()
-              //               .format(date.add(const Duration(hours: 1))),
-              //           style: MyTextStyles.body.copyWith(color: MyColors.red),
-              //         ),
-              //         GestureDetector(
-              //           onTap: () {
-              //             date = date.add(const Duration(hours: 1));
-              //             setState(() {});
-              //           },
-              //           child: Icon(
-              //             Icons.arrow_forward_ios,
-              //             color: MyColors.red,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // ),
               const SizedBox(
                 height: 20,
               ),
@@ -232,7 +227,14 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                     Globals.profile.getEstablishment().tables.length,
                     (index) => PlanDeTableCard(
                       date: date,
-                      reservation: widget.reservation,
+                      // reservation: Globals.profile
+                      //     .getEstablishment()
+                      //     .tables[index]
+                      //     .reservations
+                      //     .where((element) =>
+                      //         element.day == date.day &&
+                      //         element.hour == date.hour)
+                      //     .first,
                       table: Globals.profile.getEstablishment().tables[index],
                     ),
                   ),

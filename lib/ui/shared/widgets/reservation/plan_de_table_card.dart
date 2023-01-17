@@ -2,7 +2,8 @@ import 'dart:math';
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/Theme/my_text_styles.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/reservation.dart';
-import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/table.dart' as Table;
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/table.dart'
+    as Table;
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/reservations_api.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
@@ -14,13 +15,16 @@ class PlanDeTableCard extends StatefulWidget {
   final DateTime date;
   final Reservation? reservation;
 
-  const PlanDeTableCard({Key? key, required this.date, required this.table, this.reservation}) : super(key: key);
+  const PlanDeTableCard(
+      {Key? key, required this.date, required this.table, this.reservation})
+      : super(key: key);
 
   @override
   State<PlanDeTableCard> createState() => _PlanDeTableCardState();
 }
 
-class _PlanDeTableCardState extends State<PlanDeTableCard> with SingleTickerProviderStateMixin {
+class _PlanDeTableCardState extends State<PlanDeTableCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation _animation;
   AnimationStatus _status = AnimationStatus.dismissed;
@@ -28,7 +32,8 @@ class _PlanDeTableCardState extends State<PlanDeTableCard> with SingleTickerProv
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 800));
     _animation = Tween(end: 1.0, begin: 0.0).animate(_controller)
       ..addListener(() {
         setState(() {});
@@ -55,23 +60,30 @@ class _PlanDeTableCardState extends State<PlanDeTableCard> with SingleTickerProv
             // ?
             CustomButton(
           txt: "${widget.table.nbPersons}",
-          color: _animation.value > 0.5
-              ? Color(0xFFED4A4A)
-              : (!widget.table.isFreeAtDateTime(widget.date)
+          color: widget.reservation != null
+              ? _animation.value > 0.5
                   ? Color(0xFFED4A4A)
-                  : widget.table.nbPersons < widget.reservation!.nbPeople
-                      ? Colors.orange
-                      : Color(0xFF52C781)),
+                  : (!widget.table.isFreeAtDateTime(widget.date)
+                      ? Color(0xFFED4A4A)
+                      : widget.table.nbPersons < widget.reservation!.nbPeople
+                          ? Colors.orange
+                          : Color(0xFF52C781))
+              : Color(0xFF52C781),
           fun: (startLoading, stopLoading, btnState) {
             if (btnState == ButtonState.Idle) {
               if (!widget.table.isFreeAtDateTime(widget.date)) {
                 Color(0xFFED4A4A);
 
-                Utils.showCustomTopSnackBar(context, success: false, message: 'Table déjà réservée !');
-              } else if (widget.table.nbPersons < widget.reservation!.nbPeople) {
+                Utils.showCustomTopSnackBar(context,
+                    success: false, message: 'Table déjà réservée !');
+              } else if (widget.table.nbPersons <
+                  widget.reservation!.nbPeople) {
                 Colors.orange;
 
-                Utils.showCustomTopSnackBar(context, success: false, message: 'Nombre de couverts est inférieur au nombre de personnes réservées !');
+                Utils.showCustomTopSnackBar(context,
+                    success: false,
+                    message:
+                        'Nombre de couverts est inférieur au nombre de personnes réservées !');
               } else {
                 Color(0xFF52C781);
 
@@ -86,11 +98,13 @@ class _PlanDeTableCardState extends State<PlanDeTableCard> with SingleTickerProv
                   exceptionOrMessage.fold(
                     (exception) {
                       setState(() {});
-                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                      Utils.showCustomTopSnackBar(context,
+                          success: false, message: exception.toString());
                     },
                     (message) {
                       stopLoading();
-                      Utils.showCustomTopSnackBar(context, success: true, message: message);
+                      Utils.showCustomTopSnackBar(context,
+                          success: true, message: message);
                       _controller.forward();
                       _controller.addStatusListener((status) {
                         if (status == AnimationStatus.completed) {
