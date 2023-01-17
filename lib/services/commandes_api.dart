@@ -37,3 +37,35 @@ Future<Either<Exception, String>> updateCommandeStatusWS({required int id, requi
     return Left(ApiException(message: e.toString()));
   }
 }
+
+Future<Either<Exception, String>> updateCommandeProductStatusWS({required int id, required String status}) async {
+  try {
+    final response = await http.post(
+      Uri.parse(
+        '${Globals.baseUrl}/commande/${Globals.params.currentEstablishmentID.toString()}/updateProductStatus/$id',
+      ),
+      headers: {
+        HttpHeaders.acceptHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer ${Globals.token}',
+      },
+      body: {
+        'status': status,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      if (!json.decode(response.body)['error']) {
+        Globals.profile = await getUserWS();
+
+        return Right(json.decode(response.body)['message']);
+      } else {
+        return Left(ApiException(message: json.decode(response.body)['message']));
+      }
+    } else {
+      return Left(ApiException(message: json.decode(response.body)['message']));
+    }
+  } catch (e) {
+    print(e);
+    return Left(ApiException(message: e.toString()));
+  }
+}
