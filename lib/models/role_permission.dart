@@ -43,6 +43,10 @@ class Permission {
   static const MANAGE_ROLES = 3;
   static const REMOTE_WORK = 4;
   static const FREE_WORK = 5;
+  static const MANAGE_COMMANDES_STATUS = 6;
+  static const MANAGE_COMMANDES_PREPARATION = 7;
+  static const MANAGE_RESERVATION = 8;
+  static const ADD_RESERVATION = 9;
 
   late int id;
   late String name;

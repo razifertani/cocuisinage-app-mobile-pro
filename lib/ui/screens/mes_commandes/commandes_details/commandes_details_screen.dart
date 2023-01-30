@@ -1,8 +1,10 @@
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/commande.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/role_permission.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/commandes_api.dart';
 // import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/commandes_api.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -143,34 +145,35 @@ class _CommandDetailScreenState extends State<CommandDetailScreen> {
               SizedBox(
                 height: 20,
               ),
-              Center(
-                child: CustomButton(
-                  txt: "Valider",
-                  fun: (startLoading, stopLoading, btnState) {
-                    if (btnState == ButtonState.Idle) {
-                      startLoading();
-                      updateCommandeStatusWS(
-                        id: widget.commande.id,
-                        status: '4',
-                      ).then(
-                        (exceptionOrMessage) {
-                          stopLoading();
-                          exceptionOrMessage.fold(
-                            (exception) {
-                              Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
-                            },
-                            (message) {
-                              setState(() {});
-                              Utils.showCustomTopSnackBar(context, success: true, message: message);
-                              Navigator.pop(context);
-                            },
-                          );
-                        },
-                      );
-                    }
-                  },
+              if (Globals.profile.isOwner || Globals.profile.getColleguePermissions(id: Globals.profile.id).contains(Permission.MANAGE_COMMANDES_STATUS))
+                Center(
+                  child: CustomButton(
+                    txt: "Valider",
+                    fun: (startLoading, stopLoading, btnState) {
+                      if (btnState == ButtonState.Idle) {
+                        startLoading();
+                        updateCommandeStatusWS(
+                          id: widget.commande.id,
+                          status: '4',
+                        ).then(
+                          (exceptionOrMessage) {
+                            stopLoading();
+                            exceptionOrMessage.fold(
+                              (exception) {
+                                Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                              },
+                              (message) {
+                                setState(() {});
+                                Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                Navigator.pop(context);
+                              },
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
                 ),
-              ),
               SizedBox(
                 height: 20,
               ),

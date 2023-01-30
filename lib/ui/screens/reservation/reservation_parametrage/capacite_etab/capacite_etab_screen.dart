@@ -158,25 +158,24 @@ class _CapacitEtablisScreenState extends State<CapacitEtablisScreen> {
                     builder: (context) => AjoutCapacite(
                       newTables: newTables,
                       callBack: () {
-                        setState(() {
-                          for (var i = 0; i < newTables[0]; i++) {
-                            addTableWS(
-                              name: Globals.profile.getEstablishment().tables.isEmpty ? '${i + 1}' : "${int.parse(Globals.profile.getEstablishment().tables.last.name) + i + 1}",
-                              nbPeople: newTables[1].toString(),
-                            ).then((exceptionOrMessage) {
-                              exceptionOrMessage.fold(
-                                (exception) {
-                                  Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
-                                },
-                                (message) {
-                                  calculateCouverts();
-                                  setState(() {});
-                                  // Utils.showCustomTopSnackBar(context, success: true, message: message);
-                                },
-                              );
-                            });
-                          }
-                        });
+                        for (var i = 0; i < newTables[0]; i++) {
+                          addTableWS(
+                            name: Globals.profile.getEstablishment().tables.isEmpty ? '${i + 1}' : "${int.parse(Globals.profile.getEstablishment().tables.last.name) + i + 1}",
+                            nbPeople: newTables[1].toString(),
+                          ).then((exceptionOrMessage) {
+                            exceptionOrMessage.fold(
+                              (exception) {
+                                Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                              },
+                              (message) {
+                                calculateCouverts();
+                                setState(() {});
+                                // Utils.showCustomTopSnackBar(context, success: true, message: message);
+                              },
+                            );
+                          });
+                        }
+                        setState(() {});
                       },
                     ),
                   );

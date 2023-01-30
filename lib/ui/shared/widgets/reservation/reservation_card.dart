@@ -1,5 +1,7 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/reservation.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/role_permission.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/reservations_api.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +11,7 @@ import '../../../screens/reservation/plan_de_table/plan_de_table.dart';
 class ReservationCard extends StatefulWidget {
   final Reservation reservation;
 
-  const ReservationCard({Key? key, required this.reservation})
-      : super(key: key);
+  const ReservationCard({Key? key, required this.reservation}) : super(key: key);
 
   @override
   State<ReservationCard> createState() => _ReservationCardState();
@@ -45,53 +46,50 @@ class _ReservationCardState extends State<ReservationCard> {
               height: 10,
             ),
             Divider(
-              color: Theme.of(context).scaffoldBackgroundColor == Colors.black
-                  ? Colors.white
-                  : Colors.black,
+              color: Theme.of(context).scaffoldBackgroundColor == Colors.black ? Colors.white : Colors.black,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  onPressed: () {
-                    deleteReservationWS(id: widget.reservation.id)
-                        .then((exceptionOrMessage) {
-                      exceptionOrMessage.fold(
-                        (exception) {
-                          Utils.showCustomTopSnackBar(context,
-                              success: false, message: exception.toString());
-                        },
-                        (message) {
-                          setState(() {});
-                          Utils.showCustomTopSnackBar(context,
-                              success: true, message: message);
-                        },
-                      );
-                    });
-                  },
-                  icon: const Icon(Icons.close, color: Colors.red),
-                ),
+                if (Globals.profile.isOwner || Globals.profile.getColleguePermissions(id: Globals.profile.id).contains(Permission.MANAGE_RESERVATION))
+                  IconButton(
+                    onPressed: () {
+                      deleteReservationWS(id: widget.reservation.id).then((exceptionOrMessage) {
+                        exceptionOrMessage.fold(
+                          (exception) {
+                            Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                          },
+                          (message) {
+                            setState(() {});
+                            Utils.showCustomTopSnackBar(context, success: true, message: message);
+                          },
+                        );
+                      });
+                    },
+                    icon: const Icon(Icons.close, color: Colors.red),
+                  ),
                 Text(
                   '${widget.reservation.hour}\nTable ${widget.reservation.table?.name ?? '?'}',
                   style: MyTextStyles.cardTextStyle,
                   textAlign: TextAlign.center,
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PlanDeTableScreen(
-                          reservation: widget.reservation,
+                if (Globals.profile.isOwner || Globals.profile.getColleguePermissions(id: Globals.profile.id).contains(Permission.MANAGE_RESERVATION))
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PlanDeTableScreen(
+                            reservation: widget.reservation,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.check,
-                    color: Colors.green,
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
                   ),
-                ),
               ],
             )
           ],
