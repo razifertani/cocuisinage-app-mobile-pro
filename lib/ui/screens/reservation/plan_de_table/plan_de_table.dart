@@ -230,10 +230,15 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                   // ),
                   ...List.generate(
                     Globals.profile.getEstablishment().tables.length,
-                    (index) => PlanDeTableCard(
-                      date: date,
-                      reservation: widget.reservation,
-                      table: Globals.profile.getEstablishment().tables[index],
+                    (index) => Column(
+                      children: [
+                        PlanDeTableCard(
+                          date: date,
+                          reservation: widget.reservation,
+                          table:
+                              Globals.profile.getEstablishment().tables[index],
+                        ),
+                      ],
                     ),
                   ),
                 ],

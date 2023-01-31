@@ -37,6 +37,8 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
       if (image == null) return;
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
+
+      print(image.path);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -137,7 +139,8 @@ class _EmployeTacheWidgetState extends State<EmployeTacheWidget> {
                     lineWidth: 4,
                   ),
                   onTap: (startLoading, stopLoading, btnState) async {
-                    File? image = await pickImage();
+                    // File? image = await
+                    await pickImage();
                     if (image != null) {
                       startLoading();
                       updateTaskWS(
