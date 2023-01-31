@@ -31,10 +31,25 @@ class _HeureScreenState extends State<HeureScreen> {
 
   int currentVIndex = 0;
   int currentHIndex = 0;
-  void switchIndex(hIndex, vIndex) {
-    currentHIndex = hIndex;
-    currentVIndex = vIndex;
+  void switchIndex(verIndex, horIndex) {
+    currentHIndex = horIndex;
+    currentVIndex = verIndex;
     print(date);
+    widget.ontimeChanged(verIndex == 0
+        ? DateFormat.Hm().format(Globals.profile
+                .getEstablishment()
+                .schedules[1]
+                .begin ??
+            DateTime(2022, 1, 1, 8, 0).add(Duration(
+                minutes: Globals.profile.getEstablishment().bookingDuration *
+                    (currentHIndex))))
+        : DateFormat.Hm().format(Globals.profile
+                .getEstablishment()
+                .schedules[1]
+                .secondBegin ??
+            DateTime(2022, 1, 1, 12, 0).add(Duration(
+                minutes: Globals.profile.getEstablishment().bookingDuration *
+                    (currentHIndex)))));
     setState(() {});
   }
 
@@ -54,11 +69,11 @@ class _HeureScreenState extends State<HeureScreen> {
             children: [
               ...List.generate(
                   2,
-                  (hIndex) => Column(
+                  (verIndex) => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            labels[hIndex],
+                            labels[verIndex],
                             style: MyTextStyles.subhead,
                           ),
                           SizedBox(
@@ -68,7 +83,7 @@ class _HeureScreenState extends State<HeureScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ...List.generate(
-                                  hIndex == 0
+                                  verIndex == 0
                                       ? (((Globals.profile
                                                               .getEstablishment()
                                                               .schedules[date]
@@ -96,18 +111,18 @@ class _HeureScreenState extends State<HeureScreen> {
                                                   .inMinutes)
                                               .toInt() ~/
                                           Globals.profile.getEstablishment().bookingDuration,
-                                  (vIndex) => Padding(
+                                  (horIndex) => Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 4),
                                         child: GestureDetector(
                                           onTap: () {
-                                            switchIndex(hIndex, vIndex);
+                                            switchIndex(verIndex, horIndex);
                                           },
                                           child: Container(
                                             height: 45,
                                             width: 60,
                                             child: Center(
-                                                child: hIndex == 0
+                                                child: verIndex == 0
                                                     ? Text(DateFormat.Hm().format(Globals
                                                             .profile
                                                             .getEstablishment()
@@ -119,15 +134,16 @@ class _HeureScreenState extends State<HeureScreen> {
                                                                         .profile
                                                                         .getEstablishment()
                                                                         .bookingDuration *
-                                                                    (vIndex)))))
+                                                                    (horIndex)))))
                                                     : Text(
-                                                        DateFormat.Hm().format(Globals.profile.getEstablishment().schedules[1].secondBegin ?? DateTime(2022, 1, 1, 12, 0).add(Duration(minutes: Globals.profile.getEstablishment().bookingDuration * (vIndex)))))),
+                                                        DateFormat.Hm().format(Globals.profile.getEstablishment().schedules[1].secondBegin ?? DateTime(2022, 1, 1, 12, 0).add(Duration(minutes: Globals.profile.getEstablishment().bookingDuration * (horIndex)))))),
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(6),
                                                 color: (currentHIndex ==
-                                                            hIndex &&
-                                                        currentVIndex == vIndex)
+                                                            horIndex &&
+                                                        currentVIndex ==
+                                                            verIndex)
                                                     ? MyColors.red
                                                     : null,
                                                 border: Border.all(

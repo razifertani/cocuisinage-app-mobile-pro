@@ -136,6 +136,7 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(
                 height: 20,
@@ -225,17 +226,94 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
                   // ),
                   ...List.generate(
                     Globals.profile.getEstablishment().tables.length,
-                    (index) => PlanDeTableCard(
-                      date: date,
-                      // reservation: Globals.profile
-                      //     .getEstablishment()
-                      //     .tables[index]
-                      //     .reservations
-                      //     .where((element) =>
-                      //         element.day == date.day &&
-                      //         element.hour == date.hour)
-                      //     .first,
-                      table: Globals.profile.getEstablishment().tables[index],
+                    (index) => Stack(
+                      children: [
+                        PlanDeTableCard(
+                          date: date,
+                          // reservation: Globals.profile
+                          //     .getEstablishment()
+                          //     .tables[index]
+                          //     .reservations
+                          //     .where((element) =>
+                          //         element.day == date.day &&
+                          //         element.hour == date.hour)
+                          //     .first,
+                          table:
+                              Globals.profile.getEstablishment().tables[index],
+                        ),
+                        Positioned(
+                          top: 1,
+                          right: 30,
+                          child: SizedBox(
+                            height: 40,
+                            width: 30,
+                            child: PopupMenuButton(
+                              icon: Icon(
+                                Icons.more_vert,
+                                color: Colors.white,
+                              ),
+                              onSelected: (value) async {
+                                switch (value) {
+                                  case 'Historique':
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            HistoriqueDeTable(),
+                                      ),
+                                    );
+                                    break;
+                                  case 'Scaner code QR':
+                                    Utils.pushScreen(
+                                        context, PopUpQrCode(), 0.55);
+                                    break;
+                                  case 'Supprimer':
+                                    bool? delete = false;
+                                    delete = await showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          ConfirmationShowmodel(
+                                        title:
+                                            "vous étes sur de supprimer cet table ?",
+                                      ),
+                                    );
+                                    if (delete ?? false) {
+                                      print("object");
+                                    }
+                                    break;
+                                  case 'Modifier':
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          ModifierNmrDeTable(),
+                                    );
+                                    break;
+                                }
+                              },
+                              itemBuilder: (BuildContext bc) {
+                                return [
+                                  PopupMenuItem(
+                                    child: const Text("Historique"),
+                                    value: 'Historique',
+                                  ),
+                                  PopupMenuItem(
+                                    child: const Text("Scaner code QR"),
+                                    value: 'Scaner code QR',
+                                  ),
+                                  PopupMenuItem(
+                                    child: const Text("Modifier"),
+                                    value: 'Modifier',
+                                  ),
+                                  PopupMenuItem(
+                                    child: const Text("Supprimer"),
+                                    value: 'Supprimer',
+                                  ),
+                                ];
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
