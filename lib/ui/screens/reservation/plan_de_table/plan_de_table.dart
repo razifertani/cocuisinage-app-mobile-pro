@@ -26,20 +26,14 @@ class PlanDeTableScreen extends StatefulWidget {
 }
 
 class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
-  var date = DateTime(DateTime.now().year, DateTime.now().month,
-      DateTime.now().day, DateTime.now().hour, 0);
+  var date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour, 0);
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting();
 
-    date = DateTime(
-        widget.reservation!.day.year,
-        widget.reservation!.day.month,
-        widget.reservation!.day.day,
-        int.parse(widget.reservation!.hour.split(':')[0]),
-        int.parse(widget.reservation!.hour.split(':')[1]));
+    date = DateTime(widget.reservation!.day.year, widget.reservation!.day.month, widget.reservation!.day.day, int.parse(widget.reservation!.hour.split(':')[0]), int.parse(widget.reservation!.hour.split(':')[1]));
   }
 
   TextEditingController nmr = TextEditingController();
@@ -50,64 +44,6 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
     setState(() {
       _tapPosition = referenceBox.globalToLocal(details.globalPosition);
     });
-  }
-
-  // This function will be called when you long press on the blue box or the image
-  void _showContextMenu(BuildContext context) async {
-    final RenderObject? overlay =
-        Overlay.of(context)?.context.findRenderObject();
-
-    final result = await showMenu(
-        context: context,
-        position: RelativeRect.fromRect(
-            Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
-            Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width,
-                overlay.paintBounds.size.height)),
-        items: [
-          const PopupMenuItem(
-            value: 'Historique',
-            child: Text('Historique'),
-          ),
-          const PopupMenuItem(
-            value: 'Scaner code QR',
-            child: Text('Scaner code QR'),
-          ),
-          const PopupMenuItem(
-            value: 'Modifier',
-            child: Text('Modifier numéro de table'),
-          ),
-          const PopupMenuItem(
-            value: 'Supprimer',
-            child: Text('Supprimer'),
-          ),
-        ]);
-    switch (result) {
-      case 'Historique':
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => HistoriqueDeTable()));
-
-        break;
-      case 'Scaner code QR':
-        Utils.pushScreen(context, PopUpQrCode(), 0.55);
-        break;
-      case 'Supprimer':
-        bool? delete = false;
-        delete = await showDialog(
-            context: context,
-            builder: (context) => ConfirmationShowmodel(
-                  title: "vous étes sur de supprimer cet table ?",
-                ));
-        if (delete ?? false) {
-          print("object");
-        }
-        break;
-      case 'Modifier':
-        showDialog(
-          context: context,
-          builder: (context) => ModifierNmrDeTable(),
-        );
-        break;
-    }
   }
 
   changeDate(DateTime dateTime) {
@@ -125,9 +61,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
         ),
         centerTitle: true,
         backgroundColor: MyColors.red,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context)),
+        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -235,8 +169,7 @@ class _PlanDeTableScreenState extends State<PlanDeTableScreen> {
                         PlanDeTableCard(
                           date: date,
                           reservation: widget.reservation,
-                          table:
-                              Globals.profile.getEstablishment().tables[index],
+                          table: Globals.profile.getEstablishment().tables[index],
                         ),
                       ],
                     ),

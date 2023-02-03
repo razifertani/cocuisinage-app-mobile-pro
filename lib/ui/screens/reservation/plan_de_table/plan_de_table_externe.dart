@@ -21,13 +21,11 @@ class PlanDeTableScreenExterne extends StatefulWidget {
   PlanDeTableScreenExterne({Key? key}) : super(key: key);
 
   @override
-  State<PlanDeTableScreenExterne> createState() =>
-      _PlanDeTableScreenExterneState();
+  State<PlanDeTableScreenExterne> createState() => _PlanDeTableScreenExterneState();
 }
 
 class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
-  var date = DateTime(DateTime.now().year, DateTime.now().month,
-      DateTime.now().day, DateTime.now().hour, 0);
+  var date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour, 0);
 
   @override
   void initState() {
@@ -55,64 +53,6 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
     });
   }
 
-  // This function will be called when you long press on the blue box or the image
-  void _showContextMenu(BuildContext context) async {
-    final RenderObject? overlay =
-        Overlay.of(context)?.context.findRenderObject();
-
-    final result = await showMenu(
-        context: context,
-        position: RelativeRect.fromRect(
-            Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
-            Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width,
-                overlay.paintBounds.size.height)),
-        items: [
-          const PopupMenuItem(
-            value: 'Historique',
-            child: Text('Historique'),
-          ),
-          const PopupMenuItem(
-            value: 'Scaner code QR',
-            child: Text('Scaner code QR'),
-          ),
-          const PopupMenuItem(
-            value: 'Modifier',
-            child: Text('Modifier numéro de table'),
-          ),
-          const PopupMenuItem(
-            value: 'Supprimer',
-            child: Text('Supprimer'),
-          ),
-        ]);
-    switch (result) {
-      case 'Historique':
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => HistoriqueDeTable()));
-
-        break;
-      case 'Scaner code QR':
-        Utils.pushScreen(context, PopUpQrCode(), 0.55);
-        break;
-      case 'Supprimer':
-        bool? delete = false;
-        delete = await showDialog(
-            context: context,
-            builder: (context) => ConfirmationShowmodel(
-                  title: "vous étes sur de supprimer cet table ?",
-                ));
-        if (delete ?? false) {
-          print("object");
-        }
-        break;
-      case 'Modifier':
-        showDialog(
-          context: context,
-          builder: (context) => ModifierNmrDeTable(),
-        );
-        break;
-    }
-  }
-
   changeDate(DateTime dateTime) {
     date = dateTime;
     setState(() {});
@@ -128,9 +68,7 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
         ),
         centerTitle: true,
         backgroundColor: MyColors.red,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context)),
+        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => Navigator.pop(context)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -141,8 +79,7 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
               const SizedBox(
                 height: 20,
               ),
-              HorizontalCalendar(
-                  initialDateTime: date, ondateChanged: changeDate),
+              HorizontalCalendar(initialDateTime: date, ondateChanged: changeDate),
               const SizedBox(
                 height: 20,
               ),
@@ -161,8 +98,7 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
                             color: MyColors.red,
                           )),
                       Text(
-                        DateFormat.Hm()
-                            .format(date.subtract(const Duration(hours: 1))),
+                        DateFormat.Hm().format(date.subtract(const Duration(hours: 1))),
                         style: MyTextStyles.body.copyWith(color: MyColors.red),
                       ),
                     ],
@@ -174,8 +110,7 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
                   Row(
                     children: [
                       Text(
-                        DateFormat.Hm()
-                            .format(date.add(const Duration(hours: 1))),
+                        DateFormat.Hm().format(date.add(const Duration(hours: 1))),
                         style: MyTextStyles.body.copyWith(color: MyColors.red),
                       ),
                       GestureDetector(
@@ -238,8 +173,7 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
                           //         element.day == date.day &&
                           //         element.hour == date.hour)
                           //     .first,
-                          table:
-                              Globals.profile.getEstablishment().tables[index],
+                          table: Globals.profile.getEstablishment().tables[index],
                         ),
                         Positioned(
                           top: 1,
@@ -258,23 +192,19 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            HistoriqueDeTable(),
+                                        builder: (context) => HistoriqueDeTable(table: Globals.profile.getEstablishment().tables[index]),
                                       ),
                                     );
                                     break;
-                                  case 'Scaner code QR':
-                                    Utils.pushScreen(
-                                        context, PopUpQrCode(), 0.55);
+                                  case 'Scanner code Qr':
+                                    Utils.pushScreen(context, PopUpQrCode(tableID: Globals.profile.getEstablishment().tables[index].id), 0.55);
                                     break;
                                   case 'Supprimer':
                                     bool? delete = false;
                                     delete = await showDialog(
                                       context: context,
-                                      builder: (context) =>
-                                          ConfirmationShowmodel(
-                                        title:
-                                            "vous étes sur de supprimer cet table ?",
+                                      builder: (context) => ConfirmationShowmodel(
+                                        title: "vous étes sur de supprimer cet table ?",
                                       ),
                                     );
                                     if (delete ?? false) {
@@ -284,8 +214,7 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
                                   case 'Modifier':
                                     showDialog(
                                       context: context,
-                                      builder: (context) =>
-                                          ModifierNmrDeTable(),
+                                      builder: (context) => ModifierNmrDeTable(),
                                     );
                                     break;
                                 }
@@ -297,8 +226,8 @@ class _PlanDeTableScreenExterneState extends State<PlanDeTableScreenExterne> {
                                     value: 'Historique',
                                   ),
                                   PopupMenuItem(
-                                    child: const Text("Scaner code QR"),
-                                    value: 'Scaner code QR',
+                                    child: const Text("Scanner code Qr"),
+                                    value: 'Scanner code Qr',
                                   ),
                                   PopupMenuItem(
                                     child: const Text("Modifier"),
