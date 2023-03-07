@@ -216,7 +216,6 @@ class Profile {
         }
       });
     });
-
     return colleguePermissionsIDs;
   }
 

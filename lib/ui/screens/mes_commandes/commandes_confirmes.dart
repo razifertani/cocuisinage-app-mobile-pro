@@ -28,7 +28,7 @@ class _CommandesConfirmState extends State<CommandesConfirm> {
     super.initState();
     setState(() {
       commandes = Globals.profile.getEstablishment().commandes.where((element) {
-        return DateTime.parse(element.createdAt!).isSameDayAs(widget.selectedDate) && element.status == 4;
+        return DateTime.parse(element.createdAt!).isSameDayAs(widget.selectedDate) && (element.status == 4 || element.status == 3 || element.status == 1);
       }).toList();
     });
   }

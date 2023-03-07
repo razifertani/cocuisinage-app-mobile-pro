@@ -15,8 +15,7 @@ import 'information.dart';
 class MainResScreen extends StatefulWidget {
   final DateTime resDate;
   final Function function;
-  MainResScreen({Key? key, required this.resDate, required this.function})
-      : super(key: key);
+  MainResScreen({Key? key, required this.resDate, required this.function}) : super(key: key);
 
   @override
   State<MainResScreen> createState() => _MainResScreenState();
@@ -36,12 +35,7 @@ class _MainResScreenState extends State<MainResScreen> {
   }
 
   int currentIndex = 0;
-  List<String> imagesPath = [
-    "assets/icons/calend.png",
-    "assets/icons/clock.png",
-    "assets/icons/personnes.png",
-    "assets/icons/information.png"
-  ];
+  List<String> imagesPath = ["assets/icons/calend.png", "assets/icons/clock.png", "assets/icons/personnes.png", "assets/icons/information.png"];
   List<String> labels = ["Date", "Heure", "Personnes", "Informations"];
 
   String timeOfDay = "8:00";
@@ -98,16 +92,11 @@ class _MainResScreenState extends State<MainResScreen> {
                         children: [
                           Image.asset(
                             imagesPath[index],
-                            color: currentIndex == index
-                                ? Theme.of(context).primaryColor
-                                : Color(0xFF8E8E8E),
+                            color: currentIndex == index ? Theme.of(context).primaryColor : Color(0xFF8E8E8E),
                           ),
                           Text(
                             labels[index],
-                            style: TextStyle(
-                                color: currentIndex == index
-                                    ? Theme.of(context).primaryColor
-                                    : Color(0xFF8E8E8E)),
+                            style: TextStyle(color: currentIndex == index ? Theme.of(context).primaryColor : Color(0xFF8E8E8E)),
                           )
                         ],
                       ),
@@ -160,15 +149,12 @@ class _MainResScreenState extends State<MainResScreen> {
                                 stopLoading();
                                 exceptionOrMessage.fold(
                                   (exception) {
-                                    Utils.showCustomTopSnackBar(context,
-                                        success: false,
-                                        message: exception.toString());
+                                    Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
                                     Navigator.pop(context);
                                   },
                                   (message) {
                                     setState(() {});
-                                    Utils.showCustomTopSnackBar(context,
-                                        success: true, message: message);
+                                    Utils.showCustomTopSnackBar(context, success: true, message: message);
                                     widget.function();
                                     Navigator.pop(context);
                                   },

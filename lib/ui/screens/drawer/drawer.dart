@@ -73,8 +73,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       children: [
                         Text(
                           '${Globals.profile.getFullName()}',
-                          style: MyTextStyles.headline
-                              .copyWith(fontWeight: FontWeight.w600),
+                          style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
                         ),
                         Text(
                           '${Globals.profile.getRole().name}',
@@ -118,16 +117,14 @@ class _MyDrawerState extends State<MyDrawer> {
                           onTap: () {
                             Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => MesBoutiquesScreen()),
+                              MaterialPageRoute(builder: (context) => MesBoutiquesScreen()),
                               (Route<dynamic> route) => false,
                             );
                           },
                           child: FittedBox(
                             child: AutoSizeText(
                               "Changer de la boutique",
-                              style: MyTextStyles.subhead
-                                  .copyWith(fontWeight: FontWeight.w600),
+                              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
                         )
@@ -135,46 +132,6 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                ExpansionTileDrawer(
-                    title: "Statistiques",
-                    iconPath: "assets/drawer_icons/stat.png",
-                    widgets: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const MonPorteMonnaieScreen()),
-                          );
-                        },
-                        child: Text(
-                          "Porte monnaie",
-                          style: MyTextStyles.subhead,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => StatistiqueMainScreen()),
-                          );
-                        },
-                        child: Text(
-                          "Statistique de plat",
-                          style: MyTextStyles.subhead,
-                        ),
-                      ),
-                    ]),
                 SizedBox(
                   height: 10,
                 ),
@@ -198,15 +155,13 @@ class _MyDrawerState extends State<MyDrawer> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => PlanningScreen()),
+                              MaterialPageRoute(builder: (context) => PlanningScreen()),
                             );
                           },
                           child: FittedBox(
                             child: AutoSizeText(
                               "Planning",
-                              style: MyTextStyles.subhead
-                                  .copyWith(fontWeight: FontWeight.w600),
+                              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
                         )
@@ -239,15 +194,13 @@ class _MyDrawerState extends State<MyDrawer> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignalerUnBugScreen()),
+                              MaterialPageRoute(builder: (context) => SignalerUnBugScreen()),
                             );
                           },
                           child: FittedBox(
                             child: AutoSizeText(
                               "Signaler un bug",
-                              style: MyTextStyles.subhead
-                                  .copyWith(fontWeight: FontWeight.w600),
+                              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
                         )
@@ -268,8 +221,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       ),
                       Text(
                         "Dark theme",
-                        style: MyTextStyles.subhead
-                            .copyWith(fontWeight: FontWeight.w600),
+                        style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                       ),
                       Spacer(),
                       Consumer<ThemeController>(
@@ -335,9 +287,7 @@ class _MyDrawerState extends State<MyDrawer> {
 
                                   Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignInScreen()),
+                                    MaterialPageRoute(builder: (context) => const SignInScreen()),
                                     (Route<dynamic> route) => false,
                                   );
                                 },
@@ -347,8 +297,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           child: FittedBox(
                             child: AutoSizeText(
                               "Déconnexion",
-                              style: MyTextStyles.subhead
-                                  .copyWith(fontWeight: FontWeight.w600),
+                              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
                         )

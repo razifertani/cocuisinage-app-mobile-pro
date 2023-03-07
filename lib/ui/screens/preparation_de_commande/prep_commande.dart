@@ -1,6 +1,7 @@
 import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/commande.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/models/role_permission.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/commandes_api.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
@@ -82,15 +83,6 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
               const SizedBox(
                 height: 20,
               ),
-              // -- pas de tickets
-              // Image.asset("assets/images/box.png"),
-              // Text(
-              //   "  aucune commande en cours ",
-              //   style: MyTextStyles.headline,
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 controller: _controller,
@@ -131,32 +123,33 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
                                         style: MyTextStyles.subhead.copyWith(color: Colors.white),
                                         textAlign: TextAlign.center,
                                       ),
-                                      CustomButton(
-                                        txt: "Appeler le serveur",
-                                        fun: (startLoading, stopLoading, btnState) {
-                                          if (btnState == ButtonState.Idle) {
-                                            startLoading();
-                                            updateCommandeStatusWS(
-                                              id: Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].id,
-                                              status: '3',
-                                            ).then(
-                                              (exceptionOrMessage) {
-                                                stopLoading();
-                                                exceptionOrMessage.fold(
-                                                  (exception) {
-                                                    Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
-                                                  },
-                                                  (message) {
-                                                    setState(() {});
-                                                    Utils.showCustomTopSnackBar(context, success: true, message: message);
-                                                    Navigator.pop(context);
-                                                  },
-                                                );
-                                              },
-                                            );
-                                          }
-                                        },
-                                      ),
+                                      if (Globals.profile.isOwner || Globals.profile.getColleguePermissions(id: Globals.profile.id).contains(Permission.MANAGE_COMMANDES_STATUS))
+                                        CustomButton(
+                                          txt: "Appeler le serveur",
+                                          fun: (startLoading, stopLoading, btnState) {
+                                            if (btnState == ButtonState.Idle) {
+                                              startLoading();
+                                              updateCommandeStatusWS(
+                                                id: Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].id,
+                                                status: '3',
+                                              ).then(
+                                                (exceptionOrMessage) {
+                                                  stopLoading();
+                                                  exceptionOrMessage.fold(
+                                                    (exception) {
+                                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                                    },
+                                                    (message) {
+                                                      setState(() {});
+                                                      Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                                      Navigator.pop(context);
+                                                    },
+                                                  );
+                                                },
+                                              );
+                                            }
+                                          },
+                                        ),
                                     ],
                                   ),
                                 ),
@@ -169,55 +162,64 @@ class _PreparationDeCommandeScreenState extends State<PreparationDeCommandeScree
               const SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                width: double.infinity,
-                child: Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "${Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].typeLivraison}\n${Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commingHour}",
-                        style: MyTextStyles.headline,
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        "10mn",
-                        style: MyTextStyles.headline.copyWith(color: Colors.blue),
-                      ),
-                      const Divider(
-                        thickness: 1,
-                        indent: 10,
-                        endIndent: 10,
-                        color: Colors.black,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commandeProduct.length,
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: 10);
-                        },
-                        itemBuilder: (context, index) {
-                          return ItemCard(
-                            commandeProductID: Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commandeProduct[index].id,
-                            name: "${Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commandeProduct[index].establishmentProduct?.product.name}",
-                            quantite: Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commandeProduct[index].qte ?? 1,
-                          );
-                        },
-                      ),
-                    ],
+              if (Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).length < 1) Image.asset("assets/images/box.png"),
+              Text(
+                "  aucune commande en cours ",
+                style: MyTextStyles.headline,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              if (Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).length > 0)
+                SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "${Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].typeLivraison}\n${Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commingHour}",
+                          style: MyTextStyles.headline,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          "10mn",
+                          style: MyTextStyles.headline.copyWith(color: Colors.blue),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                          color: Colors.black,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          itemCount: Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commandeProduct.length,
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 10);
+                          },
+                          itemBuilder: (context, index) {
+                            return ItemCard(
+                              commandeProductID: Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commandeProduct[index].id,
+                              name: "${Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commandeProduct[index].establishmentProduct?.product.name}",
+                              quantite: Globals.profile.getEstablishment().commandes.where((element) => element.status == 4).toList()[currentIndex].commandeProduct[index].qte ?? 1,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
               const SizedBox(
                 height: 20,
               ),

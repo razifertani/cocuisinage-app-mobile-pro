@@ -337,6 +337,8 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                             double.parse(Globals.profile.getEstablishment().longitude),
                           );
 
+                          String distanceInKiloMeters = (distanceInMeters / 1000).toStringAsFixed(2);
+
                           if (distanceInMeters < 10) {
                             showDialog(
                               context: context,
@@ -350,7 +352,7 @@ class _EmployeHomeScreenState extends State<EmployeHomeScreen> {
                             Utils.showCustomTopSnackBar(
                               context,
                               success: false,
-                              message: "Vous êtes encore loin de votre établissement ! (${distanceInMeters.toInt()} Mètres)",
+                              message: "Vous êtes encore loin de votre établissement ! (${distanceInKiloMeters} Kilomètres)",
                             );
                           }
                         });
