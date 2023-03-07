@@ -6,7 +6,7 @@ class Reservation {
   late int establishmentId;
   int? tableId;
   late String clientName;
-  late String clientPhoneNumber;
+  late String? clientPhoneNumber;
   late int nbPeople;
   late DateTime day;
   late String hour;

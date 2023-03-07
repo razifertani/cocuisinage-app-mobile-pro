@@ -13,7 +13,7 @@ class Role {
 
   late int id;
   late String name;
-  late int establishmentId;
+  late int? establishmentId;
   String? guardName;
   String? createdAt;
   String? updatedAt;
