@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 6.w),
               child: Text(
-                "L’application qui gére la gestion de vos équipe et vos planning tous en automatisant la gestion de vos tâches",
+                "Cocuisinage vous simplifie la vie ! L'application qui gère votre commerce de A à Z !!!",
                 style: MyTextStyles.body.copyWith(
                     color: Color(0xFF717171), fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,

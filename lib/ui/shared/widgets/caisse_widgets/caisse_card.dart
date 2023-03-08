@@ -7,12 +7,15 @@ import '../../../../../Theme/my_text_styles.dart';
 import '../common_product_card.dart';
 
 class CaisseItemCard extends StatelessWidget {
-  const CaisseItemCard({Key? key}) : super(key: key);
+  final String title;
+  final String price;
+  const CaisseItemCard({Key? key, required this.price, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CommunProductCard(
-      title: "produit",
+      title: title,
       bottomRightWidget: Container(
         width: 15.w,
         decoration: BoxDecoration(
@@ -23,7 +26,7 @@ class CaisseItemCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
           child: Center(
             child: Text(
-              "3€",
+              price,
               style: MyTextStyles.subhead.copyWith(color: Colors.white),
             ),
           ),

@@ -2,19 +2,20 @@ import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/divider.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/pop_up_card.dart';
 import 'package:flutter/material.dart';
 
-class PlatPopUp extends StatelessWidget {
+class SuitePopUp extends StatelessWidget {
   Function? callBack;
-  PlatPopUp({Key? key, this.callBack}) : super(key: key);
+  SuitePopUp({Key? key, this.callBack}) : super(key: key);
   List<String> names = [
-    "Entrées",
-    "Plats",
-    "Désserts",
-    "Amuse-bouche",
-    "Fromages",
-    "Boissons",
-    "Boulangerie",
-    "Les bases",
-    "Sauces"
+    "Suite 1",
+    "Suite 2",
+    "Suite 3",
+    "Menu-kids",
+    "Menu",
+  ];
+  List<String> images = [
+    ...List.generate(3, (index) => "assets/icons/suite.png"),
+    "assets/icons/menu-kids.png",
+    "assets/icons/menu.png"
   ];
 
   @override
@@ -34,7 +35,7 @@ class PlatPopUp extends StatelessWidget {
                 fun: (startLoading, stopLoading, btnState) {
                   callBack?.call();
                 },
-                iconPath: "assets/liste_de_course_icons/viande.png"),
+                iconPath: images[index]),
           ),
           const SizedBox(
             height: 20,
