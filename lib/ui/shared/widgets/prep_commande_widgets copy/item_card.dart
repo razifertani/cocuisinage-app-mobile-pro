@@ -4,13 +4,19 @@ import 'package:cocuisinage_app_mobile_pro_mobile_pro/services/commandes_api.dar
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../../Theme/my_text_styles.dart';
 
 class ItemCard extends StatefulWidget {
   int commandeProductID;
   int quantite;
   String name;
-  ItemCard({Key? key, required this.commandeProductID, required this.name, required this.quantite}) : super(key: key);
+  ItemCard(
+      {Key? key,
+      required this.commandeProductID,
+      required this.name,
+      required this.quantite})
+      : super(key: key);
 
   @override
   State<ItemCard> createState() => _ItemCardState();
@@ -21,7 +27,10 @@ class _ItemCardState extends State<ItemCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: itemColor ?? (Theme.of(context).scaffoldBackgroundColor == Colors.black ? Color(0xFF202020) : Colors.white),
+      color: itemColor ??
+          (Theme.of(context).scaffoldBackgroundColor == Colors.black
+              ? Color(0xFF202020)
+              : Colors.white),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -33,13 +42,21 @@ class _ItemCardState extends State<ItemCard> {
             const SizedBox(
               width: 10,
             ),
-            Text(
-              widget.name,
-              style: MyTextStyles.headline,
+            SizedBox(
+              width: 50.w,
+              child: AutoSizeText(
+                widget.name,
+                style: MyTextStyles.headline,
+              ),
             ),
             const Spacer(),
-            if (Globals.profile.isOwner || Globals.profile.getColleguePermissions(id: Globals.profile.id).contains(Permission.MANAGE_COMMANDES_PREPARATION))
-              itemColor == null || itemColor == Color(0xFF202020) || itemColor == Colors.white
+            if (Globals.profile.isOwner ||
+                Globals.profile
+                    .getColleguePermissions(id: Globals.profile.id)
+                    .contains(Permission.MANAGE_COMMANDES_PREPARATION))
+              itemColor == null ||
+                      itemColor == Color(0xFF202020) ||
+                      itemColor == Colors.white
                   ? Row(
                       children: [
                         GestureDetector(
@@ -53,17 +70,21 @@ class _ItemCardState extends State<ItemCard> {
                                 (exceptionOrMessage) {
                                   exceptionOrMessage.fold(
                                     (exception) {
-                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: false,
+                                          message: exception.toString());
                                     },
                                     (message) {
                                       setState(() {});
-                                      Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: true, message: message);
                                     },
                                   );
                                 },
                               );
                             },
-                            child: Image.asset("assets/prep_commande_icons/termine.png")),
+                            child: Image.asset(
+                                "assets/prep_commande_icons/termine.png")),
                         const SizedBox(
                           width: 5,
                         ),
@@ -78,17 +99,21 @@ class _ItemCardState extends State<ItemCard> {
                                 (exceptionOrMessage) {
                                   exceptionOrMessage.fold(
                                     (exception) {
-                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: false,
+                                          message: exception.toString());
                                     },
                                     (message) {
                                       setState(() {});
-                                      Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: true, message: message);
                                     },
                                   );
                                 },
                               );
                             },
-                            child: Image.asset("assets/prep_commande_icons/en_attente.png")),
+                            child: Image.asset(
+                                "assets/prep_commande_icons/en_attente.png")),
                         const SizedBox(
                           width: 5,
                         ),
@@ -103,17 +128,21 @@ class _ItemCardState extends State<ItemCard> {
                                 (exceptionOrMessage) {
                                   exceptionOrMessage.fold(
                                     (exception) {
-                                      Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: false,
+                                          message: exception.toString());
                                     },
                                     (message) {
                                       setState(() {});
-                                      Utils.showCustomTopSnackBar(context, success: true, message: message);
+                                      Utils.showCustomTopSnackBar(context,
+                                          success: true, message: message);
                                     },
                                   );
                                 },
                               );
                             },
-                            child: Image.asset("assets/prep_commande_icons/sortie_de_stock.png")),
+                            child: Image.asset(
+                                "assets/prep_commande_icons/sortie_de_stock.png")),
                       ],
                     )
                   : const SizedBox()

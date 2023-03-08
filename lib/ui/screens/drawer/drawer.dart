@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/controllers/theme_controller.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/caisse/caisse_screen.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -73,7 +74,8 @@ class _MyDrawerState extends State<MyDrawer> {
                       children: [
                         Text(
                           '${Globals.profile.getFullName()}',
-                          style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+                          style: MyTextStyles.headline
+                              .copyWith(fontWeight: FontWeight.w600),
                         ),
                         Text(
                           '${Globals.profile.getRole().name}',
@@ -117,14 +119,16 @@ class _MyDrawerState extends State<MyDrawer> {
                           onTap: () {
                             Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => MesBoutiquesScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => MesBoutiquesScreen()),
                               (Route<dynamic> route) => false,
                             );
                           },
                           child: FittedBox(
                             child: AutoSizeText(
                               "Changer de la boutique",
-                              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
+                              style: MyTextStyles.subhead
+                                  .copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
                         )
@@ -155,13 +159,15 @@ class _MyDrawerState extends State<MyDrawer> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => PlanningScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => PlanningScreen()),
                             );
                           },
                           child: FittedBox(
                             child: AutoSizeText(
                               "Planning",
-                              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
+                              style: MyTextStyles.subhead
+                                  .copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
                         )
@@ -194,13 +200,15 @@ class _MyDrawerState extends State<MyDrawer> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SignalerUnBugScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => SignalerUnBugScreen()),
                             );
                           },
                           child: FittedBox(
                             child: AutoSizeText(
                               "Signaler un bug",
-                              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
+                              style: MyTextStyles.subhead
+                                  .copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
                         )
@@ -221,7 +229,8 @@ class _MyDrawerState extends State<MyDrawer> {
                       ),
                       Text(
                         "Dark theme",
-                        style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
+                        style: MyTextStyles.subhead
+                            .copyWith(fontWeight: FontWeight.w600),
                       ),
                       Spacer(),
                       Consumer<ThemeController>(
@@ -240,6 +249,50 @@ class _MyDrawerState extends State<MyDrawer> {
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                // FittedBox(
+                //   fit: BoxFit.scaleDown,
+                //   alignment: Alignment.topLeft,
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(
+                //       horizontal: 10,
+                //     ),
+                //     child: Row(
+                //       children: [
+                //         SizedBox(
+                //           width: 35,
+                //           child: Image.asset(
+                //             "assets/drawer_icons/bugs.png",
+                //           ),
+                //         ),
+                //         const SizedBox(
+                //           width: 5,
+                //         ),
+                //         GestureDetector(
+                //           onTap: () {
+                //             Navigator.push(
+                //               context,
+                //               MaterialPageRoute(
+                //                   builder: (context) => CaisseScreen()),
+                //             );
+                //           },
+                //           child: FittedBox(
+                //             child: AutoSizeText(
+                //               "ma caisse",
+                //               style: MyTextStyles.subhead
+                //                   .copyWith(fontWeight: FontWeight.w600),
+                //             ),
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                SizedBox(
+                  height: 15,
                 ),
                 SizedBox(
                   height: 10,
@@ -287,7 +340,9 @@ class _MyDrawerState extends State<MyDrawer> {
 
                                   Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const SignInScreen()),
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignInScreen()),
                                     (Route<dynamic> route) => false,
                                   );
                                 },
@@ -297,7 +352,8 @@ class _MyDrawerState extends State<MyDrawer> {
                           child: FittedBox(
                             child: AutoSizeText(
                               "Déconnexion",
-                              style: MyTextStyles.subhead.copyWith(fontWeight: FontWeight.w600),
+                              style: MyTextStyles.subhead
+                                  .copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
                         )

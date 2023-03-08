@@ -13,6 +13,7 @@ import '../../shared/custom_card.dart';
 import '../../shared/widgets/planning_widgets/horizontal_calendar.dart';
 import '../../shared/widgets/reservation/raduil_gauge_reservation.dart';
 import '../../shared/widgets/reservation/reservation_chart.dart';
+import '../caisse/caisse_screen.dart';
 import '../drawer/drawer.dart';
 import '../preparation_de_commande/prep_commande.dart';
 import '../tutoriel/tutoriel_pop_up.dart';
@@ -120,9 +121,14 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      PlanDeTableScreenExterne()),
+                                  builder: (context) => CaisseScreen()),
                             );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) =>
+                            //           PlanDeTableScreenExterne()),
+                            // );
                           }),
                       CustomCard(
                           imgPath: "assets/primary_icons/service.png",

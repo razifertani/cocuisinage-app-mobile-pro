@@ -1,4 +1,5 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/controllers/theme_controller.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/caisse/caisse_screen.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/on_boarding_screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
