@@ -23,9 +23,13 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Row(
         children: [
-          Image.asset(
-            imgPath,
-            height: 30,
+          SizedBox(
+            width: 35,
+            child: Image.asset(
+              imgPath,
+              height: 30,
+              width: 30,
+            ),
           ),
           const SizedBox(
             width: 10,
@@ -69,7 +73,17 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                     value: selectedCollegueID,
                     isExpanded: true,
                     icon: const Icon(Icons.keyboard_arrow_down),
-                    items: ((Globals.profile.isOwner || Globals.profile.getColleguePermissions(id: selectedCollegueID).contains(Permission.MANAGE_ROLES)) ? Globals.profile.getColleagues() : [Globals.profile.getColleague(id: Globals.profile.id)]).map((Collegue collegue) {
+                    items: ((Globals.profile.isOwner ||
+                                Globals.profile
+                                    .getColleguePermissions(
+                                        id: selectedCollegueID)
+                                    .contains(Permission.MANAGE_ROLES))
+                            ? Globals.profile.getColleagues()
+                            : [
+                                Globals.profile
+                                    .getColleague(id: Globals.profile.id)
+                              ])
+                        .map((Collegue collegue) {
                       return DropdownMenuItem(
                         value: collegue.id,
                         child: Text(
@@ -103,7 +117,9 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   padding: const EdgeInsets.all(4),
                   child: CustomRowSwitch(
                     text: Globals.config.permissions[index].name,
-                    value: Globals.profile.getColleguePermissions(id: selectedCollegueID).contains(index + 1),
+                    value: Globals.profile
+                        .getColleguePermissions(id: selectedCollegueID)
+                        .contains(index + 1),
                     onChanged: (bool) {
                       togglePermissionWS(
                         collegueID: selectedCollegueID,
@@ -111,11 +127,13 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                       ).then((exceptionOrMessage) {
                         exceptionOrMessage.fold(
                           (exception) {
-                            Utils.showCustomTopSnackBar(context, success: false, message: exception.toString());
+                            Utils.showCustomTopSnackBar(context,
+                                success: false, message: exception.toString());
                           },
                           (message) {
                             setState(() {});
-                            Utils.showCustomTopSnackBar(context, success: true, message: message);
+                            Utils.showCustomTopSnackBar(context,
+                                success: true, message: message);
                           },
                         );
                       });
@@ -123,6 +141,89 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   ),
                 );
               },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _titleWidget("assets/primary_icons/production.png", "Production"),
+            Column(
+              children: [
+                CustomRowSwitch(
+                  text: "Gérer les status de commandes",
+                  value: false,
+                  onChanged: (p0) {},
+                ),
+                CustomRowSwitch(
+                  text: "Gérer la préparation des commandes",
+                  value: false,
+                  onChanged: (p0) {},
+                ),
+                CustomRowSwitch(
+                  text: "Gérer la caisse",
+                  value: false,
+                  onChanged: (p0) {},
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _titleWidget(
+                "assets/primary_icons/approvis.png", "Approvisionnement"),
+            Column(
+              children: [
+                CustomRowSwitch(
+                  text: "Gérer la carte du restaurant",
+                  value: false,
+                  onChanged: (p0) {},
+                ),
+                CustomRowSwitch(
+                  text: "Gérer les commandes de fournisseurs",
+                  value: false,
+                  onChanged: (p0) {},
+                ),
+                CustomRowSwitch(
+                  text: "Gérer les livraisons de fournisseurs",
+                  value: false,
+                  onChanged: (p0) {},
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _titleWidget("assets/primary_icons/inventaire.png", "Inventaire"),
+            Column(
+              children: [
+                CustomRowSwitch(
+                  text: "Gérer les modifications du stock",
+                  value: false,
+                  onChanged: (p0) {},
+                ),
+                CustomRowSwitch(
+                  text: "Gérer les sortie du stock",
+                  value: false,
+                  onChanged: (p0) {},
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _titleWidget("assets/primary_icons/rec.png", "Mes recettes"),
+            Column(
+              children: [
+                CustomRowSwitch(
+                  text: "Ajouter une recette",
+                  value: false,
+                  onChanged: (p0) {},
+                ),
+                CustomRowSwitch(
+                  text: "Mettre en favoris les recettes",
+                  value: false,
+                  onChanged: (p0) {},
+                ),
+              ],
             ),
             SizedBox(
               height: 10.h,

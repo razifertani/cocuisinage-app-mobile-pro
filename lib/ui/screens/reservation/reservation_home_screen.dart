@@ -114,7 +114,7 @@ class _ReservationHomeScreenState extends State<ReservationHomeScreen> {
                           }),
                       CustomCard(
                           imgPath: "assets/primary_icons/plan_de_table.png",
-                          txt: "Plan de table",
+                          txt: "Caisse",
                           quantite:
                               Globals.profile.getEstablishment().tables.length,
                           fun: () {

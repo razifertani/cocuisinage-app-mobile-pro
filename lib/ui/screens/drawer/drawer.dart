@@ -1,6 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/controllers/theme_controller.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/approvisionnement/approvisionnement.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/caisse/caisse_screen.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/recette/mes_recettes/mes_fiches_de_recettes.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/stock/stock_screen.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -109,7 +112,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           width: 35,
                           child: Image.asset(
                             "assets/drawer_icons/changer.png",
-                            // height: 30,
+                            width: 30,
                           ),
                         ),
                         const SizedBox(
@@ -150,7 +153,10 @@ class _MyDrawerState extends State<MyDrawer> {
                       children: [
                         SizedBox(
                           width: 35,
-                          child: Image.asset("assets/icons/calendar.png"),
+                          child: Image.asset(
+                            "assets/icons/calendar.png",
+                            width: 30,
+                          ),
                         ),
                         const SizedBox(
                           width: 5,
@@ -190,7 +196,138 @@ class _MyDrawerState extends State<MyDrawer> {
                         SizedBox(
                           width: 35,
                           child: Image.asset(
+                            "assets/primary_icons/approvis.png",
+                            width: 30,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ApprovisoinnementScreen()),
+                            );
+                          },
+                          child: FittedBox(
+                            child: AutoSizeText(
+                              "Approvisionnement",
+                              style: MyTextStyles.subhead
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 35,
+                          child: Image.asset(
+                            "assets/primary_icons/inventaire.png",
+                            width: 30,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => StockScreen()),
+                            );
+                          },
+                          child: FittedBox(
+                            child: AutoSizeText(
+                              "Inventaire",
+                              style: MyTextStyles.subhead
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    child: Row(
+                      children: [
+                        Opacity(
+                          opacity: 0.8,
+                          child: SizedBox(
+                            width: 35,
+                            child: Image.asset(
+                              "assets/primary_icons/rec.png",
+                              width: 30,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MesFichesDeRecettes()),
+                            );
+                          },
+                          child: FittedBox(
+                            child: AutoSizeText(
+                              "Mes recettes",
+                              style: MyTextStyles.subhead
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 35,
+                          child: Image.asset(
                             "assets/drawer_icons/bugs.png",
+                            width: 30,
                           ),
                         ),
                         const SizedBox(
@@ -220,12 +357,18 @@ class _MyDrawerState extends State<MyDrawer> {
                   height: 15,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
-                      Image.asset("assets/drawer_icons/dark_theme.png"),
                       SizedBox(
-                        width: 15,
+                        width: 35,
+                        child: Image.asset(
+                          "assets/drawer_icons/dark_theme.png",
+                          width: 30,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
                       ),
                       Text(
                         "Dark theme",
@@ -249,50 +392,6 @@ class _MyDrawerState extends State<MyDrawer> {
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                // FittedBox(
-                //   fit: BoxFit.scaleDown,
-                //   alignment: Alignment.topLeft,
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(
-                //       horizontal: 10,
-                //     ),
-                //     child: Row(
-                //       children: [
-                //         SizedBox(
-                //           width: 35,
-                //           child: Image.asset(
-                //             "assets/drawer_icons/bugs.png",
-                //           ),
-                //         ),
-                //         const SizedBox(
-                //           width: 5,
-                //         ),
-                //         GestureDetector(
-                //           onTap: () {
-                //             Navigator.push(
-                //               context,
-                //               MaterialPageRoute(
-                //                   builder: (context) => CaisseScreen()),
-                //             );
-                //           },
-                //           child: FittedBox(
-                //             child: AutoSizeText(
-                //               "ma caisse",
-                //               style: MyTextStyles.subhead
-                //                   .copyWith(fontWeight: FontWeight.w600),
-                //             ),
-                //           ),
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                SizedBox(
-                  height: 15,
                 ),
                 SizedBox(
                   height: 10,

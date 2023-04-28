@@ -46,10 +46,13 @@ class _DetailCardState extends State<DetailCard> {
                   child: Center(
                     child: AutoSizeText(
                       "${widget.commandeProduct.qte}",
-                      style: MyTextStyles.headline.copyWith(color: Colors.black),
+                      style:
+                          MyTextStyles.headline.copyWith(color: Colors.black),
                     ),
                   ),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: const Color(0xFFF3F3F3)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFFF3F3F3)),
                 ),
                 const SizedBox(
                   width: 15,
@@ -75,14 +78,34 @@ class _DetailCardState extends State<DetailCard> {
                               ),
                             ),
                             Expanded(
-                              child: AutoSizeText('${widget.commandeProduct.message}', style: MyTextStyles.subhead.copyWith(color: Colors.grey)),
+                              child: AutoSizeText(
+                                  '${widget.commandeProduct.message}',
+                                  style: MyTextStyles.subhead
+                                      .copyWith(color: Colors.grey)),
                             )
                           ],
                         ),
                       ),
+                Container(
+                  width: 30.w,
+                  height: 45,
+                  decoration: BoxDecoration(
+                      color: commandBackgroundColor(),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                      child: Text(
+                    commandText(),
+                    style: MyTextStyles.subhead
+                        .copyWith(color: commandStatusColor()),
+                  )),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
                 AutoSizeText(
                   '${widget.commandeProduct.prix}',
-                  style: MyTextStyles.headline.copyWith(fontWeight: FontWeight.w600),
+                  style: MyTextStyles.headline
+                      .copyWith(fontWeight: FontWeight.w600),
                 )
               ],
             ),
@@ -90,5 +113,45 @@ class _DetailCardState extends State<DetailCard> {
         ),
       ),
     );
+  }
+
+  String commandText() {
+    switch (widget.commandeProduct.status) {
+      case 0:
+        return "Pret";
+      case 1:
+        return "En cours";
+      case 2:
+      default:
+        return "Pas pret";
+    }
+  }
+
+  Color commandStatusColor() {
+    switch (widget.commandeProduct.status) {
+      case 0:
+        return Color(0xff2E9C61);
+
+      case 1:
+        return Color(0xffF9A413);
+      case 2:
+        return Color(0xffD43347);
+      default:
+        return Color(0xff2E9C61);
+    }
+  }
+
+  commandBackgroundColor() {
+    switch (widget.commandeProduct.status) {
+      case 0:
+        return Color(0xffD2F3DC);
+
+      case 1:
+        return Color(0xffFFE6BA);
+      case 2:
+        return Color(0xffFBD7DB);
+      default:
+        return Color(0xffD2F3DC);
+    }
   }
 }
