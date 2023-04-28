@@ -8,6 +8,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../Theme/my_colors.dart';
 import '../../../Theme/my_text_styles.dart';
 import '../../shared/widgets/caisse_widgets/caisse_stat_card.dart';
+import '../reservation/plan_de_table/plan_de_table_externe.dart';
+import 'cloture_de_caisse/cloture_de_caisse_screen.dart';
 
 class CaisseCalculator extends StatefulWidget {
   const CaisseCalculator({Key? key}) : super(key: key);
@@ -66,8 +68,25 @@ class _CaisseCalculatorState extends State<CaisseCalculator> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  CaisseStatCard(title: "Plan de table", content: "25"),
-                  CaisseStatCard(title: "Cloture de caisse", content: "25")
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    PlanDeTableScreenExterne()));
+                      },
+                      child: CaisseStatCard(
+                          title: "Plan de table", content: "25")),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ClotureDeCaisseScreen()));
+                      },
+                      child: CaisseStatCard(
+                          title: "Cloture de caisse", content: "25"))
                 ],
               ),
             ),

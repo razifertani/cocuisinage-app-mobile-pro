@@ -1,5 +1,6 @@
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/caisse/caisse_ajouter_ticket.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/caisse/caisse_calcul.dart';
+import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/caisse/cloture_de_caisse/cloture_de_caisse_screen.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/screens/preparation_de_commande/prep_commande.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/custom_button.dart';
 import 'package:cocuisinage_app_mobile_pro_mobile_pro/ui/shared/pop_up_card.dart';
@@ -10,6 +11,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../Theme/my_colors.dart';
 import '../../../Theme/my_text_styles.dart';
 import '../../shared/widgets/caisse_widgets/caisse_stat_card.dart';
+import '../reservation/plan_de_table/plan_de_table_externe.dart';
 
 class CaisseTicketsScreen extends StatefulWidget {
   const CaisseTicketsScreen({Key? key}) : super(key: key);
@@ -76,8 +78,25 @@ class _CaisseTicketsScreenState extends State<CaisseTicketsScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  CaisseStatCard(title: "Plan de table", content: "25"),
-                  CaisseStatCard(title: "Cloture de caisse", content: "25")
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    PlanDeTableScreenExterne()));
+                      },
+                      child: CaisseStatCard(
+                          title: "Plan de table", content: "25")),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ClotureDeCaisseScreen()));
+                      },
+                      child: CaisseStatCard(
+                          title: "Cloture de caisse", content: "25"))
                 ],
               ),
             ),

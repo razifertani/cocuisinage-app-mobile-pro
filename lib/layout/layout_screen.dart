@@ -5,6 +5,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../ui/screens/home/employe_home_screen.dart';
 import '../ui/screens/home/patron_home_screen.dart';
+import '../ui/screens/mes_commandes/commandes_screen_nv.dart';
 import '../ui/screens/mes_commandes/mes_commandes_screen.dart';
 import '../ui/screens/mon_equipe/mon_equipe_screen.dart';
 import '../ui/screens/notifications/notifications.dart';
@@ -37,7 +38,7 @@ class _LayoutPageState extends State<LayoutPage> {
                 reload: () => setState(() {}),
               );
       case 1:
-        return MesCommandesScreen();
+        return CommandesScreen();
       // return PlanningScreen();
       case 2:
         return NotificationScreen();
