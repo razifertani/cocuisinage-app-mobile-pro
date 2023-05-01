@@ -13,8 +13,8 @@ class EstablishmentProduct {
   String? img;
   int? isRec;
   int? isIng;
-  String? qteForOneRec;
-  String? establishmentProductRecetteId;
+  int? qteForOneRec;
+  int? establishmentProductRecetteId;
   int? showHome;
   String? description;
   int? autoUpgradeShoppingList;
